@@ -2,8 +2,7 @@
     "name": "planificador-fio-unam",
     "compatibility_date": "2024-04-05",
     "assets": {
-        "directory": "./dist",
-        "binding": "ASSETS"
+        "directory": "./dist"
     },
     "observability": {
         "enabled": true
