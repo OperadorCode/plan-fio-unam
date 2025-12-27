@@ -1,0 +1,53 @@
+# Guía de Contribución
+
+Este documento establece los lineamientos técnicos y estándares de desarrollo para contribuir al proyecto Planificador FIO.
+
+## Stack Tecnológico
+
+- **Runtime**: Node.js (Latest LTS)
+- **Framework**: React + Vite
+- **Lenguaje**: TypeScript (Strict Mode)
+- **Gestión de Estado**: Zustand
+- **Estilos**: Tailwind CSS
+- **Testing**: Vitest + React Testing Library
+
+## Convenciones de Código
+
+### Estructura de Carpetas
+
+- `src/data`: Fuente de verdad única (Single Source of Truth) para los planes de estudio. Los datos deben seguir estrictamente las interfaces definidas.
+- `src/components`: Componentes funcionales. Se recomienda el uso de `React.memo` únicamente cuando sea justificable por razones de rendimiento.
+- `src/store`: Lógica de negocio y gestión de estado global.
+- `src/types`: Definiciones de TypeScript compartidas.
+
+### TypeScript
+
+- El uso de `any` está prohibido. Se deben definir interfaces explícitas para todas las propiedades y estructuras de datos.
+- Se requiere documentación mediante JSDoc para funciones complejas, especialmente aquellas ubicadas en `src/utils`.
+
+### Flujo de Trabajo (Git Flow)
+
+1.  Realizar un fork del repositorio.
+2.  Crear una rama para la nueva funcionalidad o corrección: `git checkout -b feature/nombre-descriptivo`.
+3.  Confirmar los cambios siguiendo convenciones semánticas: `git commit -m "feat: descripción técnica"`.
+4.  Enviar los cambios a la rama remota: `git push origin feature/nombre-descriptivo`.
+5.  Abrir un Pull Request detallando los cambios realizados.
+
+## Testing
+
+El proyecto utiliza Vitest para pruebas unitarias. Antes de enviar un Pull Request, es obligatorio verificar que todas las pruebas pasen correctamente:
+
+```bash
+npm test
+```
+
+Cualquier modificación en la lógica de validación académica (`academicValidation.ts`) debe ir acompañada de sus correspondientes casos de prueba en `academicValidation.test.ts`.
+
+## Arquitectura de Datos
+
+Los planes de estudio se definen en `src/data/careers`. Cada plan debe implementar la interfaz `StudyPlan`.
+Al agregar una nueva carrera, es necesario registrarla en `src/data/careers/index.ts` y asegurar la integridad de los datos mediante los tests de validación existentes.
+
+---
+
+Facultad de Ingeniería - Universidad Nacional de Misiones

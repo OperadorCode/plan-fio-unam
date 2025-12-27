@@ -1,0 +1,51 @@
+import type { StudyPlan } from '../../../types';
+
+export const higiene2012: StudyPlan = {
+  id: 'higiene-2012',
+  careerId: 'higiene',
+  name: 'Lic. en Higiene y Seguridad en el Trabajo',
+  year: 2012,
+  active: true,
+  coursesData: {
+    "1": [
+      { id: "HST111", name: "Algebra y Geometría Analítica", regimen: "Anual", hours: "-", cursarReg: [], cursarAprob: [], rendirAprob: [], criticality: 1 },
+      { id: "HST112", name: "Cálculo 1", regimen: "Anual", hours: "-", cursarReg: [], cursarAprob: [], rendirAprob: [], criticality: 1 },
+      { id: "HST113", name: "Física 1", regimen: "Anual", hours: "-", cursarReg: [], cursarAprob: [], rendirAprob: [], criticality: 1 },
+      { id: "HST213", name: "Química", regimen: "Anual", hours: "-", cursarReg: [], cursarAprob: [], rendirAprob: [], criticality: 1 },
+      { id: "HST011", name: "Taller de Inglés 1", regimen: "Anual", hours: "-", cursarReg: [], cursarAprob: [], rendirAprob: [], criticality: 1 }
+    ],
+    "2": [
+      { id: "HST700", name: "HST I-Introducción", regimen: "1º C.", hours: "-", cursarReg: ["HST111", "HST112", "HST113", "HST213", "HST011"], cursarAprob: [], rendirAprob: ["HST111", "HST112", "HST113", "HST213", "HST011"], criticality: 1 },
+      { id: "HST701", name: "HST II-Derecho del Trabajo", regimen: "1º C.", hours: "-", cursarReg: ["HST111", "HST112", "HST113", "HST213", "HST011"], cursarAprob: [], rendirAprob: ["HST111", "HST112", "HST113", "HST213", "HST011"], criticality: 1 },
+      { id: "HST702", name: "HST III-Medicina del Trabajo", regimen: "1º C.", hours: "-", cursarReg: ["HST111", "HST112", "HST113", "HST213", "HST011"], cursarAprob: [], rendirAprob: ["HST111", "HST112", "HST113", "HST213", "HST011"], criticality: 1 },
+      { id: "HST703", name: "HST IV-Establecimientos", regimen: "1º C.", hours: "-", cursarReg: ["HST111", "HST112", "HST113", "HST213", "HST011"], cursarAprob: [], rendirAprob: ["HST111", "HST112", "HST113", "HST213", "HST011"], criticality: 1 },
+      { id: "HST704", name: "HST V-Carga Térmica", regimen: "1º C.", hours: "-", cursarReg: ["HST111", "HST112", "HST113", "HST213", "HST011"], cursarAprob: [], rendirAprob: ["HST111", "HST112", "HST113", "HST213", "HST011"], criticality: 1 },
+      { id: "HST705", name: "HST VI-Contaminación Química", regimen: "2º C.", hours: "-", cursarReg: ["HST700", "HST701", "HST702", "HST703", "HST704"], cursarAprob: ["HST213", "HST113"], rendirAprob: ["HST700", "HST701", "HST702", "HST703", "HST704"], criticality: 1 },
+      { id: "HST706", name: "HST VII-Radiaciones", regimen: "2º C.", hours: "-", cursarReg: ["HST700", "HST701", "HST702", "HST703", "HST704"], cursarAprob: ["HST213", "HST113"], rendirAprob: ["HST700", "HST701", "HST702", "HST703", "HST704"], criticality: 1 },
+      { id: "HST707", name: "HST VIII-Soldadura", regimen: "2º C.", hours: "-", cursarReg: ["HST700", "HST701", "HST702", "HST703", "HST704"], cursarAprob: ["HST213", "HST113"], rendirAprob: ["HST700", "HST701", "HST702", "HST703", "HST704"], criticality: 1 },
+      { id: "HST708", name: "HST IX-Iluminación y Color", regimen: "2º C.", hours: "-", cursarReg: ["HST700", "HST701", "HST702", "HST703", "HST704"], cursarAprob: ["HST213", "HST113"], rendirAprob: ["HST700", "HST701", "HST702", "HST703", "HST704"], criticality: 1 },
+      { id: "HST709", name: "HST X-Ruido", regimen: "2º C.", hours: "-", cursarReg: ["HST700", "HST701", "HST702", "HST703", "HST704"], cursarAprob: ["HST213", "HST113"], rendirAprob: ["HST700", "HST701", "HST702", "HST703", "HST704"], criticality: 1 },
+      { id: "HST710", name: "HST XI-Electricidad", regimen: "2º C.", hours: "-", cursarReg: ["HST700", "HST701", "HST702", "HST703", "HST704"], cursarAprob: ["HST213", "HST113"], rendirAprob: ["HST700", "HST701", "HST702", "HST703", "HST704"], criticality: 1 },
+      { id: "HST711", name: "HST XII-Máquinas y Herramientas", regimen: "2º C.", hours: "-", cursarReg: ["HST700", "HST701", "HST702", "HST703", "HST704"], cursarAprob: ["HST213", "HST113"], rendirAprob: ["HST700", "HST701", "HST702", "HST703", "HST704"], criticality: 1 }
+    ],
+    "3": [
+      { id: "HST712", name: "HST XIII-Fuego", regimen: "1º C.", hours: "-", cursarReg: ["HST706", "HST707", "HST708", "HST709", "HST710", "HST711"], cursarAprob: ["HST700", "HST701", "HST702", "HST703", "HST704", "HST705"], rendirAprob: ["HST706", "HST707", "HST708", "HST709", "HST710", "HST711"], criticality: 1 },
+      { id: "HST713", name: "HST XIV-Elementos de Protección Personal", regimen: "1º C.", hours: "-", cursarReg: ["HST706", "HST707", "HST708", "HST709", "HST710", "HST711"], cursarAprob: ["HST700", "HST701", "HST702", "HST703", "HST704", "HST705"], rendirAprob: ["HST706", "HST707", "HST708", "HST709", "HST710", "HST711"], criticality: 1 },
+      { id: "HST714", name: "HST XV-Selección y Capacitación de Personal", regimen: "1º C.", hours: "-", cursarReg: ["HST706", "HST707", "HST708", "HST709", "HST710", "HST711"], cursarAprob: ["HST700", "HST701", "HST702", "HST703", "HST704", "HST705"], rendirAprob: ["HST706", "HST707", "HST708", "HST709", "HST710", "HST711"], criticality: 1 },
+      { id: "HST715", name: "HST XVI-Costos e Indicadores", regimen: "1º C.", hours: "-", cursarReg: ["HST706", "HST707", "HST708", "HST709", "HST710", "HST711"], cursarAprob: ["HST700", "HST701", "HST702", "HST703", "HST704", "HST705"], rendirAprob: ["HST706", "HST707", "HST708", "HST709", "HST710", "HST711"], criticality: 1 },
+      { id: "HST716", name: "HST XVII-Ergonomía", regimen: "1º C.", hours: "-", cursarReg: ["HST706", "HST707", "HST708", "HST709", "HST710", "HST711"], cursarAprob: ["HST700", "HST701", "HST702", "HST703", "HST704", "HST705"], rendirAprob: ["HST706", "HST707", "HST708", "HST709", "HST710", "HST711"], criticality: 1 },
+      { id: "HST717", name: "HST XVIII-Trabajos Rurales", regimen: "1º C.", hours: "-", cursarReg: ["HST706", "HST707", "HST708", "HST709", "HST710", "HST711"], cursarAprob: ["HST700", "HST701", "HST702", "HST703", "HST704", "HST705"], rendirAprob: ["HST706", "HST707", "HST708", "HST709", "HST710", "HST711"], criticality: 1 },
+      { id: "HST718", name: "Metodología de la Investigación", regimen: "2º C.", hours: "-", cursarReg: ["HST712", "HST713", "HST714", "HST715", "HST716", "HST717"], cursarAprob: ["HST706", "HST707", "HST708", "HST709", "HST710", "HST711"], rendirAprob: ["HST712", "HST713", "HST714", "HST715", "HST716", "HST717"], criticality: 1 },
+      { id: "HST222", name: "Termodinámica y Máquinas", regimen: "2º C.", hours: "-", cursarReg: ["HST712", "HST713", "HST714", "HST715", "HST716", "HST717"], cursarAprob: ["HST706", "HST707", "HST708", "HST709", "HST710", "HST711"], rendirAprob: ["HST712", "HST713", "HST714", "HST715", "HST716", "HST717"], criticality: 1 },
+      { id: "HST451", name: "Economía y Organización de la Producción", regimen: "2º C.", hours: "-", cursarReg: ["HST712", "HST713", "HST714", "HST715", "HST716", "HST717"], cursarAprob: ["HST706", "HST707", "HST708", "HST709", "HST710", "HST711"], rendirAprob: ["HST712", "HST713", "HST714", "HST715", "HST716", "HST717"], criticality: 1 },
+      { id: "HST219", name: "Probabilidad y Estadística", regimen: "2º C.", hours: "-", cursarReg: ["HST712", "HST713", "HST714", "HST715", "HST716", "HST717"], cursarAprob: ["HST706", "HST707", "HST708", "HST709", "HST710", "HST711"], rendirAprob: ["HST712", "HST713", "HST714", "HST715", "HST716", "HST717"], criticality: 1 }
+    ],
+    "4": [
+      { id: "HST321", name: "Electrotecnia", regimen: "1º C.", hours: "-", cursarReg: ["HST718", "HST222", "HST451", "HST219"], cursarAprob: ["HST712", "HST713", "HST714", "HST715", "HST716", "HST717"], rendirAprob: ["HST718", "HST222", "HST451", "HST219"], criticality: 1 },
+      { id: "HST322", name: "Mecánica de los Fluidos y Máquinas", regimen: "1º C.", hours: "-", cursarReg: ["HST718", "HST222", "HST451", "HST219"], cursarAprob: ["HST712", "HST713", "HST714", "HST715", "HST716", "HST717"], rendirAprob: ["HST718", "HST222", "HST451", "HST219"], criticality: 1 },
+      { id: "HST719", name: "Taller de Tesis", regimen: "1º C.", hours: "-", cursarReg: ["HST718", "HST222", "HST451", "HST219"], cursarAprob: ["HST712", "HST713", "HST714", "HST715", "HST716", "HST717"], rendirAprob: ["HST718", "HST222", "HST451", "HST219"], criticality: 1 },
+      { id: "HST012", name: "Taller de Inglés 2", regimen: "Anual", hours: "-", cursarReg: ["HST718", "HST222", "HST451", "HST219"], cursarAprob: ["HST712", "HST713", "HST714", "HST715", "HST716", "HST717"], rendirAprob: ["HST718", "HST222", "HST451", "HST219"], criticality: 1 },
+      { id: "HST720", name: "Tesis", regimen: "2º C.", hours: "-", cursarReg: ["HST712", "HST713", "HST714", "HST715", "HST716", "HST717"], cursarAprob: [], rendirAprob: ["ALL"], criticality: 1 }
+    ]
+  }
+};

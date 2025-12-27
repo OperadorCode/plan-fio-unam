@@ -1,0 +1,80 @@
+/* index.css
+   Archivo principal de estilos CSS para la aplicación React.
+   Incluye directivas de Tailwind, estilos base, utilidades personalizadas y soporte para modo oscuro.
+*/
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ESTILOS BASE Y RESET */
+:root {
+    font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+
+    color-scheme: light;
+    color: #111827;
+    background-color: #f9fafb;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+:root.dark {
+    color-scheme: dark;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #111827;
+}
+
+body {
+    margin: 0;
+    display: block;
+    min-width: 320px;
+    min-height: 100vh;
+    background-color: inherit;
+    color: inherit;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.4s ease-out forwards;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1;
+    border-radius: 20px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #94a3b8;
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #4b5563;
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #6b7280;
+}

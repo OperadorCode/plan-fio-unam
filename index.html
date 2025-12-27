@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planificador FIO (UNaM)</title>
+  <meta name="description"
+    content="Planificador de carreras académico para estudiantes de la Facultad de Ingeniería de Oberá.">
+  <meta name="theme-color" content="#1e40af">
+
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.transparenttextures.com; font-src 'self' https://fonts.gstatic.com;">
+
+  <link rel="icon" type="image/svg+xml" href="/pwa-icon.svg" />
+  <link rel="apple-touch-icon" href="/pwa-icon.svg">
+
+  <script>
+    (function () {
+      if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    })();
+  </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
+</html>
