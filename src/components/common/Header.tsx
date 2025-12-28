@@ -124,7 +124,7 @@ const Header: React.FC = () => {
       <header className="sticky top-0 z-50 w-full bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800 transition-colors duration-0">
 
         {/* Barra Principal */}
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between gap-4">
+        <div className="container mx-auto px-4 min-h-16 py-2 flex items-center justify-between gap-4 flex-wrap sm:flex-nowrap">
           {/* Logo y Título */}
           <div className="flex items-center gap-3 select-none flex-shrink-0">
             {/* Icono Dinámico */}
@@ -138,7 +138,7 @@ const Header: React.FC = () => {
           </div>
 
           {/* Controles Customizados */}
-          <div className="flex items-center gap-2 sm:gap-4 overflow-x-visible pl-2">
+          <div className="flex items-center gap-2 sm:gap-4 flex-wrap justify-end pl-2 max-w-full">
 
             {/* GRUPO DE SELECTORES */}
             <div className="flex items-center bg-gray-100 dark:bg-gray-800 rounded-lg p-1 border border-gray-200 dark:border-gray-700 flex-shrink-0 relative z-40">
@@ -178,7 +178,12 @@ const Header: React.FC = () => {
                     <span className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-400/80 to-transparent -translate-x-full animate-shimmer" />
                   )}
 
-                  <span className="font-medium max-w-[120px] sm:max-w-[220px] truncate text-left relative z-10">
+                  {/* Icono solo visible en mobile */}
+                  <div className="block sm:hidden text-blue-600 dark:text-blue-400">
+                    {currentCareer ? getIcon(currentCareer.icon, 18) : <GraduationCap size={18} />}
+                  </div>
+
+                  <span className="font-medium max-w-[120px] sm:max-w-[220px] truncate text-left relative z-10 hidden sm:block">
                     {currentCareer?.name || 'Seleccionar Carrera'}
                   </span>
                   <ChevronDown size={14} className={`text-gray-400 transition-transform duration-200 relative z-10 ${isCareerOpen ? 'rotate-180' : ''}`} />
@@ -231,8 +236,8 @@ const Header: React.FC = () => {
                     ${isPlanOpen ? 'bg-white dark:bg-gray-700 shadow-sm' : 'hover:bg-gray-200/50 dark:hover:bg-gray-700/50'}
                   `}
                 >
-                  <BookOpen size={14} className="text-gray-400" />
-                  <span className="font-bold text-blue-600 dark:text-blue-400">Plan {currentPlanDisplay}</span>
+                  <BookOpen size={14} className="text-gray-400 sm:text-gray-400 text-blue-600 dark:text-blue-400" />
+                  <span className="font-bold text-blue-600 dark:text-blue-400 hidden sm:block">Plan {currentPlanDisplay}</span>
                   <ChevronDown size={14} className={`text-gray-400 transition-transform duration-200 ${isPlanOpen ? 'rotate-180' : ''}`} />
                 </button>
 
