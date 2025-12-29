@@ -22,7 +22,7 @@ import { Github, Mail, Bug, ExternalLink } from 'lucide-react';
  */
 const PROJECT_URLS = {
     source: " ",
-    issues: " ",
+    issues: "mailto:soporte@planfio.org",
     feedback: "https://docs.google.com/forms/d/e/1FAIpQLSfWc7fNm_VqvS8kA_eIvc5jIwgL0tsLXvMFK_w4_M-qOm6QyQ/viewform?usp=dialog"
 };
 
@@ -108,7 +108,7 @@ const Footer = () => {
                         </a>
                         <a
                             href={PROJECT_URLS.issues}
-                            target="_blank"
+                            // target="_blank" // Removed for mailto links to prevent opening empty tabs
                             rel="noreferrer"
                             className="flex items-center gap-2 hover:text-red-600 dark:hover:text-red-400 transition-colors"
                             title="Reportar un problema técnico"
