@@ -9,6 +9,7 @@ import { memo, useMemo } from 'react';
 import { Handle, Position, type NodeProps } from 'reactflow';
 import { Check, BookOpen, MousePointerClick, Flame, ArrowRightCircle } from 'lucide-react';
 import type { GraphCourse, CourseStatus } from '../../types';
+import { getPeriodText } from '../../utils/courseUtils';
 
 interface CourseNodeData {
     course: GraphCourse;
@@ -19,16 +20,6 @@ interface CourseNodeData {
     criticality: number;
 }
 
-
-const getPeriodText = (course: GraphCourse): string => {
-    const raw = course.regimen || '';
-    if (!raw) return '';
-    const lower = raw.toLowerCase();
-    if (lower.includes('1') || lower.includes('primer')) return '1º Cuatrimestre';
-    if (lower.includes('2') || lower.includes('segundo')) return '2º Cuatrimestre';
-    if (lower.includes('anual')) return 'Anual';
-    return raw;
-};
 
 export const CourseNode = memo(({ data }: NodeProps<CourseNodeData>) => {
     const { course, status, isDimmed, isHighlighted, isSelected, criticality } = data;
@@ -43,7 +34,7 @@ export const CourseNode = memo(({ data }: NodeProps<CourseNodeData>) => {
     let icon = null;
     let textColor = "text-gray-700 dark:text-gray-200";
 
-    let opacityClass = isDimmed ? 'opacity-10 grayscale transition-all duration-300' : 'opacity-100 transition-all duration-300';
+    const opacityClass = isDimmed ? 'opacity-10 grayscale transition-all duration-300' : 'opacity-100 transition-all duration-300';
 
     if (status === 'approved') {
         borderColor = "border-green-500 ring-2 ring-green-100 dark:ring-green-900/30";
@@ -66,7 +57,7 @@ export const CourseNode = memo(({ data }: NodeProps<CourseNodeData>) => {
     }
 
     const isCritical = criticality >= 3 && status !== 'approved';
-    const periodText = useMemo(() => getPeriodText(course), [course]);
+    const periodText = useMemo(() => getPeriodText(course.regimen), [course.regimen]);
 
     return (
         <div className={`relative group ${opacityClass}`}>

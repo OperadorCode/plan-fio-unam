@@ -91,10 +91,10 @@ const Stats: React.FC<StatsProps> = ({ allCourses }) => {
       </div>
 
       <div className="flex-1 w-full md:w-auto min-w-[200px]">
-        <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-4 border-b border-gray-100 dark:border-gray-700 pb-2 flex items-center gap-2">
+        <h2 className="text-lg font-bold text-gray-800 dark:text-white mb-4 border-b border-gray-100 dark:border-gray-700 pb-2 flex items-center gap-2">
           <PieChart size={20} className="text-blue-500" />
           Progreso de Carrera
-        </h3>
+        </h2>
         <div className="space-y-4">
 
           <StatRow
@@ -119,7 +119,7 @@ const Stats: React.FC<StatsProps> = ({ allCourses }) => {
           />
 
           <div className="pt-3 mt-2 border-t border-gray-100 dark:border-gray-700 flex justify-between items-center">
-            <span className="text-xs text-gray-400 uppercase tracking-wider font-semibold flex items-center gap-1">
+            <span className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider font-semibold flex items-center gap-1">
               <AlertCircle size={12} />
               Total Materias
             </span>

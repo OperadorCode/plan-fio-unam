@@ -1,4 +1,6 @@
 import { memo } from 'react';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 import type { UnifiedEvent } from '../../hooks/useCalendarEvents';
 import type { EventType } from '../../data/calendarConfig';
 
@@ -35,7 +37,6 @@ export const CalendarGrid = memo(({ year, month, selectedDate, events, visibleTy
 
     const daysInMonth = getDaysInMonth(year, month);
     const firstDay = getFirstDayOfMonth(year, month);
-    const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
     const renderDays = () => {
         const days = [];
@@ -69,7 +70,8 @@ export const CalendarGrid = memo(({ year, month, selectedDate, events, visibleTy
                 bgClass += " ring-2 ring-blue-400 ring-offset-1 dark:ring-offset-gray-800 z-10";
             }
 
-            const ariaLabel = `${day} de ${months[month]}, ${dayEvents.length > 0 ? `${dayEvents.length} eventos` : 'Sin eventos'}`;
+            const monthName = format(new Date(year, month), 'MMMM', { locale: es });
+            const ariaLabel = `${day} de ${monthName}, ${dayEvents.length > 0 ? `${dayEvents.length} eventos` : 'Sin eventos'}`;
 
             days.push(
                 <button
@@ -101,14 +103,14 @@ export const CalendarGrid = memo(({ year, month, selectedDate, events, visibleTy
 
     return (
         <div className="p-2 sm:p-4 pb-2">
-            <div className="grid grid-cols-7 mb-2" role="row">
+            <div className="grid grid-cols-7 mb-2">
                 {daysOfWeek.map(d => (
-                    <div key={d} role="columnheader" className="text-center text-[10px] font-bold text-gray-400 uppercase">
+                    <div key={d} className="text-center text-[10px] font-bold text-gray-400 uppercase">
                         {d}
                     </div>
                 ))}
             </div>
-            <div className="grid grid-cols-7 gap-1 sm:gap-2" role="grid">
+            <div className="grid grid-cols-7 gap-1 sm:gap-2">
                 {renderDays()}
             </div>
         </div>

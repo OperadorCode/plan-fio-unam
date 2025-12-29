@@ -8,16 +8,18 @@
 import React, { useEffect, useState } from 'react';
 import { Download, X, ShieldCheck } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import type { BeforeInstallPromptEvent } from '../../types';
 
 export const InstallPrompt: React.FC = () => {
-    const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+    const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
     const [showPrompt, setShowPrompt] = useState(false);
     const [isInstallable, setIsInstallable] = useState(false);
 
     useEffect(() => {
         const handler = (e: Event) => {
-            e.preventDefault();
-            setDeferredPrompt(e);
+            const promptEvent = e as BeforeInstallPromptEvent;
+            promptEvent.preventDefault();
+            setDeferredPrompt(promptEvent);
             setIsInstallable(true);
 
             setTimeout(() => setShowPrompt(true), 3000);
@@ -92,6 +94,7 @@ export const InstallPrompt: React.FC = () => {
 
                     <button
                         onClick={() => setShowPrompt(false)}
+                        aria-label="Cerrar"
                         className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
                     >
                         <X size={16} />

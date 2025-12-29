@@ -18,7 +18,7 @@
 import React, { useMemo, useState, useEffect, useRef } from 'react';
 import { useAppStore } from '../store/useAppStore';
 import { examDates } from '../data/examDates';
-import { careerPlans } from '../data/careers_legacy';
+import { careerPlans } from '../data/careers';
 import { getMissingPrerequisites } from '../utils/logic';
 import {
     CalendarCheck,
@@ -68,9 +68,14 @@ const ExamPlanner: React.FC = () => {
     useEffect(() => {
         const timer = setTimeout(() => {
             if (scrollContainerRef.current) {
-                const firstFutureCard = scrollContainerRef.current.querySelector('[data-future="true"]');
+                const firstFutureCard = scrollContainerRef.current.querySelector('[data-future="true"]') as HTMLElement;
                 if (firstFutureCard) {
-                    firstFutureCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+                    const scrollLeft = firstFutureCard.offsetLeft - scrollContainerRef.current.offsetLeft;
+
+                    scrollContainerRef.current.scrollTo({
+                        left: scrollLeft,
+                        behavior: 'smooth'
+                    });
                 }
             }
         }, 500);
@@ -253,8 +258,8 @@ const ExamPlanner: React.FC = () => {
                                                         >
                                                             <span className="truncate pr-2 w-3/4">{course.name}</span>
                                                             <span className={`flex-shrink-0 text-[9px] px-1 rounded border ${isRegular
-                                                                    ? 'border-blue-200 text-blue-600 bg-blue-50'
-                                                                    : 'border-orange-200 text-orange-600 bg-orange-50'
+                                                                ? 'border-blue-200 text-blue-600 bg-blue-50'
+                                                                : 'border-orange-200 text-orange-600 bg-orange-50'
                                                                 }`}>
                                                                 {isRegular ? 'R' : 'L'}
                                                             </span>

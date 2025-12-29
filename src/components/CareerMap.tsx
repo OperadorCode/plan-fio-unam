@@ -52,9 +52,10 @@ const CareerMapContent: React.FC<CareerMapProps> = ({ courses: initialCoursesDat
     const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
 
     useEffect(() => {
+        // Fit view inicial y cuando cambia la estructura del grafo
         const timer = setTimeout(() => {
             fitView({ duration: 800 });
-        }, 100);
+        }, 150);
         return () => clearTimeout(timer);
     }, [isFullscreen, fitView, careerId, effectiveCoursesData]);
 
@@ -149,21 +150,39 @@ const CareerMapContent: React.FC<CareerMapProps> = ({ courses: initialCoursesDat
         }));
     }, [setNodes, setEdges, getEdges]);
 
+    const hoverTimeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    useEffect(() => {
+        return () => {
+            if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+        };
+    }, []);
+
     const onNodeMouseEnter = useCallback((_: React.MouseEvent, node: Node) => {
-        if (!selectedNodeId) {
+        if (selectedNodeId) return;
+
+        if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+
+        hoverTimeoutRef.current = setTimeout(() => {
             setHoveredNodeId(node.id);
             updateHighlight(node.id);
-        }
+        }, 40);
     }, [selectedNodeId, updateHighlight]);
 
     const onNodeMouseLeave = useCallback(() => {
-        if (!selectedNodeId) {
+        if (selectedNodeId) return;
+
+        if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+
+        hoverTimeoutRef.current = setTimeout(() => {
             setHoveredNodeId(null);
             updateHighlight(null);
-        }
+        }, 40);
     }, [selectedNodeId, updateHighlight]);
 
     const onNodeClick = useCallback((_: React.MouseEvent, node: Node) => {
+        if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+
         if (selectedNodeId === node.id) {
             setSelectedNodeId(null);
             setHoveredNodeId(node.id);

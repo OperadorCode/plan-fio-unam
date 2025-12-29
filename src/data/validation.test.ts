@@ -37,7 +37,7 @@ describe('Validación de Integridad de Datos (Carreras)', () => {
                 if (plan.electivesData) {
                     Object.values(plan.electivesData).flat().forEach(c => allCourseIds.add(c.id));
                 }
-                const checkRefs = (courseVars: any[]) => {
+                const checkRefs = (courseVars: StudyPlan['coursesData'][string]) => {
                     courseVars.forEach(c => {
                         const refs = [...c.cursarReg, ...c.cursarAprob, ...c.rendirAprob];
                         refs.forEach(refId => {

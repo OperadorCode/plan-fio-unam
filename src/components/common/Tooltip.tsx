@@ -58,7 +58,7 @@ const Tooltip: React.FC<TooltipProps> = ({
       const scrollX = window.scrollX;
       const scrollY = window.scrollY;
 
-      let top = rect.top + scrollY - 6;
+      const top = rect.top + scrollY - 6;
       let left = rect.left + scrollX + (rect.width / 2);
 
       if (tooltipRef.current) {

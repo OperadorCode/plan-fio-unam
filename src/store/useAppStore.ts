@@ -40,6 +40,14 @@ interface AppState {
   removeCalendarEvent: (dateKey: string, index: number) => void;
   setHoveredCourseId: (id: string | null) => void;
   resetProgress: () => void;
+  loadBackup: (data: {
+    careerId: string;
+    courseStatus: CourseStatusMap;
+    selectedElectives?: Record<string, string>;
+    examPlan?: Record<string, string[]>;
+    notes?: Record<string, string>;
+    calendarEvents?: Record<string, string[]>;
+  }) => void;
 }
 
 export const useAppStore = create<AppState>()(
@@ -129,6 +137,18 @@ export const useAppStore = create<AppState>()(
           calendarEvents: {},
           selectedElectives: {},
           careerId: state.careerId,
+          hoveredCourseId: null
+        }));
+      },
+
+      loadBackup: (data) => {
+        set(() => ({
+          careerId: data.careerId,
+          courseStatus: data.courseStatus,
+          selectedElectives: data.selectedElectives || {},
+          examPlan: data.examPlan || {},
+          notes: data.notes || {},
+          calendarEvents: data.calendarEvents || {},
           hoveredCourseId: null
         }));
       }

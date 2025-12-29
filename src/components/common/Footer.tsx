@@ -21,8 +21,8 @@ import { Github, Mail, Bug, ExternalLink } from 'lucide-react';
  * @returns JSX.Element
  */
 const PROJECT_URLS = {
-    source: "https://github.com/OperadorCode/planificador-fio-R-TS-",
-    issues: "https://github.com/OperadorCode/planificador-fio-R-TS-/issues/new",
+    source: " ",
+    issues: " ",
     feedback: "https://docs.google.com/forms/d/e/1FAIpQLSfWc7fNm_VqvS8kA_eIvc5jIwgL0tsLXvMFK_w4_M-qOm6QyQ/viewform?usp=dialog"
 };
 

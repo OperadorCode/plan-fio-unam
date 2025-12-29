@@ -18,11 +18,11 @@ Esta aplicación permite a los estudiantes de ingeniería administrar su progres
 
 El proyecto está construido sobre un stack moderno basado en React y TypeScript:
 
-- **Core**: React 18, TypeScript, Vite.
+- **Core**: React 19, TypeScript, Vite.
 - **Estado**: Zustand (con middleware de persistencia).
 - **UI/Styling**: Tailwind CSS, Lucide React (iconos).
 - **Visualización**: React Flow.
-- **Testing**: Vitest, React Testing Library.
+- **Testing**: Vitest (Unit Testing).
 - **PWA**: vite-plugin-pwa (Workbox).
 
 ## Configuración y Ejecución

@@ -19,6 +19,7 @@
 
 
 import type { CourseStatusMap, StudyPlan, Course } from '../types';
+import { isApproved, isRegular } from './logic';
 
 export const validateCourseStatus = (
     initialStatus: CourseStatusMap,
@@ -40,7 +41,7 @@ export const validateCourseStatus = (
 
         allCoursesRaw.forEach(course => {
             // --- RESOLUCIÓN DE MATERIA EFECTIVA (SLOT vs OPCIÓN) ---
-            let effectiveCourse = resolveEffectiveCourse(course, selectedElectives, plan);
+            const effectiveCourse = resolveEffectiveCourse(course, selectedElectives, plan);
 
             // Solo validamos materias que tienen algún estado (Regular o Aprobado)
             const currentS = updatedStatus[effectiveCourse.id];
@@ -49,13 +50,10 @@ export const validateCourseStatus = (
             // --- VALIDACIÓN DE CORRELATIVAS (ESPECÍFICAS) ---
 
             // 1. Verificar correlativas para REGULARIZAR/CURSAR
-            const reqsRegularOk = effectiveCourse.cursarReg.every(reqId => {
-                const s = updatedStatus[reqId];
-                return s === 'regular' || s === 'approved';
-            });
+            const reqsRegularOk = effectiveCourse.cursarReg.every(reqId => isRegular(reqId, updatedStatus));
 
             // 2. Verificar finales requeridos para CURSAR
-            const reqsFinalForCursadaOk = effectiveCourse.cursarAprob.every(reqId => updatedStatus[reqId] === 'approved');
+            const reqsFinalForCursadaOk = effectiveCourse.cursarAprob.every(reqId => isApproved(reqId, updatedStatus));
 
             // --- VALIDACIÓN DE REGLAS GLOBALES (POR AÑO/BLOQUE) ---
             // Y si cumple los requisitos específicos (si ya falló lo específico, no tiene sentido chequear global)
@@ -75,7 +73,7 @@ export const validateCourseStatus = (
             // 3. Verificar correlativas para FINAL (Solo si está 'approved')
             if (currentS === 'approved') {
                 // Se requiere 'rendirAprob' (finales para rendir este final)
-                const reqsFinalOk = effectiveCourse.rendirAprob.every(reqId => updatedStatus[reqId] === 'approved');
+                const reqsFinalOk = effectiveCourse.rendirAprob.every(reqId => isApproved(reqId, updatedStatus));
 
                 // Si fallan requisitos de final -> Bajamos a Regular
                 if (!reqsFinalOk) {

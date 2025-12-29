@@ -5,7 +5,7 @@
  */
 
 import React, { useMemo, useCallback, useState } from 'react';
-import { Check, Lock, Unlock, BookOpen, GraduationCap, Flame, ArrowUpRight, AlertCircle } from 'lucide-react';
+import { Check, Lock, Unlock, BookOpen, GraduationCap, Flame, AlertCircle } from 'lucide-react';
 import { useAppStore } from '../store/useAppStore';
 import { careerPlans } from '../data/careers';
 import { getMissingPrerequisites, buildUnlocksMap, getAllPrerequisites, calculateCriticality } from '../utils/logic';
@@ -34,7 +34,7 @@ const CourseRow: React.FC<CourseRowProps> = ({ course }) => {
     const plan = careerPlans[careerId as keyof typeof careerPlans] as unknown as StudyPlan;
 
     if (!plan) return { allCourses: [], allCoursesById: {} };
-    let rawCourses = Object.values(plan.coursesData).flat();
+    const rawCourses = Object.values(plan.coursesData).flat();
 
     const effectiveCourses = rawCourses.map(c => {
       if (c.isElectiveSlot && selectedElectives[c.id]) {
@@ -115,21 +115,45 @@ const CourseRow: React.FC<CourseRowProps> = ({ course }) => {
   // --- TOOLTIP CONTENT ---
   const tooltipContent = useMemo(() => {
     if (status === 'approved') {
+      const unlocksForCursada = unlocks.filter(u => u.types.some(t => t.includes('Cursar')));
+      const unlocksForFinal = unlocks.filter(u => u.types.some(t => t.includes('Rendir')));
+
       return (
-        <div className="space-y-2">
+        <div className="space-y-3">
           <div className="flex items-center gap-2 text-green-400 font-bold border-b border-gray-700 pb-1 mb-1">
             <Check size={14} /> <span>Materia Aprobada</span>
           </div>
+
           {unlocks.length > 0 ? (
-            <div>
-              <p className="text-[10px] uppercase text-gray-500 font-bold mb-1">Habilita:</p>
-              <ul className="list-disc pl-3 space-y-0.5 text-gray-300">
-                {unlocks.map((u, i) => (
-                  <li key={i}>
-                    <span className="font-medium text-white">{u.name}</span> <span className="text-[10px] opacity-70">({u.types.join(', ')})</span>
-                  </li>
-                ))}
-              </ul>
+            <div className="space-y-2">
+              <p className="text-[10px] uppercase text-gray-500 font-bold">Habilita:</p>
+
+              {unlocksForCursada.length > 0 && (
+                <div>
+                  <p className="text-[10px] text-blue-300 font-semibold mb-0.5">Para Cursar:</p>
+                  <ul className="list-disc pl-3 space-y-0.5 text-gray-300 mb-1.5">
+                    {unlocksForCursada.map((u, i) => (
+                      <li key={`c-${i}`}>
+                        <span className="font-medium text-white">{u.name}</span>
+                        {u.types.some(t => t.includes('Aprobada')) && <span className="text-[10px] text-green-400 ml-1">(Pide Aprobada)</span>}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {unlocksForFinal.length > 0 && (
+                <div>
+                  <p className="text-[10px] text-green-300 font-semibold mb-0.5">Para Rendir Final:</p>
+                  <ul className="list-disc pl-3 space-y-0.5 text-gray-300">
+                    {unlocksForFinal.map((u, i) => (
+                      <li key={`f-${i}`}>
+                        <span className="font-medium text-white">{u.name}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           ) : (
             <span className="text-gray-400 text-xs italic">No desbloquea materias correlativas directas.</span>
@@ -194,21 +218,47 @@ const CourseRow: React.FC<CourseRowProps> = ({ course }) => {
         <div className="flex items-center gap-2 text-blue-400 font-bold border-b border-gray-700 pb-1 mb-1">
           <Unlock size={14} /> <span>Totalmente Habilitada</span>
         </div>
-        <p className="text-gray-300">Podés cursar y rendir el final de esta materia.</p>
+        <p className="text-gray-300 text-sm">Podés cursar y rendir el final de esta materia.</p>
+
         {isCritical && (
-          <div className="mt-2 bg-orange-900/30 p-2 rounded border border-orange-700/50">
-            <p className="text-orange-400 text-xs font-bold flex items-center gap-1 mb-1">
-              <Flame size={12} /> Materia Crítica
-            </p>
-            <p className="text-[10px] text-gray-300">
-              Desbloquea directamente <span className="text-white font-bold">{criticalityScore}</span> materias.
-            </p>
+          <div className="mt-2 bg-orange-900/30 p-2 rounded border border-orange-700/50 space-y-2">
+            <div className="flex justify-between items-start">
+              <p className="text-orange-400 text-xs font-bold flex items-center gap-1">
+                <Flame size={12} /> Materia Crítica
+              </p>
+              <span className="text-[9px] bg-orange-500/20 text-orange-300 px-1.5 py-0.5 rounded">
+                {criticalityScore} desbloqueos
+              </span>
+            </div>
+
+            <div className="space-y-1">
+              <p className="text-[10px] text-gray-400 uppercase font-bold">Desbloquea directamente:</p>
+              <ul className="list-disc pl-3 text-gray-300 space-y-0.5">
+                {unlocks.slice(0, 5).map((u, i) => (
+                  <li key={i}>
+                    <span className="font-medium text-white">{u.name}</span>
+                  </li>
+                ))}
+              </ul>
+              {unlocks.length > 5 && (
+                <p className="text-[10px] text-orange-400/80 italic pl-1">+ {unlocks.length - 5} más...</p>
+              )}
+            </div>
           </div>
         )}
+
         {unlocks.length > 0 && !isCritical && (
           <div className="mt-2 pt-2 border-t border-gray-700">
             <p className="text-[10px] text-gray-500 uppercase font-bold mb-1">Futuros Desbloqueos:</p>
-            <p className="text-xs text-gray-400">Esta materia es clave para {unlocks.length} futuras materias.</p>
+            <div className="space-y-1">
+              {unlocks.slice(0, 3).map((u, i) => (
+                <div key={i} className="text-xs text-gray-400 flex items-start gap-1">
+                  <span className="text-gray-500">•</span>
+                  <span>Al aprobar habilita <span className="text-gray-300 font-medium">{u.name}</span></span>
+                </div>
+              ))}
+              {unlocks.length > 3 && <p className="text-[10px] text-gray-500 italic pl-2">+ {unlocks.length - 3} más...</p>}
+            </div>
           </div>
         )}
       </div>
@@ -228,13 +278,14 @@ const CourseRow: React.FC<CourseRowProps> = ({ course }) => {
     if (status === 'approved') {
       classes += " bg-green-50/40 dark:bg-green-900/10";
     } else if (!canRegularize) {
-      classes += " opacity-60 bg-gray-50/50 dark:bg-gray-900/50 grayscale-[0.5]";
+      classes += " opacity-90 bg-gray-50/50 dark:bg-gray-900/30";
     }
     return classes;
   };
 
   return (
     <div
+      id={`course-${course.id}`}
       className={getContainerClasses()}
       onMouseEnter={() => setHoveredCourseId(course.id)}
       onMouseLeave={() => {
@@ -255,7 +306,7 @@ const CourseRow: React.FC<CourseRowProps> = ({ course }) => {
                     rounded-lg flex-shrink-0 transition-all duration-500 relative
                     ${status === 'approved' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 scale-105' :
                   status === 'regular' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' :
-                    !canRegularize ? 'bg-gray-100 text-gray-400 dark:bg-gray-800 dark:text-gray-500' :
+                    !canRegularize ? 'bg-red-50 text-red-300 dark:bg-red-900/10 dark:text-red-400/60' :
                       'bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400 group-hover:bg-white dark:group-hover:bg-gray-700 shadow-sm'}
                     ${isPrerequisiteOfHovered ? 'ring-2 ring-yellow-400 ring-offset-1 dark:ring-offset-gray-900 animate-pulse' : ''}
                 `}>
@@ -269,10 +320,11 @@ const CourseRow: React.FC<CourseRowProps> = ({ course }) => {
 
               {/* TEXT CONTAINER */}
               <div className="flex flex-col">
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-1.5 mb-1.5">
                   <span className={`font-semibold text-sm leading-tight transition-colors duration-300 ${isPrerequisiteOfHovered ? 'text-yellow-700 dark:text-yellow-400' :
                     status === 'approved' ? 'text-green-800 dark:text-green-300' :
-                      'text-gray-700 dark:text-gray-200'
+                      !canRegularize ? 'text-gray-500 dark:text-gray-400' :
+                        'text-gray-700 dark:text-gray-200'
                     }`}>
                     {course.name}
                   </span>
@@ -282,17 +334,21 @@ const CourseRow: React.FC<CourseRowProps> = ({ course }) => {
                       <Flame size={14} fill="currentColor" />
                     </span>
                   )}
-
-                  {isPrerequisiteOfHovered && (
-                    <span className="text-[10px] bg-yellow-100 text-yellow-800 px-1.5 py-0.5 rounded-full flex items-center gap-0.5 animate-fade-in flex-shrink-0">
-                      <ArrowUpRight size={10} /> Requisito
-                    </span>
-                  )}
                 </div>
 
-                <span className="text-[10px] text-gray-400 font-mono flex gap-2">
+                <span className="text-[10px] text-gray-400 font-mono flex gap-2 items-center">
                   <span>{course.id}</span>
-                  <span>•</span>
+
+                  {course.regimen && (
+                    <>
+                      <span className="opacity-50">•</span>
+                      <span className="uppercase text-[9px] tracking-wide bg-gray-100 dark:bg-gray-800 px-1 rounded">
+                        {course.regimen.replace(/\.$/, '')}
+                      </span>
+                    </>
+                  )}
+
+                  <span className="opacity-50">•</span>
                   <span>{course.hours ? `${course.hours}hs` : '-'}</span>
                 </span>
               </div>

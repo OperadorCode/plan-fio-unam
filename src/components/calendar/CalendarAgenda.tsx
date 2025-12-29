@@ -1,5 +1,7 @@
 import { memo, useState } from 'react';
 import { Clock, Trash2, Tag, Plus } from 'lucide-react';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 import type { UnifiedEvent } from '../../hooks/useCalendarEvents';
 import type { EventType } from '../../data/calendarConfig';
 
@@ -17,8 +19,6 @@ const BORDER_COLORS: Record<EventType | 'personal', string> = {
     special: 'border-orange-500',
     personal: 'border-pink-500',
 };
-
-const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
 export const CalendarAgenda = memo(({ selectedDate, events, onAddEvent, onDeleteEvent }: CalendarAgendaProps) => {
     const [newEventText, setNewEventText] = useState('');
@@ -44,7 +44,7 @@ export const CalendarAgenda = memo(({ selectedDate, events, onAddEvent, onDelete
             <div className="flex justify-between items-center mb-3">
                 <h4 className="text-sm font-bold text-gray-700 dark:text-gray-200 flex items-center gap-2">
                     <Clock size={16} className="text-gray-400" />
-                    Agenda del {selectedDate.getDate()} de {months[selectedDate.getMonth()]}
+                    Agenda del {format(selectedDate, "d 'de' MMMM", { locale: es })}
                 </h4>
                 <span className="text-[10px] bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-2 py-0.5 rounded-full">
                     {eventsForDay.length} eventos
@@ -59,7 +59,11 @@ export const CalendarAgenda = memo(({ selectedDate, events, onAddEvent, onDelete
                                 <p className="text-gray-800 dark:text-gray-200 font-medium leading-snug">{ev.description}</p>
                                 <p className="text-xs text-gray-500 capitalize mt-0.5 flex items-center gap-1">
                                     <Tag size={10} />
-                                    {ev.type === 'personal' ? 'Nota Personal' : ev.type}
+                                    {ev.type === 'personal' ? 'Nota Personal' :
+                                        ev.type === 'holiday' ? 'Feriado' :
+                                            ev.type === 'academic' ? 'Académico' :
+                                                ev.type === 'exam' ? 'Examen' :
+                                                    ev.type === 'special' ? 'Especial' : ev.type}
                                 </p>
                             </div>
 

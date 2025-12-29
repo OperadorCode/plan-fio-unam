@@ -21,6 +21,7 @@ import { useAppStore } from '../store/useAppStore';
 import { careerPlans } from '../data/careers';
 import type { StudyPlan, Course, GraphCourse } from '../types';
 import { calculateCriticality } from '../utils/logic';
+import { getRegimenOrderValue } from '../utils/courseUtils';
 
 
 
@@ -94,14 +95,7 @@ export const useCareerGraph = (initialCoursesData: Record<string, Course[]>) => 
         sortedYears.forEach(year => {
             const courses = columns[year];
             courses.sort((a, b) => {
-                const getPVal = (c: GraphCourse) => {
-                    const p = c.regimen || '';
-                    if (p.toLowerCase().includes('anual')) return 0;
-                    if (p.includes('1') || p.toLowerCase().includes('primer')) return 1;
-                    if (p.includes('2') || p.toLowerCase().includes('segundo')) return 2;
-                    return 3;
-                };
-                return getPVal(a) - getPVal(b);
+                return getRegimenOrderValue(a.regimen) - getRegimenOrderValue(b.regimen);
             });
 
             courses.forEach((course, idx) => {

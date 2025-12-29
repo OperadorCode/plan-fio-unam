@@ -2,11 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useAppStore } from '../../store/useAppStore';
 import { careersRegistry, allPlans } from '../../data/careers';
 import {
-  Moon, Sun, GraduationCap, Trash2, BookOpen,
-  ChevronDown, Check, ChevronRight, AlertTriangle, X,
+  Moon, Sun, GraduationCap, BookOpen, Search,
+  ChevronDown, Check, ChevronRight,
   HardHat, Zap, Factory, Laptop, Cpu, ShieldAlert, Bot, DownloadCloud
 } from 'lucide-react';
 import { usePWAInstall } from '../../hooks/usePWAInstall';
+import { DataMenu } from './DataMenu';
 
 /**
  * Componente Header
@@ -16,11 +17,8 @@ import { usePWAInstall } from '../../hooks/usePWAInstall';
 const Header: React.FC = () => {
   const careerId = useAppStore(state => state.careerId);
   const setCareer = useAppStore(state => state.setCareer);
-  const resetProgress = useAppStore(state => state.resetProgress);
-
   const [isCareerOpen, setIsCareerOpen] = useState(false);
   const [isPlanOpen, setIsPlanOpen] = useState(false);
-  const [isResetModalOpen, setIsResetModalOpen] = useState(false);
 
 
   const [showCareerHint, setShowCareerHint] = useState(false);
@@ -41,8 +39,10 @@ const Header: React.FC = () => {
 
   const currentCareer = careersRegistry[careerId];
 
-  const availablePlanIds = currentCareer ? currentCareer.availablePlans : [];
-  const availablePlansData = availablePlanIds.map(id => allPlans[id]).filter(Boolean);
+  const availablePlansData = React.useMemo(() => {
+    const availablePlanIds = currentCareer ? currentCareer.availablePlans : [];
+    return availablePlanIds.map(id => allPlans[id]).filter(Boolean);
+  }, [currentCareer]);
 
   const [currentPlanDisplay, setCurrentPlanDisplay] = useState<string>('');
 
@@ -107,17 +107,11 @@ const Header: React.FC = () => {
       if (event.key === 'Escape') {
         setIsCareerOpen(false);
         setIsPlanOpen(false);
-        setIsResetModalOpen(false);
       }
     };
     window.addEventListener('keydown', handleEsc);
     return () => window.removeEventListener('keydown', handleEsc);
   }, []);
-
-  const handleConfirmReset = () => {
-    resetProgress();
-    setIsResetModalOpen(false);
-  };
 
   return (
     <>
@@ -164,6 +158,7 @@ const Header: React.FC = () => {
                   }}
                   aria-haspopup="true"
                   aria-expanded={isCareerOpen}
+                  aria-label="Seleccionar Carrera"
                   className={`
                     relative overflow-hidden
                     flex items-center gap-2 px-3 py-1.5 rounded-md text-sm transition-all duration-200
@@ -186,7 +181,7 @@ const Header: React.FC = () => {
                   <span className="font-medium max-w-[120px] sm:max-w-[220px] truncate text-left relative z-10 hidden sm:block">
                     {currentCareer?.name || 'Seleccionar Carrera'}
                   </span>
-                  <ChevronDown size={14} className={`text-gray-400 transition-transform duration-200 relative z-10 ${isCareerOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown size={14} className={`text-gray-500 transition-transform duration-200 relative z-10 ${isCareerOpen ? 'rotate-180' : ''}`} />
                 </button>
 
                 {isCareerOpen && (
@@ -231,14 +226,17 @@ const Header: React.FC = () => {
               <div className="relative" ref={planRef}>
                 <button
                   onClick={() => setIsPlanOpen(!isPlanOpen)}
+                  aria-haspopup="true"
+                  aria-expanded={isPlanOpen}
+                  aria-label={`Seleccionar Plan (Actual: ${currentPlanDisplay})`}
                   className={`
                     flex items-center gap-2 px-3 py-1.5 rounded-md text-sm transition-all duration-200 group
                     ${isPlanOpen ? 'bg-white dark:bg-gray-700 shadow-sm' : 'hover:bg-gray-200/50 dark:hover:bg-gray-700/50'}
                   `}
                 >
-                  <BookOpen size={14} className="text-gray-400 sm:text-gray-400 text-blue-600 dark:text-blue-400" />
+                  <BookOpen size={14} className="text-gray-500 sm:text-gray-500 text-blue-600 dark:text-blue-400" />
                   <span className="font-bold text-blue-600 dark:text-blue-400 hidden sm:block">Plan {currentPlanDisplay}</span>
-                  <ChevronDown size={14} className={`text-gray-400 transition-transform duration-200 ${isPlanOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown size={14} className={`text-gray-500 transition-transform duration-200 ${isPlanOpen ? 'rotate-180' : ''}`} />
                 </button>
 
                 {isPlanOpen && (
@@ -300,13 +298,14 @@ const Header: React.FC = () => {
               </button>
 
               <button
-                onClick={() => setIsResetModalOpen(true)}
-                aria-label="Reiniciar Progreso"
-                className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-red-500"
-                title="Reiniciar Progreso"
+                onClick={() => window.dispatchEvent(new CustomEvent('open-command-palette'))}
+                className="p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+                title="Buscar Materia (Ctrl+K)"
               >
-                <Trash2 size={20} />
+                <Search size={20} />
               </button>
+
+              <DataMenu />
             </div>
 
           </div>
@@ -321,65 +320,16 @@ const Header: React.FC = () => {
             <span className="text-blue-500 dark:text-blue-400">
               {currentCareer ? getIcon(currentCareer.icon, 14) : <BookOpen className="h-3.5 w-3.5" />}
             </span>
-            <span className="font-semibold text-gray-900 dark:text-gray-200 truncate max-w-[200px] sm:max-w-none">
+            <span className="font-semibold text-gray-800 dark:text-gray-200 truncate max-w-[200px] sm:max-w-none">
               {currentCareer?.name || 'Carrera no seleccionada'}
             </span>
-            <ChevronRight size={12} className="text-gray-400" />
+            <ChevronRight size={12} className="text-gray-500" />
             <span className="hidden sm:inline">Facultad de Ingeniería</span>
             <span className="hidden sm:inline text-gray-300 dark:text-gray-700 mx-1">•</span>
             <span className="text-blue-600 dark:text-blue-400 font-medium">Plan {currentPlanDisplay}</span>
           </div>
         </div>
       </header >
-
-      {/* MODAL DE CONFIRMACIÓN */}
-      {
-        isResetModalOpen && (
-          <div
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in"
-          >
-            {/* Overlay */}
-            <div className="absolute inset-0" onClick={() => setIsResetModalOpen(false)}></div>
-
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-sm relative z-10 overflow-hidden border border-gray-100 dark:border-gray-700 transform transition-all scale-100">
-              <div className="bg-red-50 dark:bg-red-900/20 p-6 flex flex-col items-center justify-center border-b border-red-100 dark:border-red-900/30">
-                <div className="bg-red-100 dark:bg-red-900/50 p-3 rounded-full mb-3">
-                  <AlertTriangle size={32} className="text-red-600 dark:text-red-400" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white">¿Estás seguro?</h3>
-              </div>
-
-              <div className="p-6 text-center">
-                <p className="text-gray-600 dark:text-gray-300 text-sm mb-6">
-                  Esta acción eliminará <span className="font-bold text-gray-800 dark:text-gray-200">todo tu progreso</span>, incluyendo materias aprobadas, planes de examen y notas personales. No se puede deshacer.
-                </p>
-
-                <div className="flex gap-3 justify-center">
-                  <button
-                    onClick={() => setIsResetModalOpen(false)}
-                    className="px-5 py-2.5 rounded-xl text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                  >
-                    Cancelar
-                  </button>
-                  <button
-                    onClick={handleConfirmReset}
-                    className="px-5 py-2.5 rounded-xl text-sm font-bold text-white bg-red-600 hover:bg-red-700 shadow-lg shadow-red-600/20 transition-all hover:scale-105"
-                  >
-                    Sí, borrar todo
-                  </button>
-                </div>
-              </div>
-
-              <button
-                onClick={() => setIsResetModalOpen(false)}
-                className="absolute top-3 right-3 p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
-              >
-                <X size={18} />
-              </button>
-            </div>
-          </div>
-        )
-      }
     </>
   );
 };

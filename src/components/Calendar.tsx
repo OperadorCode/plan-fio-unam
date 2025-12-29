@@ -1,10 +1,13 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { useAppStore } from '../store/useAppStore';
 import { useCalendarEvents } from '../hooks/useCalendarEvents';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 
 // Subcomponents
 import { CalendarHeader } from './calendar/CalendarHeader';
 import { CalendarGrid } from './calendar/CalendarGrid';
+import { CalendarScheduleView } from './calendar/CalendarScheduleView';
 import { CalendarLegend } from './calendar/CalendarLegend';
 import { CalendarAgenda } from './calendar/CalendarAgenda';
 import CalendarErrorBoundary from './calendar/CalendarErrorBoundary';
@@ -16,12 +19,11 @@ import CalendarErrorBoundary from './calendar/CalendarErrorBoundary';
  * Utiliza hooks para la lógica de datos y subcomponentes para el renderizado.
  */
 
-const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-
 const Calendar: React.FC = () => {
     // --- ESTADOS ---
     const [currentDate, setCurrentDate] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+    const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
     // Estado de filtros
     const [visibleTypes, setVisibleTypes] = useState<Record<string, boolean>>({
@@ -64,21 +66,30 @@ const Calendar: React.FC = () => {
         <div className="w-full bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden animate-fade-in flex flex-col">
 
             <CalendarHeader
-                monthName={months[currentDate.getMonth()]}
+                monthName={format(currentDate, 'MMMM', { locale: es })}
                 year={currentDate.getFullYear()}
+                viewMode={viewMode}
+                onViewChange={setViewMode}
                 onPrevMonth={() => changeMonth(-1)}
                 onNextMonth={() => changeMonth(1)}
                 onGoToday={handleGoToday}
             />
 
-            <CalendarGrid
-                year={currentDate.getFullYear()}
-                month={currentDate.getMonth()}
-                selectedDate={selectedDate}
-                events={unifiedEvents}
-                visibleTypes={visibleTypes}
-                onSelectDate={setSelectedDate}
-            />
+            {viewMode === 'grid' ? (
+                <CalendarGrid
+                    year={currentDate.getFullYear()}
+                    month={currentDate.getMonth()}
+                    selectedDate={selectedDate}
+                    events={unifiedEvents}
+                    visibleTypes={visibleTypes}
+                    onSelectDate={setSelectedDate}
+                />
+            ) : (
+                <CalendarScheduleView
+                    events={filteredEvents}
+                    onSelectDate={setSelectedDate}
+                />
+            )}
 
             <CalendarLegend
                 visibleTypes={visibleTypes}
