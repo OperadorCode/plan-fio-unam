@@ -89,11 +89,11 @@ const CareerMapContent: React.FC<CareerMapProps> = ({
 
   const containerClasses = isFullscreen
     ? "fixed inset-0 z-[9999] h-screen w-screen bg-gray-50 dark:bg-gray-900"
-    : "h-[700px] w-full bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-inner relative";
+    : "h-full w-full bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-inner relative";
 
   if (!isLayoutReady && nodes.length > 0) {
     return (
-      <div className="h-[700px] w-full bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-inner relative flex items-center justify-center">
+      <div className="h-full w-full bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-inner relative flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
           <p className="text-gray-500 dark:text-gray-400 text-sm">

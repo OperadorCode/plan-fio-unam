@@ -33,10 +33,10 @@ const Footer = () => {
             title="Universidad Nacional de Misiones"
           >
             <img
-              src="/logos/UNaM_Version_Principal_color.png"
+              src="/logos/UNaM_Version_Principal_color.webp"
               alt="Logo UNaM"
-              width="1887"
-              height="597"
+              width="252"
+              height="80"
               className="h-8 sm:h-12 md:h-20 w-auto object-contain"
             />
           </a>
@@ -49,10 +49,10 @@ const Footer = () => {
             title="Facultad de Ingeniería Oberá"
           >
             <img
-              src="/logos/LOGO-fio_color.png"
+              src="/logos/LOGO-fio_color.webp"
               alt="Logo FIO"
-              width="1984"
-              height="2144"
+              width="59"
+              height="64"
               className="h-6 sm:h-10 md:h-16 w-auto object-contain"
             />
           </a>
@@ -65,10 +65,10 @@ const Footer = () => {
             title="Centro de Estudiantes"
           >
             <img
-              src="/logos/logo-CEFI.jpeg"
+              src="/logos/logo-CEFI.webp"
               alt="Logo CEFI"
-              width="3007"
-              height="1408"
+              width="137"
+              height="64"
               className="h-6 sm:h-10 md:h-16 w-auto object-contain mix-blend-multiply dark:mix-blend-normal dark:rounded-md"
             />
           </a>
@@ -81,10 +81,10 @@ const Footer = () => {
             title="JUP FIO"
           >
             <img
-              src="/logos/logo-JUP.jpeg"
+              src="/logos/logo-JUP.webp"
               alt="Logo JUP"
-              width="2752"
-              height="1536"
+              width="115"
+              height="64"
               className="h-6 sm:h-10 md:h-16 w-auto object-contain mix-blend-multiply dark:mix-blend-normal dark:rounded-md"
             />
           </a>

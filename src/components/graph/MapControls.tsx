@@ -25,7 +25,7 @@ export const MapControls: React.FC<MapControlsProps> = ({
       position="bottom-right"
       showInteractive={false}
       showFitView={false}
-      className="!bg-white dark:!bg-gray-800 !border-gray-200 dark:!border-gray-700 !shadow-md !bottom-32 !right-8 !z-50"
+      className="!bg-white dark:!bg-gray-800 !border-gray-200 dark:!border-gray-600 !shadow-lg !rounded-xl !bottom-12 !right-2 md:!right-8 !scale-75 md:!scale-100 origin-bottom-right"
     >
       <ControlButton
         onClick={onToggleFullscreen}
@@ -35,8 +35,9 @@ export const MapControls: React.FC<MapControlsProps> = ({
         aria-label={
           isFullscreen ? "Salir de Pantalla Completa" : "Pantalla Completa"
         }
+        className="!w-8 !h-8 md:!w-9 md:!h-9 hover:!bg-gray-100 dark:hover:!bg-gray-700 transition-colors"
       >
-        {isFullscreen ? <Minimize2 size={12} /> : <Maximize2 size={12} />}
+        {isFullscreen ? <Minimize2 size={14} className="md:!w-4 md:!h-4" /> : <Maximize2 size={14} className="md:!w-4 md:!h-4" />}
       </ControlButton>
     </Controls>
   );

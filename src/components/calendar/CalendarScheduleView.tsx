@@ -47,7 +47,7 @@ export const CalendarScheduleView = memo(
     }, [events]);
 
     return (
-      <div className="h-[400px] overflow-y-auto custom-scrollbar bg-white dark:bg-gray-800">
+      <div className="h-full overflow-y-auto custom-scrollbar bg-white dark:bg-gray-800">
         {Object.keys(groupedEvents).length === 0 ? (
           <div className="h-full flex items-center justify-center text-gray-400 italic">
             No hay eventos para mostrar.
@@ -70,9 +70,8 @@ export const CalendarScheduleView = memo(
                       onClick={() =>
                         onSelectDate(new Date(ev.date + "T12:00:00"))
                       }
-                      className={`group flex items-start gap-4 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors cursor-pointer border-l-4 ${
-                        BORDER_COLORS[ev.type]
-                      }`}
+                      className={`group flex items-start gap-4 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors cursor-pointer border-l-4 ${BORDER_COLORS[ev.type]
+                        }`}
                     >
                       <div className="flex flex-col items-center min-w-[3rem]">
                         <span className="text-xs text-gray-500 dark:text-gray-400 capitalize">

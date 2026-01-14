@@ -194,36 +194,36 @@ const CourseRow: React.FC<CourseRowProps> = ({ course }) => {
 
           {(missingForCursada.regular.length > 0 ||
             missingForCursada.approved.length > 0) && (
-            <div>
-              <p className="text-[10px] uppercase text-gray-400 font-bold mb-1">
-                Correlativas Faltantes:
-              </p>
-              {missingForCursada.regular.length > 0 && (
-                <div className="mb-2">
-                  <span className="text-[10px] text-blue-300 block mb-0.5">
-                    Falta Regularizar:
-                  </span>
-                  <ul className="list-disc pl-3 text-gray-300">
-                    {missingForCursada.regular.map((n, i) => (
-                      <li key={i}>{n}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {missingForCursada.approved.length > 0 && (
-                <div>
-                  <span className="text-[10px] text-green-300 block mb-0.5">
-                    Falta Aprobar (Final):
-                  </span>
-                  <ul className="list-disc pl-3 text-gray-300">
-                    {missingForCursada.approved.map((n, i) => (
-                      <li key={i}>{n}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          )}
+              <div>
+                <p className="text-[10px] uppercase text-gray-400 font-bold mb-1">
+                  Correlativas Faltantes:
+                </p>
+                {missingForCursada.regular.length > 0 && (
+                  <div className="mb-2">
+                    <span className="text-[10px] text-blue-300 block mb-0.5">
+                      Falta Regularizar:
+                    </span>
+                    <ul className="list-disc pl-3 text-gray-300">
+                      {missingForCursada.regular.map((n, i) => (
+                        <li key={i}>{n}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {missingForCursada.approved.length > 0 && (
+                  <div>
+                    <span className="text-[10px] text-green-300 block mb-0.5">
+                      Falta Aprobar (Final):
+                    </span>
+                    <ul className="list-disc pl-3 text-gray-300">
+                      {missingForCursada.approved.map((n, i) => (
+                        <li key={i}>{n}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )}
         </div>
       );
     }
@@ -380,20 +380,18 @@ const CourseRow: React.FC<CourseRowProps> = ({ course }) => {
                 className={`
                     w-9 h-9 flex items-center justify-center
                     rounded-lg flex-shrink-0 transition-all duration-500 relative
-                    ${
-                      status === "approved"
-                        ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 scale-105"
-                        : status === "regular"
-                        ? "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400"
-                        : !canRegularize
+                    ${status === "approved"
+                    ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 scale-105"
+                    : status === "regular"
+                      ? "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400"
+                      : !canRegularize
                         ? "bg-red-50 text-red-300 dark:bg-red-900/10 dark:text-red-400/60"
                         : "bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400 group-hover:bg-white dark:group-hover:bg-gray-700 shadow-sm"
-                    }
-                    ${
-                      isPrerequisiteOfHovered
-                        ? "ring-2 ring-yellow-400 ring-offset-1 dark:ring-offset-gray-900 animate-pulse"
-                        : ""
-                    }
+                  }
+                    ${isPrerequisiteOfHovered
+                    ? "ring-2 ring-yellow-400 ring-offset-1 dark:ring-offset-gray-900 animate-pulse"
+                    : ""
+                  }
                 `}
               >
                 {status === "approved" ? (
@@ -413,15 +411,14 @@ const CourseRow: React.FC<CourseRowProps> = ({ course }) => {
               <div className="flex flex-col">
                 <div className="flex items-center gap-1.5 mb-1.5">
                   <span
-                    className={`font-semibold text-sm leading-tight transition-colors duration-300 ${
-                      isPrerequisiteOfHovered
+                    className={`font-semibold text-sm leading-tight transition-colors duration-300 ${isPrerequisiteOfHovered
                         ? "text-yellow-700 dark:text-yellow-400"
                         : status === "approved"
-                        ? "text-green-800 dark:text-green-300"
-                        : !canRegularize
-                        ? "text-gray-500 dark:text-gray-400"
-                        : "text-gray-700 dark:text-gray-200"
-                    }`}
+                          ? "text-green-800 dark:text-green-300"
+                          : !canRegularize
+                            ? "text-gray-600 dark:text-gray-300"
+                            : "text-gray-700 dark:text-gray-200"
+                      }`}
                   >
                     {course.name}
                   </span>
@@ -466,13 +463,12 @@ const CourseRow: React.FC<CourseRowProps> = ({ course }) => {
             }
             className={`
                     flex items-center justify-center w-10 h-10 sm:w-9 sm:h-9 rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 dark:focus:ring-offset-gray-900
-                    ${
-                      status === "regular" || status === "approved"
-                        ? "bg-blue-500 border-blue-600 text-white shadow-md hover:bg-blue-600 active:scale-95"
-                        : canRegularize
-                        ? "bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-300 hover:border-blue-400 hover:text-blue-400"
-                        : "bg-gray-100 dark:bg-gray-900 border-gray-200 dark:border-gray-800 text-gray-200 cursor-not-allowed"
-                    }
+                    ${status === "regular" || status === "approved"
+                ? "bg-blue-500 border-blue-600 text-white shadow-md hover:bg-blue-600 active:scale-95"
+                : canRegularize
+                  ? "bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-300 hover:border-blue-400 hover:text-blue-400"
+                  : "bg-gray-100 dark:bg-gray-900 border-gray-200 dark:border-gray-800 text-gray-200 cursor-not-allowed"
+              }
                 `}
           >
             <span className="text-xs font-bold">R</span>
@@ -489,13 +485,12 @@ const CourseRow: React.FC<CourseRowProps> = ({ course }) => {
             }
             className={`
                     flex items-center justify-center w-10 h-10 sm:w-9 sm:h-9 rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 dark:focus:ring-offset-gray-900
-                    ${
-                      status === "approved"
-                        ? "bg-green-500 border-green-600 text-white shadow-md hover:bg-green-600 active:scale-95"
-                        : canApprove
-                        ? "bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-300 hover:border-green-400 hover:text-green-400"
-                        : "bg-gray-100 dark:bg-gray-900 border-gray-200 dark:border-gray-800 text-gray-200 cursor-not-allowed opacity-50"
-                    }
+                    ${status === "approved"
+                ? "bg-green-500 border-green-600 text-white shadow-md hover:bg-green-600 active:scale-95"
+                : canApprove
+                  ? "bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-300 hover:border-green-400 hover:text-green-400"
+                  : "bg-gray-100 dark:bg-gray-900 border-gray-200 dark:border-gray-800 text-gray-200 cursor-not-allowed opacity-50"
+              }
                 `}
           >
             {!canApprove && canRegularize ? (

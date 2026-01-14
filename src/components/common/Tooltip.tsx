@@ -108,9 +108,9 @@ const Tooltip: React.FC<TooltipProps> = ({
               left: coords.left,
               transform: "translate(-50%, -100%)",
             }}
-            className="fixed z-[9999] pointer-events-none mb-1 w-72 animate-fade-in"
+            className="fixed z-[9999] pointer-events-none mb-1 w-56 sm:w-64 md:w-72 animate-fade-in overflow-hidden"
           >
-            <div className="bg-gray-900/95 backdrop-blur-sm text-white text-xs rounded-xl p-3 shadow-2xl border border-gray-700/50">
+            <div className="bg-gray-900/95 backdrop-blur-sm text-white text-[10px] sm:text-xs rounded-xl p-2 sm:p-3 shadow-2xl border border-gray-700/50 break-words">
               {content}
             </div>
           </div>,

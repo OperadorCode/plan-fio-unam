@@ -155,7 +155,8 @@ const ExamPlanner: React.FC = () => {
             flex gap-4 overflow-x-auto pb-4 px-1 
             snap-x snap-mandatory scroll-pl-1
             custom-scrollbar scroll-smooth
-            lg:grid lg:grid-cols-3 xl:grid-cols-4 lg:overflow-visible lg:pb-0 lg:snap-none
+            min-h-[calc(100vh-380px)]
+            lg:grid lg:grid-cols-3 xl:grid-cols-4 lg:overflow-visible lg:pb-0 lg:snap-none lg:min-h-0
         "
       >
         {(() => {
@@ -198,9 +199,8 @@ const ExamPlanner: React.FC = () => {
                         flex-shrink-0 snap-start lg:snap-align-none
                         bg-white dark:bg-gray-800 rounded-xl border shadow-sm transition-all duration-300
                         flex flex-col
-                        ${borderClass} ${
-                  isPast ? "opacity-60 grayscale-[0.8]" : ""
-                }
+                        ${borderClass} ${isPast ? "opacity-60 grayscale-[0.8]" : ""
+                  }
                     `}
               >
                 <div
@@ -210,21 +210,18 @@ const ExamPlanner: React.FC = () => {
                     <span
                       className={`
                                 text-[10px] uppercase font-bold px-2 py-0.5 rounded-full flex items-center gap-1
-                                ${
-                                  isFuture
-                                    ? "bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300"
-                                    : ""
-                                }
-                                ${
-                                  isCurrent
-                                    ? "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300 animate-pulse"
-                                    : ""
-                                }
-                                ${
-                                  isPast
-                                    ? "bg-gray-200 text-gray-500 dark:bg-gray-700 dark:text-gray-400"
-                                    : ""
-                                }
+                                ${isFuture
+                          ? "bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300"
+                          : ""
+                        }
+                                ${isCurrent
+                          ? "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300 animate-pulse"
+                          : ""
+                        }
+                                ${isPast
+                          ? "bg-gray-200 text-gray-500 dark:bg-gray-700 dark:text-gray-400"
+                          : ""
+                        }
                             `}
                     >
                       {isFuture && (
@@ -252,7 +249,7 @@ const ExamPlanner: React.FC = () => {
                   </p>
                 </div>
 
-                <div className="p-3 flex-grow flex flex-col gap-2 min-h-[100px]">
+                <div className="p-3 flex-grow flex flex-col gap-2 min-h-[200px] sm:min-h-[150px] lg:min-h-[100px]">
                   {selectedCourseIds.length > 0 ? (
                     <div className="space-y-1.5 max-h-[140px] overflow-y-auto custom-scrollbar pr-1">
                       {selectedCourseIds.map((id) => {
@@ -266,11 +263,10 @@ const ExamPlanner: React.FC = () => {
                           >
                             <div className="flex items-center gap-2 overflow-hidden">
                               <div
-                                className={`w-1 h-6 rounded-full ${
-                                  hasRegularStatus
-                                    ? "bg-blue-400"
-                                    : "bg-orange-400"
-                                } flex-shrink-0`}
+                                className={`w-1 h-6 rounded-full ${hasRegularStatus
+                                  ? "bg-blue-400"
+                                  : "bg-orange-400"
+                                  } flex-shrink-0`}
                               ></div>
                               <div className="overflow-hidden">
                                 <p
@@ -311,11 +307,10 @@ const ExamPlanner: React.FC = () => {
                       onClick={() => toggleSelector(turn.id)}
                       className={`
                                     w-full py-1.5 px-3 text-[10px] font-bold uppercase tracking-wide rounded-lg flex items-center justify-center gap-2 transition-all
-                                    ${
-                                      isSelectorOpen
-                                        ? "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300"
-                                        : "bg-blue-600 text-white hover:bg-blue-700 shadow-sm hover:shadow-md"
-                                    }
+                                    ${isSelectorOpen
+                          ? "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300"
+                          : "bg-blue-600 text-white hover:bg-blue-700 shadow-sm hover:shadow-md"
+                        }
                                 `}
                     >
                       {isSelectorOpen ? (
@@ -354,22 +349,20 @@ const ExamPlanner: React.FC = () => {
                                 }
                                 className={`
                                                         w-full text-left px-2 py-1.5 rounded-lg flex items-center justify-between text-xs transition-colors mb-1
-                                                        ${
-                                                          isSelected
-                                                            ? "bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-200"
-                                                            : "hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300"
-                                                        }
+                                                        ${isSelected
+                                    ? "bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-200"
+                                    : "hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300"
+                                  }
                                                     `}
                               >
                                 <span className="truncate pr-2 w-3/4">
                                   {course.name}
                                 </span>
                                 <span
-                                  className={`flex-shrink-0 text-[9px] px-1 rounded border ${
-                                    hasRegularStatus
-                                      ? "border-blue-200 text-blue-600 bg-blue-50"
-                                      : "border-orange-200 text-orange-600 bg-orange-50"
-                                  }`}
+                                  className={`flex-shrink-0 text-[9px] px-1 rounded border ${hasRegularStatus
+                                    ? "border-blue-200 text-blue-600 bg-blue-50"
+                                    : "border-orange-200 text-orange-600 bg-orange-50"
+                                    }`}
                                 >
                                   {hasRegularStatus ? "R" : "L"}
                                 </span>

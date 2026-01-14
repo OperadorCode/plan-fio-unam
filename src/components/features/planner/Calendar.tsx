@@ -51,9 +51,9 @@ const Calendar: React.FC = () => {
   }, [unifiedEvents, visibleTypes]);
 
   return (
-    <div className="w-full flex flex-col lg:flex-row gap-6 h-[calc(100vh-140px)] min-h-[600px]">
+    <div className="w-full flex flex-col gap-6 lg:flex-row lg:h-[calc(100vh-140px)] min-h-[400px] lg:min-h-[600px]">
       {/* Columna Principal: Calendario */}
-      <div className="flex-grow bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col">
+      <div className="flex-grow bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col min-h-[350px] lg:min-h-0">
         <CalendarHeader
           monthName={format(currentDate, "MMMM", { locale: es })}
           year={currentDate.getFullYear()}
@@ -84,7 +84,7 @@ const Calendar: React.FC = () => {
       </div>
 
       {/* Columna Lateral: Agenda y Filtros */}
-      <div className="w-full lg:w-80 flex-shrink-0 flex flex-col h-full bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+      <div className="w-full lg:w-80 flex-shrink-0 flex flex-col lg:h-full bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
         <div className="flex-grow flex flex-col overflow-hidden border-b border-gray-100 dark:border-gray-700">
           <CalendarAgenda
             selectedDate={selectedDate}
