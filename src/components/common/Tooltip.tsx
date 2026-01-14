@@ -10,15 +10,15 @@
 // - Usa portal para renderizar fuera del flujo normal del DOM.
 // -----------------------------------------------------------------------------
 
-import React, { useState, useRef, useLayoutEffect } from 'react';
-import { createPortal } from 'react-dom';
+import React, { useState, useRef, useLayoutEffect } from "react";
+import { createPortal } from "react-dom";
 
 /**
  * Props del Tooltip
  * @property content Contenido a mostrar en el tooltip
  * @property children Elemento trigger (hover/click)
  * @property className Clases extra para el trigger
- * @property forceVisible Fuerza la visibilidad 
+ * @property forceVisible Fuerza la visibilidad
  */
 interface TooltipProps {
   content: React.ReactNode;
@@ -27,19 +27,12 @@ interface TooltipProps {
   forceVisible?: boolean;
 }
 
-/**
- * Tooltip reutilizable.
- * - Hover en desktop, visibilidad forzada en mobile.
- * - Posicionamiento automático y prevención de desbordes.
- * - Portal para evitar problemas de stacking/contexto.
- */
 const Tooltip: React.FC<TooltipProps> = ({
   content,
   children,
-  className = '',
-  forceVisible = false
+  className = "",
+  forceVisible = false,
 }) => {
-  // Estado para Desktop (Hover)
   const [isHovered, setIsHovered] = useState(false);
   const [coords, setCoords] = useState({ left: 0, top: 0 });
 
@@ -48,29 +41,22 @@ const Tooltip: React.FC<TooltipProps> = ({
 
   const isVisible = isHovered || forceVisible;
 
-  /**
-   * Calcula la posición óptima del tooltip respecto al trigger,
-   * ajustando para evitar desbordes laterales.
-   */
   const updatePosition = () => {
     if (triggerRef.current) {
       const rect = triggerRef.current.getBoundingClientRect();
-      const scrollX = window.scrollX;
-      const scrollY = window.scrollY;
-
-      const top = rect.top + scrollY - 6;
-      let left = rect.left + scrollX + (rect.width / 2);
+      const top = rect.top - 6;
+      let left = rect.left + rect.width / 2;
 
       if (tooltipRef.current) {
         const tooltipRect = tooltipRef.current.getBoundingClientRect();
         const windowWidth = window.innerWidth;
         const padding = 10;
 
-        if (left + (tooltipRect.width / 2) > windowWidth - padding) {
-          left = windowWidth - (tooltipRect.width / 2) - padding;
+        if (left + tooltipRect.width / 2 > windowWidth - padding) {
+          left = windowWidth - tooltipRect.width / 2 - padding;
         }
-        if (left - (tooltipRect.width / 2) < padding) {
-          left = (tooltipRect.width / 2) + padding;
+        if (left - tooltipRect.width / 2 < padding) {
+          left = tooltipRect.width / 2 + padding;
         }
       }
       setCoords({ top, left });
@@ -90,13 +76,13 @@ const Tooltip: React.FC<TooltipProps> = ({
 
       requestAnimationFrame(updatePosition);
 
-      window.addEventListener('scroll', updatePosition);
-      window.addEventListener('resize', updatePosition);
+      window.addEventListener("scroll", updatePosition);
+      window.addEventListener("resize", updatePosition);
     }
 
     return () => {
-      window.removeEventListener('scroll', updatePosition);
-      window.removeEventListener('resize', updatePosition);
+      window.removeEventListener("scroll", updatePosition);
+      window.removeEventListener("resize", updatePosition);
     };
   }, [isVisible, content]);
 
@@ -112,23 +98,24 @@ const Tooltip: React.FC<TooltipProps> = ({
         {children}
       </div>
 
-      {isVisible && createPortal(
-        <div
-          ref={tooltipRef}
-          role="tooltip"
-          style={{
-            top: coords.top,
-            left: coords.left,
-            transform: 'translate(-50%, -100%)',
-          }}
-          className="absolute z-[9999] pointer-events-none mb-1 w-72 animate-fade-in"
-        >
-          <div className="bg-gray-900/95 backdrop-blur-sm text-white text-xs rounded-xl p-3 shadow-2xl border border-gray-700/50">
-            {content}
-          </div>
-        </div>,
-        document.body
-      )}
+      {isVisible &&
+        createPortal(
+          <div
+            ref={tooltipRef}
+            role="tooltip"
+            style={{
+              top: coords.top,
+              left: coords.left,
+              transform: "translate(-50%, -100%)",
+            }}
+            className="fixed z-[9999] pointer-events-none mb-1 w-72 animate-fade-in"
+          >
+            <div className="bg-gray-900/95 backdrop-blur-sm text-white text-xs rounded-xl p-3 shadow-2xl border border-gray-700/50">
+              {content}
+            </div>
+          </div>,
+          document.body
+        )}
     </>
   );
 };

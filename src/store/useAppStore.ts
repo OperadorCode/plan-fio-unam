@@ -14,23 +14,24 @@
 // 5. Persistencia y guardado
 // -----------------------------------------------------------------------------
 
-import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
-import type { CourseStatusMap, CourseStatus, StudyPlan } from '../types';
-import { careerPlans } from '../data/careers';
-import { validateCourseStatus } from '../utils/academicValidation';
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
+import type { CourseStatusMap, CourseStatus, StudyPlan } from "../types";
+import { careerPlans, allPlans } from "../data/careers";
+import { validateCourseStatus } from "../utils/academicValidation";
 
 interface AppState {
   careerId: string;
+  activePlanId: string;
   courseStatus: CourseStatusMap;
   examPlan: Record<string, string[]>;
   notes: Record<string, string>;
   calendarEvents: Record<string, string[]>;
   selectedElectives: Record<string, string>;
 
-  hoveredCourseId: string | null;
-
   setCareer: (id: string) => void;
+  setActivePlan: (planId: string) => void;
+  migrateToPlan: (targetPlanId: string, approvedCourses: string[]) => void;
   updateStatus: (courseId: string, status: CourseStatus) => void;
   selectElective: (slotId: string, optionId: string) => void;
   addExamToPlan: (periodId: string, courseId: string) => void;
@@ -38,10 +39,11 @@ interface AppState {
   saveNote: (courseId: string, note: string) => void;
   addCalendarEvent: (dateKey: string, text: string) => void;
   removeCalendarEvent: (dateKey: string, index: number) => void;
-  setHoveredCourseId: (id: string | null) => void;
+
   resetProgress: () => void;
   loadBackup: (data: {
     careerId: string;
+    activePlanId?: string;
     courseStatus: CourseStatusMap;
     selectedElectives?: Record<string, string>;
     examPlan?: Record<string, string[]>;
@@ -53,23 +55,48 @@ interface AppState {
 export const useAppStore = create<AppState>()(
   persist(
     (set, get) => ({
-      careerId: 'civil',
+      careerId: "civil",
+      activePlanId: "civil-2013",
       courseStatus: {},
       examPlan: {},
       notes: {},
       calendarEvents: {},
       selectedElectives: {},
-      hoveredCourseId: null,
 
-      setCareer: (id) => set({ careerId: id }),
-      setHoveredCourseId: (id) => set({ hoveredCourseId: id }),
+      setCareer: (careerId) => {
+        const defaultPlanId =
+          careerPlans[careerId as keyof typeof careerPlans]?.id ||
+          `${careerId}-2013`;
+        set({ careerId, activePlanId: defaultPlanId });
+      },
+      setActivePlan: (planId) => set({ activePlanId: planId }),
+
+      migrateToPlan: (targetPlanId, approvedCourses) => {
+        set((state) => {
+          const newStatus: CourseStatusMap = { ...state.courseStatus };
+          approvedCourses.forEach((courseId) => {
+            newStatus[courseId] = "approved";
+          });
+
+          return {
+            activePlanId: targetPlanId,
+            courseStatus: newStatus,
+          };
+        });
+      },
+
       saveNote: (courseId, note) => {
         set((state) => ({ notes: { ...state.notes, [courseId]: note } }));
       },
       addCalendarEvent: (dateKey, text) => {
         set((state) => {
           const currentEvents = state.calendarEvents[dateKey] || [];
-          return { calendarEvents: { ...state.calendarEvents, [dateKey]: [...currentEvents, text] } };
+          return {
+            calendarEvents: {
+              ...state.calendarEvents,
+              [dateKey]: [...currentEvents, text],
+            },
+          };
         });
       },
       removeCalendarEvent: (dateKey, index) => {
@@ -88,13 +115,23 @@ export const useAppStore = create<AppState>()(
         set((state) => {
           const periodList = state.examPlan[periodId] || [];
           if (periodList.includes(courseId)) return state;
-          return { examPlan: { ...state.examPlan, [periodId]: [...periodList, courseId] } };
+          return {
+            examPlan: {
+              ...state.examPlan,
+              [periodId]: [...periodList, courseId],
+            },
+          };
         });
       },
       removeExamFromPlan: (periodId, courseId) => {
         set((state) => {
           const periodList = state.examPlan[periodId] || [];
-          return { examPlan: { ...state.examPlan, [periodId]: periodList.filter((id) => id !== courseId) } };
+          return {
+            examPlan: {
+              ...state.examPlan,
+              [periodId]: periodList.filter((id) => id !== courseId),
+            },
+          };
         });
       },
 
@@ -102,22 +139,26 @@ export const useAppStore = create<AppState>()(
         set((state) => ({
           selectedElectives: {
             ...state.selectedElectives,
-            [slotId]: optionId
-          }
+            [slotId]: optionId,
+          },
         }));
-        get().updateStatus(slotId, 'pending');
+        get().updateStatus(slotId, "pending");
       },
 
       updateStatus: (courseId, newStatus) => {
         set((state) => {
           const tempStatus = { ...state.courseStatus };
-          if (newStatus === 'pending') {
+          if (newStatus === "pending") {
             delete tempStatus[courseId];
           } else {
             tempStatus[courseId] = newStatus;
           }
 
-          const currentPlan = careerPlans[state.careerId as keyof typeof careerPlans] as unknown as StudyPlan;
+          const currentPlan =
+            allPlans[state.activePlanId] ||
+            (careerPlans[
+              state.careerId as keyof typeof careerPlans
+            ] as unknown as StudyPlan);
 
           if (!currentPlan) return { courseStatus: tempStatus };
           return validateCourseStatus(
@@ -137,32 +178,34 @@ export const useAppStore = create<AppState>()(
           calendarEvents: {},
           selectedElectives: {},
           careerId: state.careerId,
-          hoveredCourseId: null
         }));
       },
 
       loadBackup: (data) => {
         set(() => ({
           careerId: data.careerId,
+          activePlanId:
+            data.activePlanId ||
+            careerPlans[data.careerId as keyof typeof careerPlans]?.id,
           courseStatus: data.courseStatus,
           selectedElectives: data.selectedElectives || {},
           examPlan: data.examPlan || {},
           notes: data.notes || {},
           calendarEvents: data.calendarEvents || {},
-          hoveredCourseId: null
         }));
-      }
+      },
     }),
     {
-      name: 'planificador-storage',
+      name: "planificador-storage",
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
         careerId: state.careerId,
+        activePlanId: state.activePlanId,
         courseStatus: state.courseStatus,
         examPlan: state.examPlan,
         notes: state.notes,
         calendarEvents: state.calendarEvents,
-        selectedElectives: state.selectedElectives
+        selectedElectives: state.selectedElectives,
       }),
     }
   )

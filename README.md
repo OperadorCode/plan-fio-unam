@@ -35,16 +35,19 @@ El proyecto está construido sobre un stack moderno basado en React y TypeScript
 ### Instrucciones
 
 1.  **Instalar dependencias**:
+
     ```bash
     npm install
     ```
 
 2.  **Iniciar servidor de desarrollo**:
+
     ```bash
     npm run dev
     ```
 
 3.  **Ejecutar pruebas unitarias**:
+
     ```bash
     npm test
     ```
@@ -67,4 +70,5 @@ El proyecto está construido sobre un stack moderno basado en React y TypeScript
 La aplicación está configurada como una PWA con estrategia `CacheFirst`. Las actualizaciones se descargan en segundo plano y se aplican automáticamente en la próxima visita o recarga.
 
 ---
+
 Facultad de Ingeniería de Oberá - Universidad Nacional de Misiones

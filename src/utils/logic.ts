@@ -1,22 +1,23 @@
-
 /**
  * Módulo de utilidades para la evaluación de lógica de negocio académica.
  * Provee funciones para la determinación de estados de cursada y validación de requisitos.
  */
 
-import type { Course, CourseStatusMap } from '../types';
+import type { Course, CourseStatusMap } from "../types";
 
-// ================== ESTADO DE CURSADA ==================
-
-// Retorna true si la materia está aprobada según el statusMap.
-export const isApproved = (courseId: string, statusMap: CourseStatusMap): boolean => {
-  return statusMap[courseId] === 'approved';
+export const isApproved = (
+  courseId: string,
+  statusMap: CourseStatusMap
+): boolean => {
+  return statusMap[courseId] === "approved";
 };
 
-// Retorna true si la materia está regular o aprobada (apto para cursar correlativas).
-export const isRegular = (courseId: string, statusMap: CourseStatusMap): boolean => {
+export const isRegular = (
+  courseId: string,
+  statusMap: CourseStatusMap
+): boolean => {
   const status = statusMap[courseId];
-  return status === 'regular' || status === 'approved';
+  return status === "regular" || status === "approved";
 };
 
 // ================== CHEQUEO DE CORRELATIVAS ==================
@@ -36,7 +37,7 @@ export const checkPrerequisites = (
 ): boolean => {
   if (!prereqs || prereqs.length === 0) return true;
 
-  if (prereqs[0] === 'ALL') {
+  if (prereqs[0] === "ALL") {
     const allOtherCourses = allCourses.filter((c) => c.id !== currentCourseId);
     return allOtherCourses.every((c) => checkFn(c.id, statusMap));
   }
@@ -60,25 +61,27 @@ export const getMissingPrerequisites = (
 ): { regular: string[]; approved: string[] } => {
   const missing = { regular: [] as string[], approved: [] as string[] };
 
-  const checkApprovedFunc = (id: string, map: CourseStatusMap) => isApproved(id, map);
-  const checkRegularFunc = (id: string, map: CourseStatusMap) => isRegular(id, map);
+  const checkApprovedFunc = (id: string, map: CourseStatusMap) =>
+    isApproved(id, map);
+  const checkRegularFunc = (id: string, map: CourseStatusMap) =>
+    isRegular(id, map);
   const getName = (id: string) => allCoursesById[id]?.name || id;
 
   if (forCursar) {
-    course.cursarReg.forEach((id) => {
+    course.requiredRegularToCourse.forEach((id) => {
       if (!checkRegularFunc(id, statusMap)) {
         missing.regular.push(getName(id));
       }
     });
-    course.cursarAprob.forEach((id) => {
+    course.requiredApprovedToCourse.forEach((id) => {
       if (!checkApprovedFunc(id, statusMap)) {
         missing.approved.push(getName(id));
       }
     });
   } else {
-    if (course.rendirAprob.includes('ALL')) {
+    if (course.requiredApprovedToFinal.includes("ALL")) {
       const allApproved = checkPrerequisites(
-        ['ALL'],
+        ["ALL"],
         checkApprovedFunc,
         statusMap,
         course.id,
@@ -86,10 +89,12 @@ export const getMissingPrerequisites = (
       );
 
       if (!allApproved) {
-        missing.approved.push("Todas las materias de la carrera (Plan Completo)");
+        missing.approved.push(
+          "Todas las materias de la carrera (Plan Completo)"
+        );
       }
     } else {
-      course.rendirAprob.forEach((id) => {
+      course.requiredApprovedToFinal.forEach((id) => {
         if (!checkApprovedFunc(id, statusMap)) {
           missing.approved.push(getName(id));
         }
@@ -106,21 +111,32 @@ export const getMissingPrerequisites = (
   Construye un mapa que indica qué materias desbloquea cada materia y bajo qué condición (regular/aprobada).
   Ejemplo: unlocksMap["Álgebra"] = { "Análisis I": Set("para Cursar (Regular)") }
 */
+
 export const buildUnlocksMap = (allCourses: Course[]) => {
   const unlocksMap: Record<string, Record<string, Set<string>>> = {};
 
   allCourses.forEach((course) => {
     const addUnlock = (prereqId: string, type: string) => {
       if (!unlocksMap[prereqId]) unlocksMap[prereqId] = {};
-      if (!unlocksMap[prereqId][course.name]) unlocksMap[prereqId][course.name] = new Set();
+      if (!unlocksMap[prereqId][course.name])
+        unlocksMap[prereqId][course.name] = new Set();
       unlocksMap[prereqId][course.name].add(type);
     };
 
-    course.cursarReg.forEach((id) => addUnlock(id, 'para Cursar (Regular)'));
-    course.cursarAprob.forEach((id) => addUnlock(id, 'para Cursar (Aprobada)'));
+    course.requiredRegularToCourse.forEach((id) =>
+      addUnlock(id, "para Cursar (Regular)")
+    );
+    course.requiredApprovedToCourse.forEach((id) =>
+      addUnlock(id, "para Cursar (Aprobada)")
+    );
 
-    if (course.rendirAprob && course.rendirAprob[0] !== 'ALL') {
-      course.rendirAprob.forEach((id) => addUnlock(id, 'para Rendir'));
+    if (
+      course.requiredApprovedToFinal &&
+      course.requiredApprovedToFinal[0] !== "ALL"
+    ) {
+      course.requiredApprovedToFinal.forEach((id) =>
+        addUnlock(id, "para Rendir")
+      );
     }
   });
 
@@ -133,6 +149,7 @@ export const buildUnlocksMap = (allCourses: Course[]) => {
   Devuelve el conjunto de todas las correlativas (directas e indirectas) de una materia.
   No incluye la materia original ni repite ids.
 */
+
 export const getAllPrerequisites = (
   courseId: string,
   allCoursesById: Record<string, Course>
@@ -148,12 +165,15 @@ export const getAllPrerequisites = (
     if (!course) return;
 
     const directPrereqs = [
-      ...(course.cursarReg || []),
-      ...(course.cursarAprob || []),
-      ...(course.rendirAprob && course.rendirAprob[0] !== 'ALL' ? course.rendirAprob : [])
+      ...(course.requiredRegularToCourse || []),
+      ...(course.requiredApprovedToCourse || []),
+      ...(course.requiredApprovedToFinal &&
+      course.requiredApprovedToFinal[0] !== "ALL"
+        ? course.requiredApprovedToFinal
+        : []),
     ];
 
-    directPrereqs.forEach(id => {
+    directPrereqs.forEach((id) => {
       prereqs.add(id);
       traverse(id);
     });
@@ -169,15 +189,22 @@ export const getAllPrerequisites = (
   Devuelve la cantidad de materias que dependen DIRECTAMENTE de la materia dada como correlativa.
   No cuenta dependencias indirectas para evitar sobrevalorar materias introductorias.
 */
-export const calculateCriticality = (courseId: string, allCourses: Course[]): number => {
+
+export const calculateCriticality = (
+  courseId: string,
+  allCourses: Course[]
+): number => {
   let directUnlockCount = 0;
 
-  allCourses.forEach(c => {
-    // Verifica si 'courseId' es correlativa directa de 'c'
+  allCourses.forEach((c) => {
     const isDirectPrereq =
-      (c.cursarReg && c.cursarReg.includes(courseId)) ||
-      (c.cursarAprob && c.cursarAprob.includes(courseId)) ||
-      (c.rendirAprob && c.rendirAprob.includes(courseId) && c.rendirAprob[0] !== 'ALL');
+      (c.requiredRegularToCourse &&
+        c.requiredRegularToCourse.includes(courseId)) ||
+      (c.requiredApprovedToCourse &&
+        c.requiredApprovedToCourse.includes(courseId)) ||
+      (c.requiredApprovedToFinal &&
+        c.requiredApprovedToFinal.includes(courseId) &&
+        c.requiredApprovedToFinal[0] !== "ALL");
 
     if (isDirectPrereq) {
       directUnlockCount++;

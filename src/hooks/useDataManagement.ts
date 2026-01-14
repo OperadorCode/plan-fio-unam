@@ -1,91 +1,140 @@
-import { useAppStore } from '../store/useAppStore';
-
-interface BackupData {
-    version: number;
-    timestamp: string;
-    data: {
-        courseStatus: Record<string, 'pending' | 'regular' | 'approved'>;
-        careerId: string;
-        selectedElectives: Record<string, string>;
-        examPlan: Record<string, string[]>;
-        notes: Record<string, string>;
-        calendarEvents: Record<string, string[]>;
-    };
-}
+import { useState } from "react";
+import { useAppStore } from "../store/useAppStore";
+import { BackupFileSchema } from "../schemas/backupSchema";
+import { careersRegistry } from "../data/careers";
 
 export const useDataManagement = () => {
-    const state = useAppStore();
+  const state = useAppStore();
+  const [isImporting, setIsImporting] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
+  const [importError, setImportError] = useState<string | null>(null);
 
-    const exportData = () => {
-        const backup: BackupData = {
-            version: 1,
-            timestamp: new Date().toISOString(),
-            data: {
-                careerId: state.careerId,
-                courseStatus: state.courseStatus,
-                selectedElectives: state.selectedElectives,
-                examPlan: state.examPlan,
-                notes: state.notes,
-                calendarEvents: state.calendarEvents,
-            },
-        };
+  const exportData = () => {
+    setIsExporting(true);
+    setImportError(null);
 
-        const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `planificador-fio-backup-${state.careerId}-${new Date().toISOString().split('T')[0]}.json`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
-    };
+    try {
+      const backup = {
+        version: 1,
+        timestamp: new Date().toISOString(),
+        data: {
+          careerId: state.careerId,
+          activePlanId: state.activePlanId,
+          courseStatus: state.courseStatus,
+          selectedElectives: state.selectedElectives,
+          examPlan: state.examPlan,
+          notes: state.notes,
+          calendarEvents: state.calendarEvents,
+        },
+      };
 
-    const importData = (file: File): Promise<{ success: boolean; message: string }> => {
-        return new Promise((resolve) => {
-            const reader = new FileReader();
+      const blob = new Blob([JSON.stringify(backup, null, 2)], {
+        type: "application/json",
+      });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `planificador-fio-backup-${state.careerId}-${
+        new Date().toISOString().split("T")[0]
+      }.json`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("[DataManagement] Export error:", error);
+      setImportError("Error al exportar los datos");
+    } finally {
+      setIsExporting(false);
+    }
+  };
 
-            reader.onload = (e) => {
-                try {
-                    const content = e.target?.result as string;
-                    const parsed = JSON.parse(content) as any;
+  const importData = (
+    file: File
+  ): Promise<{ success: boolean; message: string }> => {
+    return new Promise((resolve) => {
+      setIsImporting(true);
+      setImportError(null);
 
-                    if (!parsed || typeof parsed !== 'object' || !parsed.data) {
-                        resolve({ success: false, message: 'Archivo inválido o corrupto.' });
-                        return;
-                    }
+      const reader = new FileReader();
 
-                    const data = parsed.data;
+      reader.onload = (e) => {
+        try {
+          const content = e.target?.result as string;
+          let parsed: unknown;
 
-                    if (!data.careerId || !data.courseStatus) {
-                        resolve({ success: false, message: 'Faltan datos críticos en el archivo.' });
-                        return;
-                    }
+          try {
+            parsed = JSON.parse(content);
+          } catch {
+            const message = "El archivo no es un JSON válido.";
+            setImportError(message);
+            resolve({ success: false, message });
+            return;
+          }
 
-                    if (typeof data.courseStatus !== 'object') {
-                        resolve({ success: false, message: 'El historial de materias es inválido.' });
-                        return;
-                    }
+          const result = BackupFileSchema.safeParse(parsed);
 
-                    state.loadBackup({
-                        careerId: String(data.careerId),
-                        courseStatus: data.courseStatus,
-                        selectedElectives: data.selectedElectives || {},
-                        examPlan: data.examPlan || {},
-                        notes: data.notes || {},
-                        calendarEvents: data.calendarEvents || {},
-                    });
+          if (!result.success) {
+            console.error(
+              "[DataManagement] Schema validation error:",
+              result.error
+            );
+            const firstError = result.error.issues[0];
+            const message = `Archivo inválido: ${firstError.path.join(".")} - ${
+              firstError.message
+            }`;
+            setImportError(message);
+            resolve({ success: false, message });
+            return;
+          }
 
-                    resolve({ success: true, message: 'Datos restaurados correctamente.' });
-                } catch (error) {
-                    console.error(error);
-                    resolve({ success: false, message: 'Error al procesar el archivo JSON.' });
-                }
-            };
+          const { data } = result.data;
 
-            reader.readAsText(file);
-        });
-    };
+          if (!careersRegistry[data.careerId]) {
+            const message = `La carrera '${data.careerId}' no existe en el sistema.`;
+            setImportError(message);
+            resolve({ success: false, message });
+            return;
+          }
 
-    return { exportData, importData };
+          state.loadBackup({
+            careerId: data.careerId,
+            activePlanId: data.activePlanId,
+            courseStatus: data.courseStatus,
+            selectedElectives: data.selectedElectives || {},
+            examPlan: data.examPlan || {},
+            notes: data.notes || {},
+            calendarEvents: data.calendarEvents || {},
+          });
+
+          const message = "Datos restaurados correctamente.";
+          resolve({ success: true, message });
+        } catch (error) {
+          console.error("[DataManagement] Unexpected import error:", error);
+          const message = "Ocurrió un error inesperado al procesar el archivo.";
+          setImportError(message);
+          resolve({ success: false, message });
+        } finally {
+          setIsImporting(false);
+        }
+      };
+
+      reader.onerror = () => {
+        const message = "Error al leer el archivo.";
+        setImportError(message);
+        setIsImporting(false);
+        resolve({ success: false, message });
+      };
+
+      reader.readAsText(file);
+    });
+  };
+
+  return {
+    exportData,
+    importData,
+    isImporting,
+    isExporting,
+    importError,
+  };
 };

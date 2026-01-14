@@ -48,6 +48,30 @@ Cualquier modificación en la lógica de validación académica (`academicValida
 Los planes de estudio se definen en `src/data/careers`. Cada plan debe implementar la interfaz `StudyPlan`.
 Al agregar una nueva carrera, es necesario registrarla en `src/data/careers/index.ts` y asegurar la integridad de los datos mediante los tests de validación existentes.
 
+## Actualización de Datos (Procedimiento Manual)
+
+Dado que la aplicación funciona offline-first sin backend dinámico, la actualización de datos se realiza modificado los archivos fuente.
+
+### Calendario Académico
+
+1. Editar `src/data/calendar/calendarConfig.ts`.
+2. Crear una nueva constante para el año (ej: `events2026`) siguiendo el formato de años anteriores.
+3. Agregar la constante al array exportado `generalEvents`.
+
+### Mesas de Examen
+
+1. Editar `src/data/calendar/examDates.ts`.
+2. Definir los nuevos turnos respetando el esquema `ExamDate`.
+3. Concatenarlos al array `examDates`.
+
+### Planes de Estudio
+
+Para modificar un plan existente (ej: corrección de correlativas):
+
+1. Localizar el archivo en `src/data/careers/{carrera}/plan{anio}.ts`.
+2. Modificar la definición de la materia.
+3. Ejecutar `npm test` para asegurar que la integridad referencial se mantiene (que no rompa correlativas de otras materias).
+
 ---
 
 Facultad de Ingeniería - Universidad Nacional de Misiones
