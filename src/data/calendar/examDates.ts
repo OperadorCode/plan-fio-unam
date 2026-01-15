@@ -53,7 +53,7 @@ const exams2025: ExamDate[] = [
   },
   {
     id: "dic-25",
-    name: "2º Turno Diciembre",
+    name: "2º Turno Diciembre 2025",
     start: "2025-12-16",
     end: "2025-12-20",
     displayDates: "16/12 al 20/12",
@@ -75,6 +75,13 @@ const exams2026: ExamDate[] = [
     start: "2026-02-23",
     end: "2026-02-27",
     displayDates: "23/02 al 27/02",
+  },
+  {
+    id: "mar-26",
+    name: "9º Turno Marzo 2026",
+    start: "2026-03-09",
+    end: "2026-03-13",
+    displayDates: "09/03 al 13/03",
   },
   {
     id: "abr-26",
