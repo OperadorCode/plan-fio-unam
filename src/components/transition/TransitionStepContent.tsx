@@ -15,6 +15,7 @@ interface StepContentProps {
   courseMeta2013: Record<string, CourseMeta2013>;
   courseMeta2025: Record<string, CourseMeta2025>;
   approvedCourses: string[];
+  regularCourses: string[];
   simulation: ReturnType<
     typeof import("../../utils/transitionAnalysis").simulateMigration
   > | null;
@@ -31,6 +32,7 @@ const TransitionStepContent: React.FC<StepContentProps> = memo(
     courseMeta2013,
     courseMeta2025,
     approvedCourses,
+    regularCourses,
     simulation,
     isAlreadyMigrated,
     performMigration,
@@ -50,6 +52,7 @@ const TransitionStepContent: React.FC<StepContentProps> = memo(
             courseMeta2013={courseMeta2013}
             courseMeta2025={courseMeta2025}
             approvedCourses={approvedCourses}
+            regularCourses={regularCourses}
             equivalencies={transitionData.equivalencies}
             simulation={simulation}
             intermediateTitle={transitionData.intermediateTitle}

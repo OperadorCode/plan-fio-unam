@@ -42,6 +42,7 @@ export const careersRegistry: CareersRegistry = {
     color: "cyan",
     icon: "Laptop",
     availablePlans: [computacion2018.id],
+    enabled: false,
   },
   civil: {
     id: "civil",
@@ -49,6 +50,7 @@ export const careersRegistry: CareersRegistry = {
     color: "blue",
     icon: "HardHat",
     availablePlans: [civil2013.id, civil2025.id],
+    enabled: true,
   },
   electromecanica: {
     id: "electromecanica",
@@ -56,6 +58,7 @@ export const careersRegistry: CareersRegistry = {
     color: "orange",
     icon: "Zap",
     availablePlans: [electromecanica2013.id, electromecanica2025.id],
+    enabled: false,
   },
   electronica: {
     id: "electronica",
@@ -63,6 +66,7 @@ export const careersRegistry: CareersRegistry = {
     color: "indigo",
     icon: "Cpu",
     availablePlans: [electronica2013.id, electronica2025.id],
+    enabled: false,
   },
   industrial: {
     id: "industrial",
@@ -70,6 +74,7 @@ export const careersRegistry: CareersRegistry = {
     color: "green",
     icon: "Factory",
     availablePlans: [industrial2013.id, industrial2025.id],
+    enabled: false,
   },
   mecatronica: {
     id: "mecatronica",
@@ -77,6 +82,7 @@ export const careersRegistry: CareersRegistry = {
     color: "rose",
     icon: "Bot",
     availablePlans: [mecatronica2020.id],
+    enabled: false,
   },
   higiene: {
     id: "higiene",
@@ -84,6 +90,7 @@ export const careersRegistry: CareersRegistry = {
     color: "yellow",
     icon: "ShieldCheck",
     availablePlans: [higiene2012.id],
+    enabled: false,
   },
 };
 

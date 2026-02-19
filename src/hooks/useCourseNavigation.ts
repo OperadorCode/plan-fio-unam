@@ -1,10 +1,7 @@
 import { useEffect } from "react";
+import type { TabId } from "../types/navigation";
 
-export const useCourseNavigation = (
-  setActiveTab: (
-    tab: "table" | "map" | "transition" | "exams" | "calendar"
-  ) => void
-) => {
+export const useCourseNavigation = (setActiveTab: (tab: TabId) => void) => {
   useEffect(() => {
     let mounted = true;
     let outerTimeout: ReturnType<typeof setTimeout>;

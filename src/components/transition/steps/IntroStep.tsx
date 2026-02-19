@@ -113,12 +113,13 @@ export const IntroStep: React.FC<IntroStepProps> = ({ intermediateTitle }) => {
               2
             </div>
             <h4 className="text-lg font-bold text-center text-gray-900 dark:text-white mb-2">
-              1° y 2° Año Cursado
+              1° y 2° Año
             </h4>
             <p className="text-sm text-center text-gray-600 dark:text-gray-400">
-              Si ya cursaste, pasás <strong>automáticamente</strong> al Nuevo
-              Plan. Se te reconocen todas las materias aprobadas con
-              equivalencia directa.
+              Ya no se dictan bajo el Plan 2013. Si venís de 1° y empezás 2°, el
+              cambio es <strong>automático</strong>. Si completaste 2° y podés
+              cursar 3° en su totalidad, podés optar por seguir en el plan
+              anterior.
             </p>
           </div>
 
@@ -174,11 +175,10 @@ export const IntroStep: React.FC<IntroStepProps> = ({ intermediateTitle }) => {
                       {[...Array(8)].map((_, i) => (
                         <div
                           key={i}
-                          className={`border-l border-gray-100 dark:border-gray-800 ${
-                            i % 2 === 0
+                          className={`border-l border-gray-100 dark:border-gray-800 ${i % 2 === 0
                               ? "bg-gray-50/50 dark:bg-gray-800/50"
                               : ""
-                          } h-full`}
+                            } h-full`}
                         ></div>
                       ))}
                     </div>

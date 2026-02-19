@@ -15,6 +15,7 @@ const TransitionDashboard: React.FC = () => {
     transitionData,
     hasTransition,
     approvedCourses,
+    regularCourses,
     simulation,
     isAlreadyMigrated,
     isMigrating,
@@ -43,6 +44,7 @@ const TransitionDashboard: React.FC = () => {
             courseMeta2013={courseMeta2013}
             courseMeta2025={courseMeta2025}
             approvedCourses={approvedCourses}
+            regularCourses={regularCourses}
             simulation={simulation}
             isAlreadyMigrated={isAlreadyMigrated}
             performMigration={performMigration}
@@ -58,11 +60,10 @@ const TransitionDashboard: React.FC = () => {
             title="Anterior"
             className={`
                 h-10 w-10 flex items-center justify-center rounded-full transition-all
-                ${
-                  isFirstStep
-                    ? "text-gray-200 dark:text-gray-800 cursor-not-allowed"
-                    : "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white"
-                }
+                ${isFirstStep
+                ? "text-gray-200 dark:text-gray-800 cursor-not-allowed"
+                : "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white"
+              }
             `}
           >
             <ArrowLeft size={20} strokeWidth={2} />
@@ -78,11 +79,10 @@ const TransitionDashboard: React.FC = () => {
                 key={idx}
                 role="listitem"
                 aria-current={idx === currentStep ? "step" : undefined}
-                className={`h-2 w-2 rounded-full transition-all duration-300 ${
-                  idx === currentStep
+                className={`h-2 w-2 rounded-full transition-all duration-300 ${idx === currentStep
                     ? "bg-indigo-600 dark:bg-indigo-500 scale-125"
                     : "bg-gray-200 dark:bg-gray-700"
-                }`}
+                  }`}
               />
             ))}
           </div>

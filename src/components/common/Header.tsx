@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Menu, GraduationCap } from "lucide-react";
+import { GraduationCap } from "lucide-react";
 import { useAppStore } from "../../store/useAppStore";
 import { careersRegistry } from "../../data/careers";
 import { getCareerIcon } from "../../utils/iconHelpers";
@@ -12,11 +12,9 @@ import { HeaderActions } from "./Header/HeaderActions";
  * Componente Header
  * Gestiona la navegación, selección de carrera, versiones de planes y el cambio de tema global.
  */
-interface HeaderProps {
-  onMenuClick?: () => void;
-}
 
-const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
+
+const Header: React.FC = () => {
   const careerId = useAppStore((state) => state.careerId);
 
   const [theme, setTheme] = useState(() => {
@@ -44,13 +42,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
       <div className="container mx-auto px-2 sm:px-4 min-h-14 sm:min-h-16 py-2 flex items-center justify-between gap-2 sm:gap-4 flex-nowrap">
         <div className="flex items-center gap-2 sm:gap-4 flex-grow min-w-0">
           <div className="flex items-center gap-2 sm:gap-3 select-none flex-shrink-0">
-            <button
-              onClick={onMenuClick}
-              className="md:hidden p-1.5 sm:p-2 -ml-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300"
-              aria-label="Abrir menú"
-            >
-              <Menu size={22} className="sm:w-6 sm:h-6" />
-            </button>
+
             <div
               className={`p-2 sm:p-2.5 rounded-xl ${styles.bg} ${styles.text} shadow-lg ${styles.shadow}`}
             >

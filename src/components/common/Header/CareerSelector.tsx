@@ -64,16 +64,14 @@ export const CareerSelector: React.FC = () => {
         className={`
                     relative overflow-hidden
                     flex items-center gap-1.5 px-2 py-1.5 rounded-lg transition-colors duration-200
-                    ${
-                      isCareerOpen
-                        ? "bg-white dark:bg-gray-700 shadow-sm text-blue-700 dark:text-blue-400"
-                        : "text-blue-600 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-700/50 hover:text-blue-800 dark:hover:text-white"
-                    }
-                    ${
-                      showCareerHint
-                        ? "ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-gray-900 animate-pulse"
-                        : ""
-                    }
+                    ${isCareerOpen
+            ? "bg-white dark:bg-gray-700 shadow-sm text-blue-700 dark:text-blue-400"
+            : "text-blue-600 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-700/50 hover:text-blue-800 dark:hover:text-white"
+          }
+                    ${showCareerHint
+            ? "ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-gray-900 animate-pulse"
+            : ""
+          }
                 `}
       >
         {showCareerHint && (
@@ -81,9 +79,8 @@ export const CareerSelector: React.FC = () => {
         )}
 
         <div
-          className={`relative z-10 ${
-            isCareerOpen ? "text-blue-600 dark:text-blue-400" : ""
-          }`}
+          className={`relative z-10 ${isCareerOpen ? "text-blue-600 dark:text-blue-400" : ""
+            }`}
         >
           {currentCareer ? (
             getCareerIcon(currentCareer.icon, 20)
@@ -94,9 +91,8 @@ export const CareerSelector: React.FC = () => {
 
         <ChevronDown
           size={14}
-          className={`text-gray-400 opacity-70 transition-transform duration-200 relative z-10 ${
-            isCareerOpen ? "rotate-180" : ""
-          }`}
+          className={`text-gray-400 opacity-70 transition-transform duration-200 relative z-10 ${isCareerOpen ? "rotate-180" : ""
+            }`}
         />
       </button>
 
@@ -107,42 +103,55 @@ export const CareerSelector: React.FC = () => {
           </div>
           {Object.values(careersRegistry).map((career) => {
             const isSelected = careerId === career.id;
+            const isDisabled = !career.enabled;
             return (
               <button
                 key={career.id}
                 onClick={() => {
+                  if (isDisabled) return;
                   setCareer(career.id);
                   setIsCareerOpen(false);
                 }}
-                className={`w-full text-left px-4 py-3 text-sm flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors
-                                    ${
-                                      isSelected
-                                        ? "text-blue-600 dark:text-blue-400 font-semibold bg-blue-50 dark:bg-blue-900/10"
-                                        : "text-gray-700 dark:text-gray-300"
-                                    }
+                disabled={isDisabled}
+                className={`w-full text-left px-4 py-3 text-sm flex items-center justify-between transition-colors
+                                    ${isDisabled
+                    ? "opacity-50 cursor-not-allowed"
+                    : isSelected
+                      ? "text-blue-600 dark:text-blue-400 font-semibold bg-blue-50 dark:bg-blue-900/10"
+                      : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50"
+                  }
                                 `}
               >
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 flex-1 min-w-0">
                   <span
                     className={
-                      isSelected
-                        ? "text-blue-600 dark:text-blue-400"
-                        : "text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400"
+                      isDisabled
+                        ? "text-gray-400 dark:text-gray-600"
+                        : isSelected
+                          ? "text-blue-600 dark:text-blue-400"
+                          : "text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400"
                     }
                   >
                     {getCareerIcon(career.icon, 16)}
                   </span>
                   <span
-                    className={`truncate ${
-                      isSelected
+                    className={`truncate ${isDisabled
+                      ? "text-gray-400 dark:text-gray-600"
+                      : isSelected
                         ? "text-blue-700 dark:text-blue-300"
                         : "text-gray-700 dark:text-gray-300"
-                    }`}
+                      }`}
                   >
                     {career.name}
                   </span>
                 </div>
-                {isSelected && <Check size={14} />}
+                {isDisabled ? (
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400 dark:text-gray-600 bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-full whitespace-nowrap">
+                    Próximamente
+                  </span>
+                ) : (
+                  isSelected && <Check size={14} />
+                )}
               </button>
             );
           })}

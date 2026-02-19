@@ -11,6 +11,7 @@ interface EquivalenciesStepProps {
   courseMeta2013: Record<string, CourseMeta2013>;
   courseMeta2025: Record<string, CourseMeta2025>;
   approvedCourses: string[];
+  regularCourses: string[];
   equivalencies: any[];
   simulation: ReturnType<typeof simulateMigration> | null;
   intermediateTitle: string;
@@ -22,6 +23,7 @@ export const EquivalenciesStep: React.FC<EquivalenciesStepProps> = ({
   courseMeta2013,
   courseMeta2025,
   approvedCourses,
+  regularCourses,
   equivalencies,
   simulation,
   intermediateTitle,
@@ -76,6 +78,7 @@ export const EquivalenciesStep: React.FC<EquivalenciesStepProps> = ({
         courseMeta2013={courseMeta2013}
         courseMeta2025={courseMeta2025}
         approvedCourses={approvedCourses}
+        regularCourses={regularCourses}
         equivalencies={equivalencies}
       />
     </div>

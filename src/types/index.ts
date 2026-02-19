@@ -84,6 +84,7 @@ export interface CareerMetadata {
   color: string; // Clase de color base (ej: 'blue', 'green')
   icon: string; // Nombre del icono lucide
   availablePlans: string[]; // IDs de los planes disponibles para elegir
+  enabled: boolean; // true si los datos del plan están verificados y la carrera es seleccionable
 }
 
 // --- BASES DE DATOS ---

@@ -31,6 +31,14 @@ export const useMigrationLogic = () => {
     [courseStatus]
   );
 
+  const regularCourses = useMemo(
+    () =>
+      Object.entries(courseStatus)
+        .filter(([_, status]) => status === "regular")
+        .map(([id]) => id),
+    [courseStatus]
+  );
+
   const sourcePlanCourses = useMemo(() => {
     return approvedCourses.filter((id) => courseMeta2013[id]);
   }, [approvedCourses, courseMeta2013]);
@@ -81,6 +89,7 @@ export const useMigrationLogic = () => {
     transitionData,
     hasTransition,
     approvedCourses,
+    regularCourses,
     simulation,
     isAlreadyMigrated,
 

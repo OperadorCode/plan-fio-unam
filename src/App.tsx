@@ -12,9 +12,8 @@ import { usePlanContext } from "./context/PlanContext";
 import {
   Map,
   Table,
-  ArrowRightLeft,
   CalendarDays,
-  BookOpenCheck,
+  ArrowRightLeft,
 } from "lucide-react";
 import { WelcomeModal } from "./components/common/WelcomeModal";
 import { InstallPrompt } from "./components/pwa/InstallPrompt";
@@ -54,47 +53,38 @@ function App() {
   useAppShortcuts(setActiveTab);
   useCourseNavigation(setActiveTab);
 
-  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
-
   const tabs = useMemo(
     () =>
       [
         {
-          id: "table",
+          id: "table" as const,
           label: "Plan de Estudios",
           shortLabel: "Plan",
           icon: Table,
           show: true,
         },
         {
-          id: "map",
+          id: "map" as const,
           label: "Mapa de Correlatividades",
           shortLabel: "Mapa",
           icon: Map,
           show: true,
         },
         {
-          id: "transition",
-          label: "Plan de Transición",
-          shortLabel: "Transición",
+          id: "transition" as const,
+          label: "Nuevo Plan",
+          shortLabel: "Nuevo",
           icon: ArrowRightLeft,
           show: hasTransition,
         },
         {
-          id: "exams",
-          label: "Exámenes",
-          shortLabel: "Mesas",
-          icon: BookOpenCheck,
-          show: true,
-        },
-        {
-          id: "calendar",
-          label: "Calendario",
-          shortLabel: "Calendario",
+          id: "agenda" as const,
+          label: "Agenda Académica",
+          shortLabel: "Agenda",
           icon: CalendarDays,
           show: true,
         },
-      ] as const,
+      ],
     [careerId, hasTransition]
   );
 
@@ -104,9 +94,7 @@ function App() {
         activeTab={activeTab}
         onTabChange={setActiveTab}
         tabs={tabs}
-        mobileOpen={mobileSidebarOpen}
-        setMobileOpen={setMobileSidebarOpen}
-        header={<Header onMenuClick={() => setMobileSidebarOpen(true)} />}
+        header={<Header />}
       >
         <div className="flex flex-col min-h-screen">
           <CommandPalette />

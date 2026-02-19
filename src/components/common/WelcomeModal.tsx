@@ -4,13 +4,30 @@ import {
   Download,
   MousePointer2,
   Save,
-  Sparkles,
   ArrowRight,
+  HardHat,
+  Laptop,
+  Zap,
+  Cpu,
+  Factory,
+  Bot,
+  ShieldCheck,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
+const careerIcons = [
+  { Icon: HardHat, color: "text-blue-300" },
+  { Icon: Laptop, color: "text-cyan-300" },
+  { Icon: Zap, color: "text-orange-300" },
+  { Icon: Cpu, color: "text-indigo-300" },
+  { Icon: Factory, color: "text-green-300" },
+  { Icon: Bot, color: "text-rose-300" },
+  { Icon: ShieldCheck, color: "text-yellow-300" },
+];
+
 export const WelcomeModal: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [iconIndex, setIconIndex] = useState(0);
 
   useEffect(() => {
     const hasSeen = localStorage.getItem("hasSeenWelcome_v2");
@@ -24,10 +41,20 @@ export const WelcomeModal: React.FC = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const interval = setInterval(() => {
+      setIconIndex((prev) => (prev + 1) % careerIcons.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [isOpen]);
+
   const handleClose = () => {
     setIsOpen(false);
     localStorage.setItem("hasSeenWelcome_v2", "true");
   };
+
+  const { Icon: ActiveIcon, color: activeColor } = careerIcons[iconIndex];
 
   return (
     <AnimatePresence>
@@ -49,7 +76,22 @@ export const WelcomeModal: React.FC = () => {
           >
             <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-white text-center relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-              <Sparkles className="mx-auto mb-3 text-yellow-300" size={32} />
+
+              <div className="mx-auto mb-3 h-8 w-8 relative">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={iconIndex}
+                    initial={{ opacity: 0, scale: 0.5, rotate: -30 }}
+                    animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                    exit={{ opacity: 0, scale: 0.5, rotate: 30 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className="absolute inset-0 flex items-center justify-center"
+                  >
+                    <ActiveIcon size={32} className={activeColor} />
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
               <h2 className="text-2xl font-bold">
                 ¡Bienvenido al Planificador!
               </h2>

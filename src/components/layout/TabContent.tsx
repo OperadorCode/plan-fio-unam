@@ -16,7 +16,7 @@ const ExamPlanner = lazy(() => import("../features/planner/ExamPlanner"));
 import { useTransitionData } from "../../hooks/useTransitionData";
 
 interface TabContentProps {
-  activeTab: "table" | "map" | "transition" | "exams" | "calendar";
+  activeTab: "table" | "map" | "transition" | "agenda";
   currentPlan: StudyPlan;
   careerId: string;
 }
@@ -67,45 +67,47 @@ export const TabContent: React.FC<TabContentProps> = ({
         </Suspense>
       )}
 
-      {activeTab === "exams" && (
-        <div className="w-full">
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 md:p-6">
-            <div className="mb-4 md:mb-6">
-              <h2 className="text-lg md:text-xl font-bold text-gray-800 dark:text-white mb-1 md:mb-2">
-                Gestión de Mesas de Examen
-              </h2>
-              <p className="text-gray-500 dark:text-gray-400 text-xs md:text-sm">
-                Administrá el cronograma de finales, validá correlatividades y
-                optimizá tu estrategia académica.
-              </p>
-            </div>
-            <Suspense
-              fallback={
-                <div className="flex items-center justify-center min-h-[200px]">
-                  <LoadingScreen message="Cargando planificador..." />
-                </div>
-              }
-            >
-              <ExamPlannerErrorBoundary>
-                <ExamPlanner />
-              </ExamPlannerErrorBoundary>
-            </Suspense>
-          </div>
-        </div>
-      )}
-
-      {activeTab === "calendar" && (
-        <Suspense
-          fallback={
-            <div className="flex items-center justify-center min-h-[400px]">
-              <LoadingScreen message="Cargando calendario..." />
-            </div>
-          }
-        >
+      {activeTab === "agenda" && (
+        <div className="space-y-8">
+          {/* Exámenes */}
           <div className="w-full">
-            <Calendar />
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 md:p-6">
+              <div className="mb-4 md:mb-6">
+                <h2 className="text-lg md:text-xl font-bold text-gray-800 dark:text-white mb-1 md:mb-2">
+                  Gestión de Mesas de Examen
+                </h2>
+                <p className="text-gray-500 dark:text-gray-400 text-xs md:text-sm">
+                  Administrá el cronograma de finales, validá correlatividades y
+                  optimizá tu estrategia académica.
+                </p>
+              </div>
+              <Suspense
+                fallback={
+                  <div className="flex items-center justify-center min-h-[200px]">
+                    <LoadingScreen message="Cargando planificador..." />
+                  </div>
+                }
+              >
+                <ExamPlannerErrorBoundary>
+                  <ExamPlanner />
+                </ExamPlannerErrorBoundary>
+              </Suspense>
+            </div>
           </div>
-        </Suspense>
+
+          {/* Calendario */}
+          <Suspense
+            fallback={
+              <div className="flex items-center justify-center min-h-[400px]">
+                <LoadingScreen message="Cargando calendario..." />
+              </div>
+            }
+          >
+            <div className="w-full">
+              <Calendar />
+            </div>
+          </Suspense>
+        </div>
       )}
     </div>
   );

@@ -12,6 +12,7 @@ interface EquivalenceTableProps {
     courseMeta2013: Record<string, CourseMeta2013>;
     courseMeta2025: Record<string, CourseMeta2025>;
     approvedCourses: string[];
+    regularCourses: string[];
     equivalencies: EquivalenceRule[];
 }
 
@@ -19,6 +20,7 @@ export const EquivalenciesTable: React.FC<EquivalenceTableProps> = ({
     courseMeta2013,
     courseMeta2025,
     approvedCourses,
+    regularCourses,
     equivalencies,
 }) => {
     const { searchTerm, setSearchTerm, groupedEquivalencies } =
@@ -72,6 +74,7 @@ export const EquivalenciesTable: React.FC<EquivalenceTableProps> = ({
                                         eq={eq}
                                         courseMeta2013={courseMeta2013}
                                         approvedCourses={approvedCourses}
+                                        regularCourses={regularCourses}
                                     />
                                 ))}
                             </div>
@@ -112,6 +115,7 @@ export const EquivalenciesTable: React.FC<EquivalenceTableProps> = ({
                                                 eq={eq}
                                                 courseMeta2013={courseMeta2013}
                                                 approvedCourses={approvedCourses}
+                                                regularCourses={regularCourses}
                                             />
                                         ))}
                                     </React.Fragment>
