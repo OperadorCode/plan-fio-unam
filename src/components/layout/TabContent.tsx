@@ -10,13 +10,16 @@ const CareerMap = lazy(() => import("../features/academic/CareerMap"));
 const TransitionDashboard = lazy(
   () => import("../transition/TransitionDashboard")
 );
+const EquivalenciesView = lazy(
+  () => import("../transition/EquivalenciesView")
+);
 const Calendar = lazy(() => import("../features/planner/Calendar"));
 const ExamPlanner = lazy(() => import("../features/planner/ExamPlanner"));
 
 import { useTransitionData } from "../../hooks/useTransitionData";
 
 interface TabContentProps {
-  activeTab: "table" | "map" | "transition" | "agenda";
+  activeTab: "table" | "map" | "transition" | "equivalencies" | "agenda";
   currentPlan: StudyPlan;
   careerId: string;
 }
@@ -63,6 +66,20 @@ export const TabContent: React.FC<TabContentProps> = ({
         >
           <TransitionErrorBoundary>
             <TransitionDashboard />
+          </TransitionErrorBoundary>
+        </Suspense>
+      )}
+
+      {activeTab === "equivalencies" && hasTransition && (
+        <Suspense
+          fallback={
+            <div className="flex items-center justify-center min-h-[400px]">
+              <LoadingScreen message="Cargando tabla de equivalencias..." />
+            </div>
+          }
+        >
+          <TransitionErrorBoundary>
+            <EquivalenciesView />
           </TransitionErrorBoundary>
         </Suspense>
       )}

@@ -6,6 +6,7 @@ import type { Course } from "../../../types";
 interface StructureStepProps {
   creditsData: CreditSystemData;
   approvedCodes: string[];
+  regularCodes?: string[];
   intermediateTitleName: string;
   intermediateTitleFlag: keyof Course;
 }
@@ -13,6 +14,7 @@ interface StructureStepProps {
 export const StructureStep: React.FC<StructureStepProps> = ({
   creditsData,
   approvedCodes,
+  regularCodes = [],
   intermediateTitleName,
   intermediateTitleFlag,
 }) => {
@@ -30,6 +32,7 @@ export const StructureStep: React.FC<StructureStepProps> = ({
       <CreditSystemView
         creditData={creditsData}
         approvedCodes={approvedCodes}
+        regularCodes={regularCodes}
         intermediateTitleName={intermediateTitleName}
         intermediateTitleFlag={intermediateTitleFlag}
       />

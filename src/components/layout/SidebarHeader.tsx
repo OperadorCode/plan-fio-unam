@@ -40,11 +40,11 @@ export const SidebarHeader: React.FC<SidebarHeaderProps> = ({
 
       <button
         onClick={toggle}
-        className={`p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-500 ${
-          !isOpen ? "mx-auto" : ""
-        }`}
+        className={`p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-500 flex items-center gap-1.5 ${!isOpen ? "mx-auto" : ""
+          }`}
         aria-label="Alternar menú lateral"
       >
+        {isOpen && <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Menú</span>}
         {isOpen ? <ChevronLeft size={20} /> : <Menu size={20} />}
       </button>
     </div>

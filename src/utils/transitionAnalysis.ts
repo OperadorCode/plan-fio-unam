@@ -4,6 +4,7 @@ import { checkAllTitles } from "./titleValidation";
 
 interface MigrationSimulation {
   courses2025Approved: string[];
+  courses2025Regular: string[];
   courses2025Pending: string[];
   lostCourses: string[];
   gainedTitles: {
@@ -38,6 +39,7 @@ const calculateEquivalencies = (
 
 export const simulateMigration = (
   approvedIdsMixed: string[],
+  regularIdsMixed: string[] = [],
   equivalencies: EquivalenceRule[],
   targetPlan: StudyPlan,
   intermediateTitleFlag: keyof Course
@@ -61,6 +63,17 @@ export const simulateMigration = (
     (id) => !uniqueMatched.has(id) && !all2025Ids.has(id)
   );
 
+  const { newApproved: equivalenciesFoundRegular } =
+    calculateEquivalencies(regularIdsMixed, equivalencies);
+
+  const directlyRegular2025 = regularIdsMixed.filter((id) =>
+    all2025Ids.has(id)
+  );
+
+  const finalRegular2025 = Array.from(
+    new Set([...equivalenciesFoundRegular, ...directlyRegular2025])
+  );
+
   const gainedTitles = checkAllTitles(
     finalApproved2025,
     allCourses2025,
@@ -74,6 +87,7 @@ export const simulateMigration = (
 
   return {
     courses2025Approved: finalApproved2025,
+    courses2025Regular: finalRegular2025,
     courses2025Pending: pending2025,
     lostCourses,
     gainedTitles,

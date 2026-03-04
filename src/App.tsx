@@ -4,7 +4,7 @@
  * bajo una estructura de navegación por pestañas limpia y unificada.
  */
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import { useAppStore } from "./store/useAppStore";
@@ -14,6 +14,7 @@ import {
   Table,
   CalendarDays,
   ArrowRightLeft,
+  ClipboardList,
 } from "lucide-react";
 import { WelcomeModal } from "./components/common/WelcomeModal";
 import { InstallPrompt } from "./components/pwa/InstallPrompt";
@@ -34,13 +35,26 @@ function App() {
   const [activeTab, setActiveTab] = useState<TabId>("table");
 
   const careerId = useAppStore((state) => state.careerId);
-  const { hasTransition } = useTransitionData();
+  const activePlanId = useAppStore((state) => state.activePlanId);
+  const { hasTransition, data: transitionData } = useTransitionData();
 
-  if (activeTab === "transition" && !hasTransition) {
+  const showTransitionTabs = hasTransition && !!transitionData && activePlanId !== transitionData.config.targetPlanId;
+
+  if ((activeTab === "transition" || activeTab === "equivalencies") && !showTransitionTabs) {
     setActiveTab("table");
   }
 
   const { currentPlan, allCourses, loading } = usePlanContext();
+
+  useEffect(() => {
+    const handleTabNavigation = (e: CustomEvent<{ tabId: TabId }>) => {
+      setActiveTab(e.detail.tabId);
+    };
+    window.addEventListener("navigate-to-tab", handleTabNavigation as EventListener);
+    return () => {
+      window.removeEventListener("navigate-to-tab", handleTabNavigation as EventListener);
+    };
+  }, []);
 
   if (loading || !currentPlan) {
     return (
@@ -72,10 +86,17 @@ function App() {
         },
         {
           id: "transition" as const,
-          label: "Nuevo Plan",
-          shortLabel: "Nuevo",
+          label: "Actualizar Plan",
+          shortLabel: "Transición",
           icon: ArrowRightLeft,
-          show: hasTransition,
+          show: showTransitionTabs,
+        },
+        {
+          id: "equivalencies" as const,
+          label: "Equivalencias",
+          shortLabel: "Equival.",
+          icon: ClipboardList,
+          show: showTransitionTabs,
         },
         {
           id: "agenda" as const,
@@ -85,7 +106,7 @@ function App() {
           show: true,
         },
       ],
-    [careerId, hasTransition]
+    [careerId, showTransitionTabs]
   );
 
   return (

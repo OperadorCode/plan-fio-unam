@@ -15,6 +15,7 @@ import type { Course } from "../../types";
 interface CreditSystemViewProps {
   creditData: CreditSystemData;
   approvedCodes?: string[];
+  regularCodes?: string[];
   intermediateTitleName?: string;
   intermediateTitleFlag?: keyof Course;
 }
@@ -22,6 +23,7 @@ interface CreditSystemViewProps {
 export const CreditSystemView: React.FC<CreditSystemViewProps> = ({
   creditData,
   approvedCodes = [],
+  regularCodes = [],
   intermediateTitleName,
   intermediateTitleFlag,
 }) => {
@@ -68,21 +70,19 @@ export const CreditSystemView: React.FC<CreditSystemViewProps> = ({
 
       <div
         className={`rounded-xl p-6 border transition-all duration-300
-                 ${
-                   selectedBlock
-                     ? "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
-                     : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-sm"
-                 }
+                 ${selectedBlock
+            ? "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+            : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-sm"
+          }
             `}
       >
         <div className="flex items-start gap-4">
           <div
             className={`p-3 rounded-lg hidden sm:block transition-colors duration-300
-                        ${
-                          selectedBlock
-                            ? "bg-gray-100 dark:bg-gray-700 text-gray-500"
-                            : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300"
-                        }
+                        ${selectedBlock
+                ? "bg-gray-100 dark:bg-gray-700 text-gray-500"
+                : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300"
+              }
                     `}
           >
             {selectedBlock ? (
@@ -164,6 +164,7 @@ export const CreditSystemView: React.FC<CreditSystemViewProps> = ({
               yearData={year}
               selectedBlock={selectedBlock}
               approvedCodes={approvedCodes}
+              regularCodes={regularCodes}
             />
           ))}
         </div>

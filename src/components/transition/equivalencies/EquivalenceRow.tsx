@@ -79,6 +79,31 @@ export const EquivalenceRow: React.FC<EquivalenceRowProps> = React.memo(
       return null;
     };
 
+    const equivalenceBadge = (type: string, size: "sm" | "md" = "md") => {
+      const isDirect = type === "DIRECTA";
+      const baseClasses = "font-extrabold uppercase border shadow-sm cursor-help transition-transform hover:scale-105 whitespace-nowrap text-center";
+      const sizeClasses = size === "md" ? "px-4 py-1.5 rounded-xl text-[10px] tracking-widest" : "px-3 py-1 rounded-lg text-[9px] tracking-wider";
+      const colorClasses = isDirect
+        ? "bg-gradient-to-r from-emerald-50 to-green-100 text-emerald-800 border-emerald-200 dark:from-emerald-900/40 dark:to-green-900/40 dark:text-emerald-300 dark:border-emerald-800/50"
+        : "bg-gradient-to-r from-amber-50 to-orange-100 text-amber-900 border-amber-300 dark:from-amber-900/40 dark:to-orange-900/40 dark:text-amber-300 dark:border-amber-800/50";
+
+      return (
+        <Tooltip
+          content={
+            isDirect
+              ? "Equivalencia total: Se te dará por aprobada automáticamente."
+              : type === "PARCIAL"
+                ? "Equivalencia parcial: Podés necesitar rendir un complemento."
+                : "Tipo de equivalencia especial."
+          }
+        >
+          <div className={`${baseClasses} ${sizeClasses} ${colorClasses}`}>
+            {type}
+          </div>
+        </Tooltip>
+      );
+    };
+
 
     const rowBgClasses = {
       approved:
@@ -158,25 +183,7 @@ export const EquivalenceRow: React.FC<EquivalenceRowProps> = React.memo(
           </div>
         </div>
         <div className="flex items-center gap-3 my-3">
-          <Tooltip
-            content={
-              eq.type === "DIRECTA"
-                ? "Equivalencia total: Se te dará por aprobada automáticamente."
-                : eq.type === "PARCIAL"
-                  ? "Equivalencia parcial: Podés necesitar rendir un complemento."
-                  : "Tipo de equivalencia especial."
-            }
-          >
-            <div
-              className={`px-2.5 py-1 rounded-lg text-[9px] font-bold uppercase tracking-wide border
-                ${eq.type === "DIRECTA"
-                  ? "bg-green-50 text-green-700 border-green-300 dark:bg-green-900/30 dark:text-green-300 dark:border-green-700"
-                  : "bg-orange-50 text-orange-700 border-orange-300 dark:bg-orange-900/30 dark:text-orange-300 dark:border-orange-700"
-                }`}
-            >
-              {eq.type}
-            </div>
-          </Tooltip>
+          {equivalenceBadge(eq.type, "sm")}
           <ArrowRight size={16} className="text-gray-300" />
           {centerStatusLabel}
         </div>
@@ -257,27 +264,9 @@ export const EquivalenceRow: React.FC<EquivalenceRowProps> = React.memo(
           </div>
         </td>
 
-        <td className="px-2 py-4 align-top text-center">
-          <div className="flex flex-col items-center justify-start mt-1 space-y-2">
-            <Tooltip
-              content={
-                eq.type === "DIRECTA"
-                  ? "Equivalencia total: Se te dará por aprobada automáticamente."
-                  : eq.type === "PARCIAL"
-                    ? "Equivalencia parcial: Podés necesitar rendir un complemento."
-                    : "Tipo de equivalencia especial."
-              }
-            >
-              <div
-                className={`px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider border shadow-sm cursor-help transition-transform hover:scale-105
-                  ${eq.type === "DIRECTA"
-                    ? "bg-green-50 text-green-700 border-green-300 dark:bg-green-900/30 dark:text-green-300 dark:border-green-700"
-                    : "bg-orange-50 text-orange-700 border-orange-300 dark:bg-orange-900/30 dark:text-orange-300 dark:border-orange-700"
-                  }`}
-              >
-                {eq.type}
-              </div>
-            </Tooltip>
+        <td className="px-2 py-4 align-top text-center w-32 border-x border-gray-100 dark:border-gray-800/50">
+          <div className="flex flex-col items-center justify-start mt-2 space-y-3">
+            {equivalenceBadge(eq.type, "md")}
 
             <div className="flex flex-col items-center gap-1 opacity-80">
               {centerStatusLabel}

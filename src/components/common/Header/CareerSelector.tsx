@@ -37,6 +37,7 @@ export const CareerSelector: React.FC = () => {
   const dismissHint = () => {
     setShowCareerHint(false);
     localStorage.setItem("careerHintDismissed", "true");
+    window.dispatchEvent(new Event("careerHintDismissed"));
   };
 
   return (

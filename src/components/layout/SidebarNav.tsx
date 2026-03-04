@@ -23,9 +23,8 @@ export const SidebarNav: React.FC<SidebarNavProps> = ({
 }) => {
   return (
     <div
-      className={`flex-1 py-6 px-3 space-y-2 overflow-x-hidden ${
-        isOpen ? "overflow-y-auto custom-scrollbar" : "overflow-y-hidden"
-      }`}
+      className={`flex-1 py-6 px-3 space-y-2 overflow-x-hidden ${isOpen ? "overflow-y-auto custom-scrollbar" : "overflow-y-hidden"
+        }`}
     >
       {tabs
         .filter((t) => t.show !== false)
@@ -39,10 +38,9 @@ export const SidebarNav: React.FC<SidebarNavProps> = ({
               onClick={() => onTabChange(tab.id)}
               className={`
                 relative w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 group
-                ${
-                  isActive
-                    ? "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-semibold shadow-sm"
-                    : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200"
+                ${isActive
+                  ? "bg-blue-50/80 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-bold shadow-sm"
+                  : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200"
                 }
               `}
             >
@@ -62,11 +60,10 @@ export const SidebarNav: React.FC<SidebarNavProps> = ({
               <div className="relative z-10 flex items-center justify-center min-w-[24px]">
                 <Icon
                   size={22}
-                  className={`transition-colors duration-200 ${
-                    isActive
-                      ? "text-blue-600 dark:text-blue-400"
-                      : "group-hover:text-gray-900 dark:group-hover:text-gray-200"
-                  }`}
+                  className={`transition-colors duration-200 ${isActive
+                    ? "text-blue-600 dark:text-blue-400"
+                    : "group-hover:text-gray-900 dark:group-hover:text-gray-200"
+                    }`}
                 />
               </div>
 

@@ -20,7 +20,7 @@ export const MigrationStep: React.FC<MigrationStepProps> = ({
   targetPlanName,
 }) => {
   return (
-    <div className="animate-fade-in max-w-2xl mx-auto py-8">
+    <div className="animate-fade-in w-full py-4">
       {!isAlreadyMigrated ? (
         <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl shadow-indigo-500/5 border border-indigo-100 dark:border-indigo-900/50 p-8 sm:p-12 text-center relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500" />

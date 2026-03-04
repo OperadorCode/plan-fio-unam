@@ -74,13 +74,21 @@ export const EquivalenciesStep: React.FC<EquivalenciesStepProps> = ({
       )}
 
       {/* Tabla de Equivalencias */}
-      <EquivalenciesTable
-        courseMeta2013={courseMeta2013}
-        courseMeta2025={courseMeta2025}
-        approvedCourses={approvedCourses}
-        regularCourses={regularCourses}
-        equivalencies={equivalencies}
-      />
+      <div className="mt-8">
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">Tabla de Equivalencias</h2>
+          <p className="text-gray-600 dark:text-gray-400">
+            Consultá cómo se reconocen las materias de tu plan actual en el nuevo plan de estudios.
+          </p>
+        </div>
+        <EquivalenciesTable
+          courseMeta2013={courseMeta2013}
+          courseMeta2025={courseMeta2025}
+          approvedCourses={approvedCourses}
+          regularCourses={regularCourses}
+          equivalencies={equivalencies}
+        />
+      </div>
     </div>
   );
 };

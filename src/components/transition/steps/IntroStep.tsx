@@ -54,8 +54,7 @@ export const IntroStep: React.FC<IntroStepProps> = ({ intermediateTitle }) => {
               <span className="font-bold text-cyan-700 dark:text-cyan-400">
                 {intermediateTitle}
               </span>
-              . Una certificación oficial que valida tu trayecto y te habilita
-              profesionalmente antes de terminar la ingeniería.
+              . Una certificación oficial que valida tu trayecto.
             </p>
           </div>
 
@@ -176,8 +175,8 @@ export const IntroStep: React.FC<IntroStepProps> = ({ intermediateTitle }) => {
                         <div
                           key={i}
                           className={`border-l border-gray-100 dark:border-gray-800 ${i % 2 === 0
-                              ? "bg-gray-50/50 dark:bg-gray-800/50"
-                              : ""
+                            ? "bg-gray-50/50 dark:bg-gray-800/50"
+                            : ""
                             } h-full`}
                         ></div>
                       ))}

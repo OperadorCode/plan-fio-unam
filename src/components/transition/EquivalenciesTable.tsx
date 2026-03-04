@@ -1,5 +1,5 @@
 import React from "react";
-import { BarChart2, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import { useEquivalenciesFilter } from "../../hooks/useEquivalenciesFilter";
 import { EquivalenceRow } from "./equivalencies/EquivalenceRow";
 import type {
@@ -32,27 +32,18 @@ export const EquivalenciesTable: React.FC<EquivalenceTableProps> = ({
 
     return (
         <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col max-h-[70vh] select-none">
-            <div className="p-4 md:p-6 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4 md:gap-6 flex-shrink-0">
-                <div>
-                    <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                        <BarChart2 size={20} className="text-gray-500 dark:text-gray-400" />
-                        Tabla de Equivalencias
-                    </h3>
-                    <p className="text-xs text-gray-500 mt-1 dark:text-gray-400">
-                        Consultá la correspondencia entre planes de estudio.
-                    </p>
-                </div>
-                <div className="relative w-full sm:w-72 group">
+            <div className="p-4 sm:p-5 bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 flex flex-shrink-0 justify-center">
+                <div className="relative w-full max-w-2xl group">
                     <Search
-                        className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-600 transition-colors"
-                        size={16}
+                        className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-500 transition-colors"
+                        size={18}
                     />
                     <input
                         type="text"
-                        placeholder="Filtrar por nombre o código..."
+                        placeholder="Buscar materia por nombre o código..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full pl-9 pr-4 py-2 text-sm bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
+                        className="w-full pl-12 pr-4 py-3 text-sm sm:text-base bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-400 dark:focus:border-blue-500 outline-none transition-all placeholder-gray-400/80 font-medium text-gray-700 dark:text-gray-200 shadow-inner"
                     />
                 </div>
             </div>
