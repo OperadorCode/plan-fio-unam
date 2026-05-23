@@ -38,13 +38,18 @@ function App() {
   const activePlanId = useAppStore((state) => state.activePlanId);
   const { hasTransition, data: transitionData } = useTransitionData();
 
-  const showTransitionTabs = hasTransition && !!transitionData && activePlanId !== transitionData.config.targetPlanId;
-
-  if ((activeTab === "transition" || activeTab === "equivalencies") && !showTransitionTabs) {
-    setActiveTab("table");
-  }
-
   const { currentPlan, allCourses, loading } = usePlanContext();
+
+  const showTransitionTabs = hasTransition && !!transitionData && activePlanId !== transitionData.config.targetPlanId && transitionData.equivalencies.length > 0;
+
+  useAppShortcuts(setActiveTab);
+  useCourseNavigation(setActiveTab);
+
+  useEffect(() => {
+    if ((activeTab === "transition" || activeTab === "equivalencies") && !showTransitionTabs) {
+      setTimeout(() => setActiveTab("table"), 0);
+    }
+  }, [activeTab, showTransitionTabs]);
 
   useEffect(() => {
     const handleTabNavigation = (e: CustomEvent<{ tabId: TabId }>) => {
@@ -55,17 +60,6 @@ function App() {
       window.removeEventListener("navigate-to-tab", handleTabNavigation as EventListener);
     };
   }, []);
-
-  if (loading || !currentPlan) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
-        <LoadingScreen message="Cargando plan de estudios..." />
-      </div>
-    );
-  }
-
-  useAppShortcuts(setActiveTab);
-  useCourseNavigation(setActiveTab);
 
   const tabs = useMemo(
     () =>
@@ -108,6 +102,14 @@ function App() {
       ],
     [careerId, showTransitionTabs]
   );
+
+  if (loading || !currentPlan) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+        <LoadingScreen message="Cargando plan de estudios..." />
+      </div>
+    );
+  }
 
   return (
     <ErrorBoundary>

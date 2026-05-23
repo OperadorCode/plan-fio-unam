@@ -74,7 +74,7 @@ export const careersRegistry: CareersRegistry = {
     color: "green",
     icon: "Factory",
     availablePlans: [industrial2013.id, industrial2025.id],
-    enabled: false,
+    enabled: true,
   },
   mecatronica: {
     id: "mecatronica",

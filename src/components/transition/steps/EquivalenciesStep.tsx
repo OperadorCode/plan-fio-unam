@@ -2,17 +2,18 @@ import React, { useMemo } from "react";
 import { EquivalenciesTable } from "../EquivalenciesTable";
 import { PlanComparison } from "../PlanComparison";
 import type {
-  CourseMeta2013,
-  CourseMeta2025,
+  OriginCourseMeta,
+  TargetCourseMeta,
 } from "../../../hooks/useCareerMetadata";
+import type { EquivalenceRule } from "../../../types";
 import type { simulateMigration } from "../../../utils/transitionAnalysis";
 
 interface EquivalenciesStepProps {
-  courseMeta2013: Record<string, CourseMeta2013>;
-  courseMeta2025: Record<string, CourseMeta2025>;
+  originCourseMeta: Record<string, OriginCourseMeta>;
+  targetCourseMeta: Record<string, TargetCourseMeta>;
   approvedCourses: string[];
   regularCourses: string[];
-  equivalencies: any[];
+  equivalencies: EquivalenceRule[];
   simulation: ReturnType<typeof simulateMigration> | null;
   intermediateTitle: string;
   sourcePlanYear: number;
@@ -20,8 +21,8 @@ interface EquivalenciesStepProps {
 }
 
 export const EquivalenciesStep: React.FC<EquivalenciesStepProps> = ({
-  courseMeta2013,
-  courseMeta2025,
+  originCourseMeta,
+  targetCourseMeta,
   approvedCourses,
   regularCourses,
   equivalencies,
@@ -33,38 +34,38 @@ export const EquivalenciesStep: React.FC<EquivalenciesStepProps> = ({
   const comparisonData = useMemo(() => {
     if (!simulation) return null;
 
-    const validCourseIds2013 = new Set(Object.keys(courseMeta2013));
+    const validCourseIds2013 = new Set(Object.keys(originCourseMeta));
 
     const filteredApprovedCourses = approvedCourses.filter((id) =>
       validCourseIds2013.has(id)
     );
 
-    const totalCourses2013 = validCourseIds2013.size;
-    const approvedCount2013 = filteredApprovedCourses.length;
-    const progress2013 =
-      totalCourses2013 > 0 ? (approvedCount2013 / totalCourses2013) * 100 : 0;
+    const originTotalCourses = validCourseIds2013.size;
+    const originApprovedCount = filteredApprovedCourses.length;
+    const originProgress =
+      originTotalCourses > 0 ? (originApprovedCount / originTotalCourses) * 100 : 0;
 
     const lostCoursesDetails = simulation.lostCourses.map((id) => ({
       id,
-      name: courseMeta2013[id]?.name || id,
+      name: originCourseMeta[id]?.name || id,
     }));
 
     return {
-      progress2013,
-      approvedCount2013,
-      totalCourses2013,
+      originProgress,
+      originApprovedCount,
+      originTotalCourses,
       lostCoursesDetails,
     };
-  }, [simulation, courseMeta2013, approvedCourses]);
+  }, [simulation, originCourseMeta, approvedCourses]);
 
   return (
     <div className="animate-fade-in space-y-8">
       {/* Comparación Visual de Planes */}
       {simulation && comparisonData && (
         <PlanComparison
-          progress2013={comparisonData.progress2013}
-          approvedCount2013={comparisonData.approvedCount2013}
-          totalCourses2013={comparisonData.totalCourses2013}
+          originProgress={comparisonData.originProgress}
+          originApprovedCount={comparisonData.originApprovedCount}
+          originTotalCourses={comparisonData.originTotalCourses}
           simulation={simulation}
           lostCoursesDetails={comparisonData.lostCoursesDetails}
           intermediateTitle={intermediateTitle}
@@ -82,8 +83,8 @@ export const EquivalenciesStep: React.FC<EquivalenciesStepProps> = ({
           </p>
         </div>
         <EquivalenciesTable
-          courseMeta2013={courseMeta2013}
-          courseMeta2025={courseMeta2025}
+          originCourseMeta={originCourseMeta}
+          targetCourseMeta={targetCourseMeta}
           approvedCourses={approvedCourses}
           regularCourses={regularCourses}
           equivalencies={equivalencies}

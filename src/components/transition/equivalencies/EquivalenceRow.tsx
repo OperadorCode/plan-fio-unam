@@ -2,7 +2,7 @@ import React from "react";
 import { CheckCircle, BookOpen, ArrowRight, Clock } from "lucide-react";
 import Tooltip from "../../common/Tooltip";
 import type { EquivalenceRule } from "../../../types";
-import type { CourseMeta2013 } from "../../../hooks/useCareerMetadata";
+import type { OriginCourseMeta } from "../../../hooks/useCareerMetadata";
 
 interface EnrichedEquivalence extends EquivalenceRule {
   targetName: string;
@@ -12,7 +12,7 @@ interface EnrichedEquivalence extends EquivalenceRule {
 
 interface EquivalenceRowProps {
   eq: EnrichedEquivalence;
-  courseMeta2013: Record<string, CourseMeta2013>;
+  originCourseMeta: Record<string, OriginCourseMeta>;
   approvedCourses: string[];
   regularCourses: string[];
 }
@@ -20,9 +20,9 @@ interface EquivalenceRowProps {
 type SourceStatus = "approved" | "regular" | "pending";
 
 export const EquivalenceRow: React.FC<EquivalenceRowProps> = React.memo(
-  ({ eq, courseMeta2013, approvedCourses, regularCourses }) => {
+  ({ eq, originCourseMeta, approvedCourses, regularCourses }) => {
     const sourceItems = eq.sourceIds.map((id: string) => {
-      const meta = courseMeta2013[id];
+      const meta = originCourseMeta[id];
       const isApproved = approvedCourses.includes(id);
       const isRegular = regularCourses.includes(id);
       const status: SourceStatus = isApproved
@@ -155,7 +155,7 @@ export const EquivalenceRow: React.FC<EquivalenceRowProps> = React.memo(
         {/* Source courses */}
         <div className="mb-3">
           <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2 block">
-            Plan 2013
+            Plan de Origen
           </span>
           <div className="flex flex-col gap-2">
             {sourceItems.map((src) => (

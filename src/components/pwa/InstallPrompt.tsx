@@ -25,14 +25,18 @@ export const InstallPrompt: React.FC = () => {
       setTimeout(() => setShowPrompt(true), 3000);
     };
 
-    window.addEventListener("beforeinstallprompt", handler);
-
-    window.addEventListener("appinstalled", () => {
+    const installedHandler = () => {
       setShowPrompt(false);
       setDeferredPrompt(null);
-    });
+    };
 
-    return () => window.removeEventListener("beforeinstallprompt", handler);
+    window.addEventListener("beforeinstallprompt", handler);
+    window.addEventListener("appinstalled", installedHandler);
+
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handler);
+      window.removeEventListener("appinstalled", installedHandler);
+    };
   }, []);
 
   const handleInstallClick = async () => {

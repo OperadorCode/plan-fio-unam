@@ -20,7 +20,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
   if (activeTab !== "table") return null;
 
-  const showBanner = hasTransition && transitionData && currentPlan.id !== transitionData.config.targetPlanId;
+  const showBanner = hasTransition && transitionData && currentPlan.id !== transitionData.config.targetPlanId && transitionData.equivalencies.length > 0;
 
   return (
     <div className="mb-6 animate-fade-in-down flex flex-col gap-4">

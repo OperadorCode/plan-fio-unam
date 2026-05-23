@@ -17,7 +17,7 @@
  */
 
 import type { CourseStatusMap, StudyPlan, Course } from "../types";
-import { isApproved, isRegular } from "./logic";
+import { isApproved, isRegular, checkPrerequisites } from "./logic";
 
 export const validateCourseStatus = (
   initialStatus: CourseStatusMap,
@@ -31,9 +31,10 @@ export const validateCourseStatus = (
 
   let hasChanges = true;
   let iterations = 0;
+  const MAX_ITERATIONS = Math.max(allCoursesRaw.length, 10);
 
   // Bucle de validación en cascada (propaga cambios hacia adelante)
-  while (hasChanges && iterations < 10) {
+  while (hasChanges && iterations < MAX_ITERATIONS) {
     hasChanges = false;
     iterations++;
 
@@ -52,15 +53,22 @@ export const validateCourseStatus = (
       // --- VALIDACIÓN DE CORRELATIVAS (ESPECÍFICAS) ---
 
       // 1. Verificar correlativas para REGULARIZAR/CURSAR
-      const reqsRegularOk = effectiveCourse.requiredRegularToCourse.every(
-        (reqId) => isRegular(reqId, updatedStatus)
+      const reqsRegularOk = checkPrerequisites(
+        effectiveCourse.requiredRegularToCourse,
+        isRegular,
+        updatedStatus,
+        effectiveCourse.id,
+        allCoursesRaw
       );
 
       // 2. Verificar finales requeridos para CURSAR
-      const reqsFinalForCursadaOk =
-        effectiveCourse.requiredApprovedToCourse.every((reqId) =>
-          isApproved(reqId, updatedStatus)
-        );
+      const reqsFinalForCursadaOk = checkPrerequisites(
+        effectiveCourse.requiredApprovedToCourse,
+        isApproved,
+        updatedStatus,
+        effectiveCourse.id,
+        allCoursesRaw
+      );
 
       // --- VALIDACIÓN DE REGLAS GLOBALES (POR AÑO/BLOQUE) ---
       // Y si cumple los requisitos específicos (si ya falló lo específico, no tiene sentido chequear global)
@@ -69,7 +77,7 @@ export const validateCourseStatus = (
       if (
         reqsRegularOk &&
         reqsFinalForCursadaOk &&
-        plan.careerId !== "higiene_seguridad"
+      plan.careerId !== "higiene"
       ) {
         globalRulesOk = checkGlobalRules(effectiveCourse, updatedStatus, plan);
       }
@@ -84,8 +92,12 @@ export const validateCourseStatus = (
       // 3. Verificar correlativas para FINAL (Solo si está 'approved')
       if (currentS === "approved") {
         // Se requiere 'requiredApprovedToFinal' (finales para rendir este final)
-        const reqsFinalOk = effectiveCourse.requiredApprovedToFinal.every(
-          (reqId) => isApproved(reqId, updatedStatus)
+        const reqsFinalOk = checkPrerequisites(
+          effectiveCourse.requiredApprovedToFinal,
+          isApproved,
+          updatedStatus,
+          effectiveCourse.id,
+          allCoursesRaw
         );
 
         // Si fallan requisitos de final -> Bajamos a Regular
@@ -95,6 +107,13 @@ export const validateCourseStatus = (
         }
       }
     });
+  }
+
+  if (import.meta.env.DEV && iterations >= MAX_ITERATIONS) {
+    console.warn(
+      `[academicValidation] La cascada NO convergió después de ${iterations} iteraciones. ` +
+      `Posible ciclo en correlativas o plan demasiado grande (${allCoursesRaw.length} materias).`
+    );
   }
 
   // 3. Limpiar Exámenes Planificados si la materia se aprueba

@@ -31,6 +31,15 @@ const CourseRow: React.FC<CourseRowProps> = ({ course }) => {
   const { allCoursesById, unlocksMap, criticalityMap } = usePlanCourses();
   const fullCourseStatus = useAppStore((state) => state.courseStatus);
   const courseStatusSnapshot = useMemo(() => {
+    const hasAll =
+      course.requiredRegularToCourse?.includes("ALL") ||
+      course.requiredApprovedToCourse?.includes("ALL") ||
+      course.requiredApprovedToFinal?.includes("ALL");
+
+    if (hasAll) {
+      return fullCourseStatus;
+    }
+
     const relevantIds = new Set<string>([course.id]);
     course.requiredRegularToCourse?.forEach((id) => relevantIds.add(id));
     course.requiredApprovedToCourse?.forEach((id) => relevantIds.add(id));

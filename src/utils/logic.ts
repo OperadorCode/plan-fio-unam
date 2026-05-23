@@ -68,16 +68,39 @@ export const getMissingPrerequisites = (
   const getName = (id: string) => allCoursesById[id]?.name || id;
 
   if (forCursar) {
-    course.requiredRegularToCourse.forEach((id) => {
-      if (!checkRegularFunc(id, statusMap)) {
-        missing.regular.push(getName(id));
-      }
-    });
-    course.requiredApprovedToCourse.forEach((id) => {
-      if (!checkApprovedFunc(id, statusMap)) {
-        missing.approved.push(getName(id));
-      }
-    });
+    if (course.requiredRegularToCourse.includes("ALL")) {
+      const allRegular = checkPrerequisites(
+        ["ALL"],
+        checkRegularFunc,
+        statusMap,
+        course.id,
+        Object.values(allCoursesById)
+      );
+      if (!allRegular) missing.regular.push("Todas las materias de la carrera (Regularizadas)");
+    } else {
+      course.requiredRegularToCourse.forEach((id) => {
+        if (!checkRegularFunc(id, statusMap)) {
+          missing.regular.push(getName(id));
+        }
+      });
+    }
+
+    if (course.requiredApprovedToCourse.includes("ALL")) {
+      const allApproved = checkPrerequisites(
+        ["ALL"],
+        checkApprovedFunc,
+        statusMap,
+        course.id,
+        Object.values(allCoursesById)
+      );
+      if (!allApproved) missing.approved.push("Todas las materias de la carrera (Aprobadas)");
+    } else {
+      course.requiredApprovedToCourse.forEach((id) => {
+        if (!checkApprovedFunc(id, statusMap)) {
+          missing.approved.push(getName(id));
+        }
+      });
+    }
   } else {
     if (course.requiredApprovedToFinal.includes("ALL")) {
       const allApproved = checkPrerequisites(
@@ -123,12 +146,23 @@ export const buildUnlocksMap = (allCourses: Course[]) => {
       unlocksMap[prereqId][course.name].add(type);
     };
 
-    course.requiredRegularToCourse.forEach((id) =>
-      addUnlock(id, "para Cursar (Regular)")
-    );
-    course.requiredApprovedToCourse.forEach((id) =>
-      addUnlock(id, "para Cursar (Aprobada)")
-    );
+    if (
+      course.requiredRegularToCourse &&
+      course.requiredRegularToCourse[0] !== "ALL"
+    ) {
+      course.requiredRegularToCourse.forEach((id) =>
+        addUnlock(id, "para Cursar (Regular)")
+      );
+    }
+
+    if (
+      course.requiredApprovedToCourse &&
+      course.requiredApprovedToCourse[0] !== "ALL"
+    ) {
+      course.requiredApprovedToCourse.forEach((id) =>
+        addUnlock(id, "para Cursar (Aprobada)")
+      );
+    }
 
     if (
       course.requiredApprovedToFinal &&
@@ -165,10 +199,13 @@ export const getAllPrerequisites = (
     if (!course) return;
 
     const directPrereqs = [
-      ...(course.requiredRegularToCourse || []),
-      ...(course.requiredApprovedToCourse || []),
-      ...(course.requiredApprovedToFinal &&
-      course.requiredApprovedToFinal[0] !== "ALL"
+      ...(course.requiredRegularToCourse && course.requiredRegularToCourse[0] !== "ALL"
+        ? course.requiredRegularToCourse
+        : []),
+      ...(course.requiredApprovedToCourse && course.requiredApprovedToCourse[0] !== "ALL"
+        ? course.requiredApprovedToCourse
+        : []),
+      ...(course.requiredApprovedToFinal && course.requiredApprovedToFinal[0] !== "ALL"
         ? course.requiredApprovedToFinal
         : []),
     ];

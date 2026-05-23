@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useMemo, useState } from "react";
+import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useAppStore } from "../store/useAppStore";
 import { careerPlans, allPlans } from "../data/careers";
 import { StudyPlanSchema } from "../schemas/careerSchemas";
@@ -22,29 +22,32 @@ export const PlanProvider: React.FC<{ children: React.ReactNode }> = ({
   const [validationWarnings, setValidationWarnings] = useState<string[]>([]);
 
   const planData = useMemo(() => {
-    setValidationWarnings([]);
-
     let plan = allPlans[activePlanId];
 
     if (!plan && careerPlans[careerId as keyof typeof careerPlans]) {
       plan = careerPlans[careerId as keyof typeof careerPlans];
     }
 
-    if (!plan) return null;
+    return plan || null;
+  }, [activePlanId, careerId]);
 
-    if (import.meta.env.DEV) {
-      const validation = StudyPlanSchema.safeParse(plan);
-      if (!validation.success) {
-        const warnings = validation.error.issues.map(
-          (issue) => `[${issue.path.join(".")}]: ${issue.message}`
-        );
-        console.warn("[PlanContext] Validation warnings:", warnings);
-        setValidationWarnings(warnings);
-      }
+  useEffect(() => {
+    if (!planData || !import.meta.env.DEV) {
+      setTimeout(() => setValidationWarnings([]), 0);
+      return;
     }
 
-    return plan;
-  }, [activePlanId, careerId]);
+    const validation = StudyPlanSchema.safeParse(planData);
+    if (!validation.success) {
+      const warnings = validation.error.issues.map(
+        (issue) => `[${issue.path.join(".")}]: ${issue.message}`
+      );
+      console.warn("[PlanContext] Validation warnings:", warnings);
+      setTimeout(() => setValidationWarnings(warnings), 0);
+    } else {
+      setTimeout(() => setValidationWarnings([]), 0);
+    }
+  }, [planData]);
 
   const allCourses = useMemo(() => {
     if (!planData) return [];
@@ -58,22 +61,15 @@ export const PlanProvider: React.FC<{ children: React.ReactNode }> = ({
     return null;
   }, [planData, careerId]);
 
-  const stableWarnings = useMemo(() => {
-    if (validationWarnings.length === 0) {
-      return [];
-    }
-    return validationWarnings;
-  }, [validationWarnings.join(",")]);
-
   const value = useMemo(
     () => ({
       currentPlan: planData,
       allCourses,
       loading: false,
       error: errorMessage,
-      validationWarnings: stableWarnings,
+      validationWarnings,
     }),
-    [planData, allCourses, errorMessage, stableWarnings]
+    [planData, allCourses, errorMessage, validationWarnings]
   );
 
   return <PlanContext.Provider value={value}>{children}</PlanContext.Provider>;

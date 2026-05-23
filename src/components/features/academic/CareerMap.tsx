@@ -76,7 +76,7 @@ const CareerMapContent: React.FC<CareerMapProps> = ({
 
   useEffect(() => {
     if (nodes.length === 0) {
-      setIsLayoutReady(false);
+      setTimeout(() => setIsLayoutReady(false), 0);
       return;
     }
 

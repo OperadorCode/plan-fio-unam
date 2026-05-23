@@ -3,10 +3,23 @@ import { useAppStore } from "../../store/useAppStore";
 import { careersRegistry } from "../../data/careers";
 import { getCareerIcon } from "../../utils/iconHelpers";
 
+const careerColorClasses: Record<string, string> = {
+  cyan: "from-cyan-500 to-cyan-600 shadow-cyan-500/20",
+  blue: "from-blue-500 to-blue-600 shadow-blue-500/20",
+  orange: "from-orange-500 to-orange-600 shadow-orange-500/20",
+  indigo: "from-indigo-500 to-indigo-600 shadow-indigo-500/20",
+  green: "from-green-500 to-green-600 shadow-green-500/20",
+  rose: "from-rose-500 to-rose-600 shadow-rose-500/20",
+  yellow: "from-yellow-500 to-yellow-600 shadow-yellow-500/20",
+};
+
+const defaultColorClasses = "from-blue-500 to-blue-600 shadow-blue-500/20";
+
 export const TransitionHeader: React.FC = () => {
   const careerId = useAppStore((state) => state.careerId);
   const career = careersRegistry[careerId];
   const careerName = career?.name || "Plan de Transición";
+  const colorClasses = careerColorClasses[career?.color || "blue"] || defaultColorClasses;
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-8 bg-gradient-to-r from-blue-50/50 to-indigo-50/50 dark:from-gray-800 dark:to-gray-800">
@@ -14,13 +27,7 @@ export const TransitionHeader: React.FC = () => {
         <div>
           <div className="flex items-center gap-4 mb-2">
             <div
-              className={`p-3 rounded-xl bg-gradient-to-br from-${
-                career?.color || "blue"
-              }-500 to-${
-                career?.color || "blue"
-              }-600 text-white shadow-lg shadow-${
-                career?.color || "blue"
-              }-500/20`}
+              className={`p-3 rounded-xl bg-gradient-to-br ${colorClasses} text-white shadow-lg`}
             >
               {getCareerIcon(career?.icon, 32)}
             </div>

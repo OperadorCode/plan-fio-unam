@@ -3,30 +3,30 @@ import { Search } from "lucide-react";
 import { useEquivalenciesFilter } from "../../hooks/useEquivalenciesFilter";
 import { EquivalenceRow } from "./equivalencies/EquivalenceRow";
 import type {
-    CourseMeta2013,
-    CourseMeta2025,
+    OriginCourseMeta,
+    TargetCourseMeta,
 } from "../../hooks/useCareerMetadata";
 import type { EquivalenceRule } from "../../types";
 
 interface EquivalenceTableProps {
-    courseMeta2013: Record<string, CourseMeta2013>;
-    courseMeta2025: Record<string, CourseMeta2025>;
+    originCourseMeta: Record<string, OriginCourseMeta>;
+    targetCourseMeta: Record<string, TargetCourseMeta>;
     approvedCourses: string[];
     regularCourses: string[];
     equivalencies: EquivalenceRule[];
 }
 
 export const EquivalenciesTable: React.FC<EquivalenceTableProps> = ({
-    courseMeta2013,
-    courseMeta2025,
+    originCourseMeta,
+    targetCourseMeta,
     approvedCourses,
     regularCourses,
     equivalencies,
 }) => {
     const { searchTerm, setSearchTerm, groupedEquivalencies } =
         useEquivalenciesFilter({
-            courseMeta2013,
-            courseMeta2025,
+            originCourseMeta,
+            targetCourseMeta,
             equivalencies,
         });
 
@@ -56,14 +56,14 @@ export const EquivalenciesTable: React.FC<EquivalenceTableProps> = ({
                             <div key={year}>
                                 <div className="sticky top-0 bg-gray-50/95 dark:bg-gray-800/95 backdrop-blur-sm py-2 mb-2 z-10">
                                     <span className="text-[10px] font-extrabold text-gray-500 dark:text-gray-400 uppercase tracking-widest">
-                                        {year}º Año (Plan 2013)
+                                        {year}º Año (Plan de Origen)
                                     </span>
                                 </div>
-                                {eqs.map((eq: any, index: number) => (
+                                {eqs.map((eq: EquivalenceRule, index: number) => (
                                     <EquivalenceRow
                                         key={index}
                                         eq={eq}
-                                        courseMeta2013={courseMeta2013}
+                                        originCourseMeta={originCourseMeta}
                                         approvedCourses={approvedCourses}
                                         regularCourses={regularCourses}
                                     />
@@ -76,7 +76,7 @@ export const EquivalenciesTable: React.FC<EquivalenceTableProps> = ({
                         <thead className="bg-gray-100 dark:bg-gray-900 text-gray-600 dark:text-gray-300 uppercase text-[11px] font-bold tracking-wider sticky top-0 z-20 border-b border-gray-200 dark:border-gray-700 shadow-sm">
                             <tr>
                                 <th className="px-3 sm:px-6 py-3 min-w-[200px] bg-gray-100 dark:bg-gray-900">
-                                    Plan 2013 (Origen)
+                                    Plan de Origen (Origen)
                                 </th>
                                 <th className="px-2 py-3 text-center min-w-[80px] bg-gray-100 dark:bg-gray-900">
                                     Tipo
@@ -96,15 +96,15 @@ export const EquivalenciesTable: React.FC<EquivalenceTableProps> = ({
                                                 colSpan={3}
                                                 className="px-6 py-2 text-[10px] font-extrabold text-gray-500 dark:text-gray-400 uppercase tracking-widest border-y border-gray-100 dark:border-gray-700/50 bg-gray-50/95 dark:bg-gray-800/95"
                                             >
-                                                {year}º Año (Plan 2013)
+                                                {year}º Año (Plan de Origen)
                                             </td>
                                         </tr>
 
-                                        {eqs.map((eq: any, index: number) => (
+                                        {eqs.map((eq: EquivalenceRule, index: number) => (
                                             <EquivalenceRow
                                                 key={index}
                                                 eq={eq}
-                                                courseMeta2013={courseMeta2013}
+                                                originCourseMeta={originCourseMeta}
                                                 approvedCourses={approvedCourses}
                                                 regularCourses={regularCourses}
                                             />

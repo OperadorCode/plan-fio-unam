@@ -3,14 +3,14 @@ import { useAppStore } from "../store/useAppStore";
 import { allPlans } from "../data/careers";
 import type { Course } from "../types";
 
-export interface CourseMeta2013 {
+export interface OriginCourseMeta {
   name: string;
   year: string;
   regimen: string;
   hours: number;
 }
 
-export interface CourseMeta2025 {
+export interface TargetCourseMeta {
   name: string;
   regimen: string;
   block: string;
@@ -19,13 +19,14 @@ export interface CourseMeta2025 {
 export const useCareerMetadata = () => {
   const careerId = useAppStore((state) => state.careerId);
 
-  const courseMeta2013 = useMemo(() => {
-    const planId = `${careerId}-2013`;
-    const plan = allPlans[planId];
-    const meta: Record<string, CourseMeta2013> = {};
+  const originCourseMeta = useMemo(() => {
+    const originPlan = Object.values(allPlans).find(
+      (p) => p.careerId === careerId && p.year !== 2025
+    );
+    const meta: Record<string, OriginCourseMeta> = {};
 
-    if (plan) {
-      Object.entries(plan.coursesData).forEach(([year, courses]) => {
+    if (originPlan) {
+      Object.entries(originPlan.coursesData).forEach(([year, courses]) => {
         courses.forEach((c: Course) => {
           meta[c.id] = {
             name: c.name,
@@ -39,13 +40,13 @@ export const useCareerMetadata = () => {
     return meta;
   }, [careerId]);
 
-  const courseMeta2025 = useMemo(() => {
+  const targetCourseMeta = useMemo(() => {
     const planId = `${careerId}-2025`;
     const plan = allPlans[planId];
-    const meta: Record<string, CourseMeta2025> = {};
+    const meta: Record<string, TargetCourseMeta> = {};
 
     if (plan) {
-      Object.entries(plan.coursesData).forEach(([_, courses]) => {
+      Object.entries(plan.coursesData).forEach(([, courses]) => {
         courses.forEach((c: Course) => {
           meta[c.id] = {
             name: c.name,
@@ -58,5 +59,5 @@ export const useCareerMetadata = () => {
     return meta;
   }, [careerId]);
 
-  return { courseMeta2013, courseMeta2025 };
+  return { originCourseMeta, targetCourseMeta };
 };

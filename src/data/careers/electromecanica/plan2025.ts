@@ -550,6 +550,7 @@ export const electromecanica2025: StudyPlan = {
         isBUI: false,
         isTUEM: false,
         isElectiveSlot: true,
+        electiveGroup: "OPTATIVAS_ELECTROMECANICA",
         requiredRegularToCourse: [
           "EM0411",
           "EM0412",
@@ -629,6 +630,20 @@ export const electromecanica2025: StudyPlan = {
         block: "TA",
         isBUI: false,
         isTUEM: false,
+        requiredRegularToCourse: [],
+        requiredApprovedToCourse: [],
+        requiredApprovedToFinal: [],
+      },
+    ],
+  },
+  electivesData: {
+    OPTATIVAS_ELECTROMECANICA: [
+      {
+        id: "OP_EM01",
+        name: "Asignatura Optativa",
+        regimen: "2º C.",
+        hours: 120,
+        block: "TA",
         requiredRegularToCourse: [],
         requiredApprovedToCourse: [],
         requiredApprovedToFinal: [],

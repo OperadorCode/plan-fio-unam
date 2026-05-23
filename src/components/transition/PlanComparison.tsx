@@ -6,9 +6,9 @@ import { TargetPlanCard } from "./comparison/TargetPlanCard";
 type SimulationResult = ReturnType<typeof simulateMigration>;
 
 interface PlanComparisonProps {
-  progress2013: number;
-  approvedCount2013: number;
-  totalCourses2013: number;
+  originProgress: number;
+  originApprovedCount: number;
+  originTotalCourses: number;
   simulation: SimulationResult;
   lostCoursesDetails: { id: string; name: string }[];
   intermediateTitle: string;
@@ -17,9 +17,9 @@ interface PlanComparisonProps {
 }
 
 export const PlanComparison: React.FC<PlanComparisonProps> = ({
-  progress2013,
-  approvedCount2013,
-  totalCourses2013,
+  originProgress,
+  originApprovedCount,
+  originTotalCourses,
   simulation,
   lostCoursesDetails,
   intermediateTitle,
@@ -29,14 +29,14 @@ export const PlanComparison: React.FC<PlanComparisonProps> = ({
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
       <CurrentPlanCard
-        progress={progress2013}
-        approvedCount={approvedCount2013}
-        totalCourses={totalCourses2013}
+        progress={originProgress}
+        approvedCount={originApprovedCount}
+        totalCourses={originTotalCourses}
         planYear={sourcePlanYear}
       />
       <TargetPlanCard
         progress={simulation.progress2025}
-        approvedCountOriginal={approvedCount2013}
+        approvedCountOriginal={originApprovedCount}
         coursesApproved2025={simulation.courses2025Approved}
         lostCoursesDetails={lostCoursesDetails}
         gainedTitles={simulation.gainedTitles}

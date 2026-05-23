@@ -21,7 +21,7 @@ export interface CreditSubject {
   isTUEM?: boolean;
   isTUEA?: boolean;
   isTUGPP?: boolean;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface CreditYear {

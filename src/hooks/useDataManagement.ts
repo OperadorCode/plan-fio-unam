@@ -53,6 +53,14 @@ export const useDataManagement = () => {
     file: File
   ): Promise<{ success: boolean; message: string }> => {
     return new Promise((resolve) => {
+      const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1MB
+      if (file.size > MAX_FILE_SIZE) {
+        const message = `El archivo es demasiado grande (${(file.size / 1024 / 1024).toFixed(1)}MB). El límite es 1MB.`;
+        setImportError(message);
+        resolve({ success: false, message });
+        return;
+      }
+
       setIsImporting(true);
       setImportError(null);
 

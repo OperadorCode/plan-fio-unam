@@ -31,7 +31,7 @@ interface AppState {
 
   setCareer: (id: string) => void;
   setActivePlan: (planId: string) => void;
-  migrateToPlan: (targetPlanId: string, approvedCourses: string[]) => void;
+  migrateToPlan: (targetPlanId: string, approvedCourses: string[], regularCourses?: string[]) => void;
   updateStatus: (courseId: string, status: CourseStatus) => void;
   selectElective: (slotId: string, optionId: string) => void;
   addExamToPlan: (periodId: string, courseId: string) => void;
@@ -54,7 +54,7 @@ interface AppState {
 
 export const useAppStore = create<AppState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       careerId: "civil",
       activePlanId: "civil-2013",
       courseStatus: {},
@@ -67,20 +67,44 @@ export const useAppStore = create<AppState>()(
         const defaultPlanId =
           careerPlans[careerId as keyof typeof careerPlans]?.id ||
           `${careerId}-2013`;
-        set({ careerId, activePlanId: defaultPlanId });
+        set({
+          careerId,
+          activePlanId: defaultPlanId,
+          courseStatus: {},
+          examPlan: {},
+          selectedElectives: {},
+          notes: {},
+          calendarEvents: {},
+        });
       },
-      setActivePlan: (planId) => set({ activePlanId: planId }),
 
-      migrateToPlan: (targetPlanId, approvedCourses) => {
-        set((state) => {
-          const newStatus: CourseStatusMap = { ...state.courseStatus };
+      setActivePlan: (planId) => {
+        if (!allPlans[planId]) {
+          if (import.meta.env.DEV) {
+            console.warn(`[Store] Plan "${planId}" no existe en allPlans`);
+          }
+          return;
+        }
+        set({ activePlanId: planId });
+      },
+
+      migrateToPlan: (targetPlanId, approvedCourses, regularCourses = []) => {
+        set(() => {
+          const newStatus: CourseStatusMap = {};
           approvedCourses.forEach((courseId) => {
             newStatus[courseId] = "approved";
+          });
+          regularCourses.forEach((courseId) => {
+            if (!newStatus[courseId]) {
+              newStatus[courseId] = "regular";
+            }
           });
 
           return {
             activePlanId: targetPlanId,
             courseStatus: newStatus,
+            examPlan: {},           // Exámenes del plan viejo no aplican
+            selectedElectives: {},  // Slots de optativas cambian entre planes
           };
         });
       },
@@ -136,13 +160,40 @@ export const useAppStore = create<AppState>()(
       },
 
       selectElective: (slotId, optionId) => {
-        set((state) => ({
-          selectedElectives: {
+        set((state) => {
+          const newElectives = {
             ...state.selectedElectives,
             [slotId]: optionId,
-          },
-        }));
-        get().updateStatus(slotId, "pending");
+          };
+
+          const tempStatus = { ...state.courseStatus };
+          delete tempStatus[slotId];
+
+          const currentPlan =
+            allPlans[state.activePlanId] ||
+            (careerPlans[
+              state.careerId as keyof typeof careerPlans
+            ] as unknown as StudyPlan);
+
+          if (!currentPlan) {
+            return {
+              selectedElectives: newElectives,
+              courseStatus: tempStatus,
+            };
+          }
+
+          const validatedState = validateCourseStatus(
+            tempStatus,
+            currentPlan,
+            newElectives,
+            state.examPlan
+          );
+
+          return {
+            selectedElectives: newElectives,
+            ...validatedState,
+          };
+        });
       },
 
       updateStatus: (courseId, newStatus) => {
@@ -182,17 +233,40 @@ export const useAppStore = create<AppState>()(
       },
 
       loadBackup: (data) => {
-        set(() => ({
-          careerId: data.careerId,
-          activePlanId:
+        set(() => {
+          const activePlanId =
             data.activePlanId ||
-            careerPlans[data.careerId as keyof typeof careerPlans]?.id,
-          courseStatus: data.courseStatus,
-          selectedElectives: data.selectedElectives || {},
-          examPlan: data.examPlan || {},
-          notes: data.notes || {},
-          calendarEvents: data.calendarEvents || {},
-        }));
+            careerPlans[data.careerId as keyof typeof careerPlans]?.id;
+
+          const selectedElectives = data.selectedElectives || {};
+          const examPlan = data.examPlan || {};
+          let courseStatus = data.courseStatus;
+
+          const targetPlan = allPlans[activePlanId || ""] ||
+            (careerPlans[
+              data.careerId as keyof typeof careerPlans
+            ] as unknown as StudyPlan);
+
+          if (targetPlan) {
+            const validated = validateCourseStatus(
+              courseStatus,
+              targetPlan,
+              selectedElectives,
+              examPlan
+            );
+            courseStatus = validated.courseStatus;
+          }
+
+          return {
+            careerId: data.careerId,
+            activePlanId,
+            courseStatus,
+            selectedElectives,
+            examPlan,
+            notes: data.notes || {},
+            calendarEvents: data.calendarEvents || {},
+          };
+        });
       },
     }),
     {

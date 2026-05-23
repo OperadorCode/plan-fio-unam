@@ -9,7 +9,7 @@
 import { useMemo } from "react";
 import { useAppStore } from "../store/useAppStore";
 import { usePlanContext } from "../context/PlanContext";
-import { careerPlans } from "../data/careers";
+import { careerPlans, allPlans } from "../data/careers";
 import { buildUnlocksMap, calculateCriticality } from "../utils/logic";
 import type { Course, StudyPlan } from "../types";
 
@@ -22,15 +22,16 @@ interface PlanCoursesData {
 
 export const usePlanCourses = (): PlanCoursesData => {
   const careerId = useAppStore((state) => state.careerId);
+  const activePlanId = useAppStore((state) => state.activePlanId);
   const selectedElectives = useAppStore((state) => state.selectedElectives);
   const { currentPlan } = usePlanContext();
 
   const allCourses = useMemo(() => {
     if (!currentPlan) return [];
 
-    const plan = careerPlans[
-      careerId as keyof typeof careerPlans
-    ] as unknown as StudyPlan;
+
+    const plan = (allPlans[activePlanId] ||
+      careerPlans[careerId as keyof typeof careerPlans]) as unknown as StudyPlan;
 
     const rawCourses = Object.values(currentPlan.coursesData).flat();
 
@@ -46,7 +47,7 @@ export const usePlanCourses = (): PlanCoursesData => {
       }
       return c;
     });
-  }, [currentPlan, careerId, selectedElectives]);
+  }, [currentPlan, careerId, activePlanId, selectedElectives]);
 
   const allCoursesById = useMemo(() => {
     const map: Record<string, Course> = {};

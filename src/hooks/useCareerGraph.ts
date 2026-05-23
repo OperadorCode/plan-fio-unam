@@ -20,7 +20,7 @@ import {
   type Edge,
 } from "reactflow";
 import { useAppStore } from "../store/useAppStore";
-import { careerPlans } from "../data/careers";
+import { careerPlans, allPlans } from "../data/careers";
 import type { StudyPlan, Course, GraphCourse } from "../types";
 import { calculateCriticality } from "../utils/logic";
 import { getRegimenOrderValue } from "../utils/courseUtils";
@@ -29,15 +29,15 @@ export const useCareerGraph = (
   initialCoursesData: Record<string, Course[]>
 ) => {
   const careerId = useAppStore((state) => state.careerId);
+  const activePlanId = useAppStore((state) => state.activePlanId);
   const courseStatus = useAppStore((state) => state.courseStatus);
   const selectedElectives = useAppStore((state) => state.selectedElectives);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
   const effectiveCoursesData = useMemo(() => {
-    const plan = careerPlans[
-      careerId as keyof typeof careerPlans
-    ] as unknown as StudyPlan;
+    const plan = (allPlans[activePlanId] ||
+      careerPlans[careerId as keyof typeof careerPlans]) as unknown as StudyPlan;
 
     if (!initialCoursesData) return {};
     if (!plan) return initialCoursesData;
@@ -71,7 +71,7 @@ export const useCareerGraph = (
     });
 
     return newMap;
-  }, [initialCoursesData, selectedElectives, careerId]);
+  }, [initialCoursesData, selectedElectives, careerId, activePlanId]);
 
   const baseGraph = useMemo(() => {
     if (!effectiveCoursesData) return { nodes: [], edges: [] };

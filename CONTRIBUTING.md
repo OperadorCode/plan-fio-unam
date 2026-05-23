@@ -45,12 +45,16 @@ Cualquier modificación en la lógica de validación académica (`academicValida
 
 ## Arquitectura de Datos
 
-Los planes de estudio se definen en `src/data/careers`. Cada plan debe implementar la interfaz `StudyPlan`.
-Al agregar una nueva carrera, es necesario registrarla en `src/data/careers/index.ts` y asegurar la integridad de los datos mediante los tests de validación existentes.
+Los datos académicos se organizan en `src/data/careers/{carrera}/`. Para cada carrera, la estructura consta de:
+- **Planes de Estudio (`plan{anio}.ts`)**: Implementan la interfaz `StudyPlan` y contienen las asignaturas, años, cuatrimestres y correlatividades.
+- **Sistemas de Créditos (`creditos{anio}.ts`)**: Implementan la interfaz `CreditSystemData` y detallan la carga horaria (HPS, HPT, HAT, CHT) y los créditos (CRE) por bloque de conocimiento.
+- **Equivalencias (`equivalencias.ts`)**: Definen las reglas de transición (interfaz `EquivalenceRule`) entre planes anteriores (ej. 2013) y el plan vigente.
+
+Al agregar una nueva carrera o modificar las transiciones, es necesario registrarla en `src/hooks/useTransitionData.ts` y asegurar la integridad de los datos mediante los tests de validación existentes.
 
 ## Actualización de Datos (Procedimiento Manual)
 
-Dado que la aplicación funciona offline-first sin backend dinámico, la actualización de datos se realiza modificado los archivos fuente.
+Dado que la aplicación funciona offline-first sin backend dinámico, la actualización de datos se realiza modificando los archivos fuente.
 
 ### Calendario Académico
 
@@ -64,13 +68,29 @@ Dado que la aplicación funciona offline-first sin backend dinámico, la actuali
 2. Definir los nuevos turnos respetando el esquema `ExamDate`.
 3. Concatenarlos al array `examDates`.
 
-### Planes de Estudio
+### Planes de Estudio y Correlativas
 
 Para modificar un plan existente (ej: corrección de correlativas):
 
 1. Localizar el archivo en `src/data/careers/{carrera}/plan{anio}.ts`.
-2. Modificar la definición de la materia.
+2. Modificar la definición de la materia (nombre, código, correlativas).
 3. Ejecutar `npm test` para asegurar que la integridad referencial se mantiene (que no rompa correlativas de otras materias).
+
+### Sistemas de Créditos y Titulaciones Intermedias
+
+Para actualizar horas, créditos o requerimientos de títulos intermedios:
+
+1. Localizar el archivo en `src/data/careers/{carrera}/creditos{anio}.ts`.
+2. Ajustar los valores de `HPS`, `HPT`, `HAT`, `CHT` o `CRE` correspondientes.
+3. Para indicar si una materia pertenece a un título intermedio, usar los flags booleanos específicos de cada carrera (ej: `isTULOC` para Civil, `isTUEM` para Electromecánica, etc.).
+
+### Equivalencias y Transición de Planes
+
+Para modificar cómo se reconocen las materias de un plan anterior en el nuevo:
+
+1. Localizar el archivo en `src/data/careers/{carrera}/equivalencias.ts`.
+2. Agregar o modificar las reglas de equivalencia especificando `sourceSubjectId`, `targetSubjectId` y el `type` de equivalencia (directa, parcial, etc.).
+3. Verificar que los códigos coincidan exactamente con los definidos en los archivos de los planes.
 
 ---
 

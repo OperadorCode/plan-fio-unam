@@ -28,7 +28,7 @@ export const TabContent: React.FC<TabContentProps> = ({
   activeTab,
   currentPlan,
 }) => {
-  const { hasTransition } = useTransitionData();
+  const { hasTransition, data } = useTransitionData();
 
   return (
     <div className="animate-fade-in min-h-[500px] flex flex-col">
@@ -56,7 +56,7 @@ export const TabContent: React.FC<TabContentProps> = ({
         </div>
       )}
 
-      {activeTab === "transition" && hasTransition && (
+      {activeTab === "transition" && hasTransition && (data?.equivalencies?.length ?? 0) > 0 && (
         <Suspense
           fallback={
             <div className="flex items-center justify-center min-h-[400px]">
@@ -70,7 +70,7 @@ export const TabContent: React.FC<TabContentProps> = ({
         </Suspense>
       )}
 
-      {activeTab === "equivalencies" && hasTransition && (
+      {activeTab === "equivalencies" && hasTransition && (data?.equivalencies?.length ?? 0) > 0 && (
         <Suspense
           fallback={
             <div className="flex items-center justify-center min-h-[400px]">

@@ -16,7 +16,7 @@ const TransitionDashboard: React.FC = () => {
     performMigration,
   } = useMigrationLogic();
 
-  const { courseMeta2013, courseMeta2025 } = useCareerMetadata();
+  const { originCourseMeta, targetCourseMeta } = useCareerMetadata();
 
   if (!hasTransition || !transitionData) return null;
 
@@ -35,8 +35,8 @@ const TransitionDashboard: React.FC = () => {
         <div className="px-4 xl:px-8 max-w-5xl mx-auto">
           <TransitionStepContent
             transitionData={transitionData}
-            courseMeta2013={courseMeta2013}
-            courseMeta2025={courseMeta2025}
+            originCourseMeta={originCourseMeta}
+            targetCourseMeta={targetCourseMeta}
             approvedCourses={approvedCourses}
             regularCourses={regularCourses}
             simulation={simulation}

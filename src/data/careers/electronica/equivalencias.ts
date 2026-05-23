@@ -1,10 +1,4 @@
-export interface EquivalenceRule {
-  targetId: string; // ID de la materia en el Plan 2025 (Nuevo)
-  targetName: string; // Nombre referencia Plan 2025
-  sourceIds: string[]; // IDs de las materias necesarias del Plan 2013 (Viejo)
-  type: "DIRECTA" | "PARCIAL";
-  note?: string; 
-}
+import type { EquivalenceRule } from "../../../types";
 
 /**
  * Tabla de Equivalencias entre Plan 2013 (Res. C.S. N°075/12) y Plan 2025

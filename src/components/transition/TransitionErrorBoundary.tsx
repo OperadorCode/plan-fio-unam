@@ -34,7 +34,7 @@ export class TransitionErrorBoundary extends Component<Props, State> {
 
   private handleGoHome = () => {
     window.dispatchEvent(
-      new CustomEvent("change-tab", { detail: { tab: "table" } })
+      new CustomEvent("navigate-to-tab", { detail: { tabId: "table" } })
     );
     this.setState({ hasError: false, error: undefined });
   };
@@ -72,7 +72,8 @@ export class TransitionErrorBoundary extends Component<Props, State> {
               </button>
             </div>
 
-            {this.state.error && (
+            {/* M14 fix: ocultar detalles del error en producción */}
+            {import.meta.env.DEV && this.state.error && (
               <div className="mt-4 p-3 bg-gray-100 dark:bg-gray-900 rounded text-left overflow-auto max-h-24">
                 <code className="text-[10px] text-gray-500 font-mono block">
                   {this.state.error.toString()}

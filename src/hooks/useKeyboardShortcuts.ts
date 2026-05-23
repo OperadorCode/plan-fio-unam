@@ -17,6 +17,15 @@ interface Shortcut {
 export const useKeyboardShortcuts = (shortcuts: Shortcut[]) => {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (
+        target instanceof HTMLInputElement ||
+        target instanceof HTMLTextAreaElement ||
+        target.isContentEditable
+      ) {
+        return;
+      }
+
       shortcuts.forEach(({ combo, handler, preventDefault = true }) => {
         const keys = combo.toLowerCase().split("+");
         const mainKey = keys[keys.length - 1];
@@ -46,3 +55,4 @@ export const useKeyboardShortcuts = (shortcuts: Shortcut[]) => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [shortcuts]);
 };
+

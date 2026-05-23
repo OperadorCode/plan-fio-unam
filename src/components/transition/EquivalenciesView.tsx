@@ -7,16 +7,16 @@ import { AlertCircle } from "lucide-react";
 
 export const EquivalenciesView: React.FC = () => {
     const { data: transitionData, hasTransition } = useTransitionData();
-    const { courseMeta2013, courseMeta2025 } = useCareerMetadata();
+    const { originCourseMeta, targetCourseMeta } = useCareerMetadata();
     const courseStatus = useAppStore((state) => state.courseStatus);
 
     const approvedCourses = useMemo(
-        () => Object.entries(courseStatus).filter(([_, status]) => status === "approved").map(([id]) => id),
+        () => Object.entries(courseStatus).filter(([, status]) => status === "approved").map(([id]) => id),
         [courseStatus]
     );
 
     const regularCourses = useMemo(
-        () => Object.entries(courseStatus).filter(([_, status]) => status === "regular").map(([id]) => id),
+        () => Object.entries(courseStatus).filter(([, status]) => status === "regular").map(([id]) => id),
         [courseStatus]
     );
 
@@ -41,8 +41,8 @@ export const EquivalenciesView: React.FC = () => {
                 </p>
             </div>
             <EquivalenciesTable
-                courseMeta2013={courseMeta2013}
-                courseMeta2025={courseMeta2025}
+                originCourseMeta={originCourseMeta}
+                targetCourseMeta={targetCourseMeta}
                 approvedCourses={approvedCourses}
                 regularCourses={regularCourses}
                 equivalencies={transitionData.equivalencies}

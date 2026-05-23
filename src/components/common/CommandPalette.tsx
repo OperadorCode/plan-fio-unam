@@ -39,7 +39,7 @@ export const CommandPalette: React.FC = () => {
 
   useEffect(() => {
     if (!isOpen) {
-      setQuery("");
+      setTimeout(() => setQuery(""), 0);
       setHoveredCourseId(null);
     }
   }, [isOpen, setHoveredCourseId]);

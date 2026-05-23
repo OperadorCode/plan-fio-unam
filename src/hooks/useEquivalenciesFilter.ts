@@ -3,11 +3,11 @@ import type { EquivalenceRule } from "../types";
 import { normalizeText } from "../utils/textUtils";
 
 interface UseEquivalenciesFilterProps {
-  courseMeta2013: Record<
+  originCourseMeta: Record<
     string,
     { name: string; year: string; regimen: string; hours: number }
   >;
-  courseMeta2025: Record<
+  targetCourseMeta: Record<
     string,
     { name: string; regimen: string; block: string }
   >;
@@ -15,15 +15,15 @@ interface UseEquivalenciesFilterProps {
 }
 
 export const useEquivalenciesFilter = ({
-  courseMeta2013,
-  courseMeta2025,
+  originCourseMeta,
+  targetCourseMeta,
   equivalencies,
 }: UseEquivalenciesFilterProps) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const searchIndex = useMemo(() => {
     return equivalencies.map((eq) => {
-      const meta2025 = courseMeta2025[eq.targetId];
+      const meta2025 = targetCourseMeta[eq.targetId];
       const targetName = meta2025?.name || eq.targetName;
       const targetRegimen = meta2025?.regimen;
 
@@ -31,7 +31,7 @@ export const useEquivalenciesFilter = ({
       const targetIdNorm = normalizeText(eq.targetId);
 
       const sourceData = eq.sourceIds.map((id) => {
-        const meta = courseMeta2013[id];
+        const meta = originCourseMeta[id];
         return {
           id,
           idNorm: normalizeText(id),
@@ -49,7 +49,7 @@ export const useEquivalenciesFilter = ({
         sourceData,
       };
     });
-  }, [courseMeta2013, courseMeta2025]);
+  }, [originCourseMeta, targetCourseMeta, equivalencies]);
 
   const groupedEquivalencies = useMemo(() => {
     const term = normalizeText(searchTerm);

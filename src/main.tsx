@@ -7,6 +7,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import { PlanProvider } from "./context/PlanContext";
 import { HoverProvider } from "./context/HoverContext";
+import { ErrorBoundary } from "./components/common/ErrorBoundary";
 import "./index.css";
 
 const rootElement = document.getElementById("root");
@@ -16,11 +17,14 @@ if (!rootElement) {
 } else {
   ReactDOM.createRoot(rootElement).render(
     <React.StrictMode>
-      <PlanProvider>
-        <HoverProvider>
-          <App />
-        </HoverProvider>
-      </PlanProvider>
+      <ErrorBoundary>
+        <PlanProvider>
+          <HoverProvider>
+            <App />
+          </HoverProvider>
+        </PlanProvider>
+      </ErrorBoundary>
     </React.StrictMode>
   );
 }
+

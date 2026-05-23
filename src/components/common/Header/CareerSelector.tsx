@@ -3,12 +3,18 @@ import { ChevronDown, Check, GraduationCap } from "lucide-react";
 import { useAppStore } from "../../../store/useAppStore";
 import { careersRegistry } from "../../../data/careers";
 import { getCareerIcon } from "../../../utils/iconHelpers";
+import { ConfirmationModal } from "../ConfirmationModal";
 
 export const CareerSelector: React.FC = () => {
   const careerId = useAppStore((state) => state.careerId);
+  const courseStatus = useAppStore((state) => state.courseStatus);
   const setCareer = useAppStore((state) => state.setCareer);
   const [isCareerOpen, setIsCareerOpen] = useState(false);
   const [showCareerHint, setShowCareerHint] = useState(false);
+  const [seenNewIndustrial, setSeenNewIndustrial] = useState(false);
+  const [pendingCareerId, setPendingCareerId] = useState<string | null>(null);
+
+  const hasProgress = Object.keys(courseStatus).length > 0;
 
   const careerRef = useRef<HTMLDivElement>(null);
   const currentCareer = careersRegistry[careerId];
@@ -20,6 +26,17 @@ export const CareerSelector: React.FC = () => {
       return () => clearTimeout(timer);
     }
   }, []);
+
+  useEffect(() => {
+    setSeenNewIndustrial(localStorage.getItem("seenNew_industrial") === "true");
+  }, []);
+
+  useEffect(() => {
+    if (careerId === "industrial" && !seenNewIndustrial) {
+      localStorage.setItem("seenNew_industrial", "true");
+      setSeenNewIndustrial(true);
+    }
+  }, [careerId, seenNewIndustrial]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -40,7 +57,7 @@ export const CareerSelector: React.FC = () => {
     window.dispatchEvent(new Event("careerHintDismissed"));
   };
 
-  return (
+  const mainContent = (
     <div className="relative" ref={careerRef}>
       {/* Tooltip Animado */}
       {showCareerHint && (
@@ -110,7 +127,19 @@ export const CareerSelector: React.FC = () => {
                 key={career.id}
                 onClick={() => {
                   if (isDisabled) return;
-                  setCareer(career.id);
+                  if (isSelected) {
+                    setIsCareerOpen(false);
+                    return;
+                  }
+                  if (career.id === "industrial") {
+                    localStorage.setItem("seenNew_industrial", "true");
+                    setSeenNewIndustrial(true);
+                  }
+                  if (hasProgress) {
+                    setPendingCareerId(career.id);
+                  } else {
+                    setCareer(career.id);
+                  }
                   setIsCareerOpen(false);
                 }}
                 disabled={isDisabled}
@@ -136,14 +165,19 @@ export const CareerSelector: React.FC = () => {
                     {getCareerIcon(career.icon, 16)}
                   </span>
                   <span
-                    className={`truncate ${isDisabled
+                    className={`truncate flex items-center gap-2 ${isDisabled
                       ? "text-gray-400 dark:text-gray-600"
                       : isSelected
                         ? "text-blue-700 dark:text-blue-300"
                         : "text-gray-700 dark:text-gray-300"
                       }`}
                   >
-                    {career.name}
+                    <span>{career.name}</span>
+                    {career.id === "industrial" && !seenNewIndustrial && (
+                      <span className="text-[9px] uppercase font-bold text-white bg-blue-500 px-1.5 py-0.5 rounded-full animate-pulse">
+                        Nuevo
+                      </span>
+                    )}
                   </span>
                 </div>
                 {isDisabled ? (
@@ -160,4 +194,26 @@ export const CareerSelector: React.FC = () => {
       )}
     </div>
   );
+
+  return (
+    <>
+      <ConfirmationModal
+        isOpen={pendingCareerId !== null}
+        onClose={() => setPendingCareerId(null)}
+        onConfirm={() => {
+          if (pendingCareerId) {
+            setCareer(pendingCareerId);
+            setPendingCareerId(null);
+          }
+        }}
+        title="Cambiar de carrera"
+        message="Al cambiar de carrera se borrará todo tu progreso actual (materias, exámenes, notas y calendario). Te recomendamos exportar un backup antes de continuar."
+        confirmText="Cambiar carrera"
+        cancelText="Cancelar"
+        type="warning"
+      />
+      {mainContent}
+    </>
+  );
 };
+

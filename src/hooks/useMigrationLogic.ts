@@ -11,7 +11,7 @@ export const useMigrationLogic = () => {
   const approvedCourses = useMemo(
     () =>
       Object.entries(courseStatus)
-        .filter(([_, status]) => status === "approved")
+        .filter(([, status]) => status === "approved")
         .map(([id]) => id),
     [courseStatus]
   );
@@ -19,7 +19,7 @@ export const useMigrationLogic = () => {
   const regularCourses = useMemo(
     () =>
       Object.entries(courseStatus)
-        .filter(([_, status]) => status === "regular")
+        .filter(([, status]) => status === "regular")
         .map(([id]) => id),
     [courseStatus]
   );
@@ -44,11 +44,10 @@ export const useMigrationLogic = () => {
     setIsMigrating(true);
     migrateToPlan(
       transitionData.config.targetPlanId,
-      simulation.courses2025Approved
+      simulation.courses2025Approved,
+      simulation.courses2025Regular
     );
-    setTimeout(() => {
-      window.location.reload();
-    }, 800);
+    setIsMigrating(false);
   }, [transitionData, simulation, migrateToPlan, isMigrating]);
 
   return {
@@ -64,3 +63,4 @@ export const useMigrationLogic = () => {
     performMigration,
   };
 };
+

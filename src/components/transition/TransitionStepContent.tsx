@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import type {
-  CourseMeta2013,
-  CourseMeta2025,
+  OriginCourseMeta,
+  TargetCourseMeta,
 } from "../../hooks/useCareerMetadata";
 import type { TransitionData } from "../../hooks/useTransitionData";
 import { IntroStep } from "./steps/IntroStep";
@@ -11,8 +11,8 @@ import { MigrationStep } from "./steps/MigrationStep";
 
 interface StepContentProps {
   transitionData: TransitionData | null;
-  courseMeta2013: Record<string, CourseMeta2013>;
-  courseMeta2025: Record<string, CourseMeta2025>;
+  originCourseMeta: Record<string, OriginCourseMeta>;
+  targetCourseMeta: Record<string, TargetCourseMeta>;
   approvedCourses: string[];
   regularCourses: string[];
   simulation: ReturnType<
@@ -27,8 +27,8 @@ interface StepContentProps {
 const TransitionStepContent: React.FC<StepContentProps> = memo(
   ({
     transitionData,
-    courseMeta2013,
-    courseMeta2025,
+    originCourseMeta,
+    targetCourseMeta,
     approvedCourses,
     regularCourses,
     simulation,
@@ -43,7 +43,7 @@ const TransitionStepContent: React.FC<StepContentProps> = memo(
       <div className="flex flex-col gap-16 md:gap-24 animate-fade-in pb-12">
         {/* Sección 1: Introducción */}
         <section id="transicion-intro" className="scroll-mt-24">
-          <IntroStep intermediateTitle={transitionData.intermediateTitle} />
+            <IntroStep intermediateTitle={transitionData.intermediateTitle} />
         </section>
 
         {/* Sección 2: Equivalencias */}
@@ -56,8 +56,8 @@ const TransitionStepContent: React.FC<StepContentProps> = memo(
             </div>
           </div>
           <EquivalenciesStep
-            courseMeta2013={courseMeta2013}
-            courseMeta2025={courseMeta2025}
+            originCourseMeta={originCourseMeta}
+            targetCourseMeta={targetCourseMeta}
             approvedCourses={approvedCourses}
             regularCourses={regularCourses}
             equivalencies={transitionData.equivalencies}
