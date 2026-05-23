@@ -57,6 +57,14 @@ export const CareerSelector: React.FC = () => {
     window.dispatchEvent(new Event("careerHintDismissed"));
   };
 
+  useEffect(() => {
+    if (isCareerOpen) {
+      window.dispatchEvent(new Event("careerMenuOpened"));
+    } else {
+      window.dispatchEvent(new Event("careerMenuClosed"));
+    }
+  }, [isCareerOpen]);
+
   const mainContent = (
     <div className="relative" ref={careerRef}>
       {/* Tooltip Animado */}
@@ -143,7 +151,7 @@ export const CareerSelector: React.FC = () => {
                   setIsCareerOpen(false);
                 }}
                 disabled={isDisabled}
-                className={`w-full text-left px-4 py-3 text-sm flex items-center justify-between transition-colors
+                className={`w-full text-left px-4 py-3 text-sm flex items-center justify-between gap-2 transition-colors
                                     ${isDisabled
                     ? "opacity-50 cursor-not-allowed"
                     : isSelected
@@ -165,27 +173,27 @@ export const CareerSelector: React.FC = () => {
                     {getCareerIcon(career.icon, 16)}
                   </span>
                   <span
-                    className={`truncate flex items-center gap-2 ${isDisabled
+                    className={`flex items-center gap-2 min-w-0 ${isDisabled
                       ? "text-gray-400 dark:text-gray-600"
                       : isSelected
                         ? "text-blue-700 dark:text-blue-300"
                         : "text-gray-700 dark:text-gray-300"
                       }`}
                   >
-                    <span>{career.name}</span>
+                    <span className="truncate">{career.name}</span>
                     {career.id === "industrial" && !seenNewIndustrial && (
-                      <span className="text-[9px] uppercase font-bold text-white bg-blue-500 px-1.5 py-0.5 rounded-full animate-pulse">
+                      <span className="text-[9px] uppercase font-bold text-white bg-blue-500 px-1.5 py-0.5 rounded-full animate-pulse flex-shrink-0">
                         Nuevo
                       </span>
                     )}
                   </span>
                 </div>
                 {isDisabled ? (
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400 dark:text-gray-600 bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-full whitespace-nowrap">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400 dark:text-gray-600 bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-full whitespace-nowrap flex-shrink-0">
                     Próximamente
                   </span>
                 ) : (
-                  isSelected && <Check size={14} />
+                  isSelected && <Check size={14} className="flex-shrink-0" />
                 )}
               </button>
             );

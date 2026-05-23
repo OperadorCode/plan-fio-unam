@@ -17,17 +17,41 @@ export const PlanSelector: React.FC = () => {
     const hasSeenPlanHint = localStorage.getItem("planHintDismissed");
     if (hasSeenPlanHint) return;
 
-    const showHintWithDelay = () => {
-      setTimeout(() => setShowPlanHint(true), 800);
+    let timer: ReturnType<typeof setTimeout>;
+
+    const tryShowHint = (delay: number) => {
+      if (!localStorage.getItem("careerHintDismissed")) return;
+      clearTimeout(timer);
+      timer = setTimeout(() => setShowPlanHint(true), delay);
+    };
+
+    const handleCareerHintDismissed = () => {
+      tryShowHint(800);
+    };
+
+    const handleCareerMenuOpened = () => {
+      clearTimeout(timer);
+      setShowPlanHint(false);
+    };
+
+    const handleCareerMenuClosed = () => {
+      tryShowHint(800);
     };
 
     if (localStorage.getItem("careerHintDismissed")) {
-      const timer = setTimeout(() => setShowPlanHint(true), 2500);
-      return () => clearTimeout(timer);
-    } else {
-      window.addEventListener("careerHintDismissed", showHintWithDelay);
-      return () => window.removeEventListener("careerHintDismissed", showHintWithDelay);
+      tryShowHint(2500);
     }
+
+    window.addEventListener("careerHintDismissed", handleCareerHintDismissed);
+    window.addEventListener("careerMenuOpened", handleCareerMenuOpened);
+    window.addEventListener("careerMenuClosed", handleCareerMenuClosed);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("careerHintDismissed", handleCareerHintDismissed);
+      window.removeEventListener("careerMenuOpened", handleCareerMenuOpened);
+      window.removeEventListener("careerMenuClosed", handleCareerMenuClosed);
+    };
   }, []);
 
   const dismissHint = () => {
