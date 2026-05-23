@@ -47,7 +47,7 @@ export const creditos2025 = {
           nombre: "Álgebra 1",
           HPS: 5, HPT: 75, HAT: 94, CHT: 169, CRE: 5,
           bloque: "CB",
-          isTitulacionIntermedia: true,
+          isTUGPP: true,
         },
         {
           cuatrimestre: "1º C.",
@@ -55,7 +55,7 @@ export const creditos2025 = {
           nombre: "Cálculo Diferencial",
           HPS: 6, HPT: 90, HAT: 113, CHT: 203, CRE: 6,
           bloque: "CB",
-          isTitulacionIntermedia: true,
+          isTUGPP: true,
         },
         {
           cuatrimestre: "1º C.",
@@ -63,7 +63,7 @@ export const creditos2025 = {
           nombre: "Inglés 1",
           HPS: 3, HPT: 45, HAT: 45, CHT: 90, CRE: 3,
           bloque: "CC",
-          isTitulacionIntermedia: true,
+          isTUGPP: true,
         },
         {
           cuatrimestre: "1º C.",
@@ -71,7 +71,7 @@ export const creditos2025 = {
           nombre: "Introducción a la Ingeniería Industrial",
           HPS: 4, HPT: 60, HAT: 60, CHT: 120, CRE: 4,
           bloque: "CC",
-          isTitulacionIntermedia: true,
+          isTUGPP: true,
         },
         {
           cuatrimestre: "2º C.",
@@ -79,7 +79,7 @@ export const creditos2025 = {
           nombre: "Álgebra 2",
           HPS: 5, HPT: 75, HAT: 94, CHT: 169, CRE: 5,
           bloque: "CB",
-          isTitulacionIntermedia: true,
+          isTUGPP: true,
         },
         {
           cuatrimestre: "2º C.",
@@ -87,7 +87,7 @@ export const creditos2025 = {
           nombre: "Cálculo Integral",
           HPS: 4, HPT: 60, HAT: 75, CHT: 135, CRE: 4,
           bloque: "CB",
-          isTitulacionIntermedia: true,
+          isTUGPP: true,
         },
         {
           cuatrimestre: "2º C.",
@@ -95,7 +95,7 @@ export const creditos2025 = {
           nombre: "Física 1",
           HPS: 8, HPT: 120, HAT: 150, CHT: 270, CRE: 9,
           bloque: "CB",
-          isTitulacionIntermedia: true,
+          isTUGPP: true,
         },
         {
           cuatrimestre: "2º C.",
@@ -110,7 +110,7 @@ export const creditos2025 = {
           nombre: "Sistemas de Representación Gráfica",
           HPS: 4, HPT: 60, HAT: 75, CHT: 135, CRE: 4,
           bloque: "CB",
-          isTitulacionIntermedia: true,
+          isTUGPP: true,
         },
       ],
     },
@@ -130,7 +130,7 @@ export const creditos2025 = {
           nombre: "Física 2",
           HPS: 6, HPT: 90, HAT: 113, CHT: 203, CRE: 6,
           bloque: "CB",
-          isTitulacionIntermedia: true,
+          isTUGPP: true,
         },
         {
           cuatrimestre: "1º C.",
@@ -138,7 +138,7 @@ export const creditos2025 = {
           nombre: "Probabilidad y Estadística",
           HPS: 4, HPT: 60, HAT: 75, CHT: 135, CRE: 4,
           bloque: "CB",
-          isTitulacionIntermedia: true,
+          isTUGPP: true,
         },
         {
           cuatrimestre: "1º C.",
@@ -146,7 +146,7 @@ export const creditos2025 = {
           nombre: "Química",
           HPS: 5, HPT: 75, HAT: 94, CHT: 169, CRE: 5,
           bloque: "CB",
-          isTitulacionIntermedia: true,
+          isTUGPP: true,
         },
         {
           cuatrimestre: "1º C.",
@@ -154,7 +154,7 @@ export const creditos2025 = {
           nombre: "Economía e Ingeniería Económica",
           HPS: 6, HPT: 90, HAT: 135, CHT: 225, CRE: 7,
           bloque: "TB",
-          isTitulacionIntermedia: true,
+          isTUGPP: true,
         },
         {
           cuatrimestre: "2º C.",
@@ -162,7 +162,7 @@ export const creditos2025 = {
           nombre: "Estática y Resistencia de Materiales",
           HPS: 6, HPT: 90, HAT: 135, CHT: 225, CRE: 8,
           bloque: "TB",
-          isTitulacionIntermedia: true,
+          isTUGPP: true,
         },
         {
           cuatrimestre: "2º C.",
@@ -170,7 +170,7 @@ export const creditos2025 = {
           nombre: "Informática",
           HPS: 4, HPT: 60, HAT: 75, CHT: 135, CRE: 4,
           bloque: "CB",
-          isTitulacionIntermedia: true,
+          isTUGPP: true,
         },
         {
           cuatrimestre: "2º C.",
@@ -178,7 +178,7 @@ export const creditos2025 = {
           nombre: "Mecánica Aplicada",
           HPS: 4, HPT: 60, HAT: 90, CHT: 150, CRE: 5,
           bloque: "TB",
-          isTitulacionIntermedia: true,
+          isTUGPP: true,
         },
         {
           cuatrimestre: "2º C.",
@@ -186,7 +186,7 @@ export const creditos2025 = {
           nombre: "Termodinámica",
           HPS: 6, HPT: 90, HAT: 135, CHT: 225, CRE: 8,
           bloque: "TB",
-          isTitulacionIntermedia: true,
+          isTUGPP: true,
         },
       ],
     },
@@ -199,7 +199,7 @@ export const creditos2025 = {
           nombre: "Electrónica y Control",
           HPS: 4, HPT: 60, HAT: 90, CHT: 150, CRE: 5,
           bloque: "TB",
-          isTitulacionIntermedia: true,
+          isTUGPP: true,
         },
         {
           cuatrimestre: "1º C.",
@@ -207,7 +207,7 @@ export const creditos2025 = {
           nombre: "Mecánica de los Fluidos y Máquinas",
           HPS: 6, HPT: 90, HAT: 135, CHT: 225, CRE: 7,
           bloque: "TB",
-          isTitulacionIntermedia: true,
+          isTUGPP: true,
         },
         {
           cuatrimestre: "1º C.",
@@ -215,7 +215,7 @@ export const creditos2025 = {
           nombre: "Electrotecnia y Máquinas Eléctricas",
           HPS: 6, HPT: 90, HAT: 135, CHT: 225, CRE: 7,
           bloque: "TB",
-          isTitulacionIntermedia: true,
+          isTUGPP: true,
         },
         {
           cuatrimestre: "1º C.",
@@ -223,7 +223,7 @@ export const creditos2025 = {
           nombre: "Sistemas de Producción",
           HPS: 6, HPT: 90, HAT: 180, CHT: 270, CRE: 9,
           bloque: "TA",
-          isTitulacionIntermedia: true,
+          isTUGPP: true,
         },
         {
           cuatrimestre: "2º C.",
@@ -238,7 +238,7 @@ export const creditos2025 = {
           nombre: "Higiene, Seguridad y Medio Ambiente",
           HPS: 5, HPT: 75, HAT: 150, CHT: 225, CRE: 7,
           bloque: "TA",
-          isTitulacionIntermedia: true,
+          isTUGPP: true,
         },
         {
           cuatrimestre: "2º C.",
@@ -246,7 +246,7 @@ export const creditos2025 = {
           nombre: "Costos Industriales",
           HPS: 4, HPT: 60, HAT: 120, CHT: 180, CRE: 6,
           bloque: "TA",
-          isTitulacionIntermedia: true,
+          isTUGPP: true,
         },
         {
           cuatrimestre: "2º C.",
@@ -254,7 +254,7 @@ export const creditos2025 = {
           nombre: "Estadística Aplicada",
           HPS: 4, HPT: 60, HAT: 90, CHT: 150, CRE: 5,
           bloque: "TB",
-          isTitulacionIntermedia: true,
+          isTUGPP: true,
         },
         {
           cuatrimestre: "2º C.",
@@ -262,7 +262,7 @@ export const creditos2025 = {
           nombre: "Procesos de Producción",
           HPS: 5, HPT: 75, HAT: 150, CHT: 225, CRE: 7,
           bloque: "TA",
-          isTitulacionIntermedia: true,
+          isTUGPP: true,
         },
       ],
     },
