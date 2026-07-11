@@ -12,8 +12,8 @@
 import { Github, Mail, Bug, ExternalLink } from "lucide-react";
 
 const PROJECT_URLS = {
-  source: " ",
-  issues: "soporte@planfio.org",
+  source: "https://github.com/OperadorCode/plan-fio-unam",
+  issues: "https://github.com/OperadorCode/plan-fio-unam/issues/new",
   feedback:
     "https://docs.google.com/forms/d/e/1FAIpQLSfWc7fNm_VqvS8kA_eIvc5jIwgL0tsLXvMFK_w4_M-qOm6QyQ/viewform?usp=dialog",
 };

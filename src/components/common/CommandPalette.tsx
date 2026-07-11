@@ -2,8 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { Search, GraduationCap } from "lucide-react";
 import { useAppStore } from "../../store/useAppStore";
 import { useHoverContext } from "../../context/HoverContext";
-import type { StudyPlan } from "../../types";
-import { careerPlans } from "../../data/careers";
+import { getPlanForCareer } from "../../data/careers";
 import { useKeyboardShortcuts } from "../../hooks/useKeyboardShortcuts";
 import CommandPaletteErrorBoundary from "./CommandPaletteErrorBoundary";
 
@@ -93,9 +92,7 @@ const CourseList: React.FC<{
   const filteredCourses = useMemo(() => {
     if (!query.trim()) return [];
 
-    const plan = careerPlans[
-      careerId as keyof typeof careerPlans
-    ] as unknown as StudyPlan;
+    const plan = getPlanForCareer(careerId);
     if (!plan) return [];
 
     const courses = Object.values(plan.coursesData).flat();

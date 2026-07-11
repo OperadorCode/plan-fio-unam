@@ -1,7 +1,23 @@
 {
-  "name": "planificador-fio-v2",
+  "name": "planificador-fio-unam",
+  "version": "1.0.0",
+  "description": "Planificador académico para la Facultad de Ingeniería de Oberá (UNaM). Gestión de correlatividades, planes de estudio y calendario de exámenes.",
+  "author": "OperadorCode",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OperadorCode/plan-fio-unam.git"
+  },
+  "homepage": "https://planfio.org/",
+  "keywords": [
+    "planificador",
+    "fio",
+    "unam",
+    "academico",
+    "correlatividades",
+    "ingenieria"
+  ],
   "private": true,
-  "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -39,9 +55,9 @@
     "tailwindcss": "^3.4.17",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.4",
-    "vite": "^7.2.4",
+    "vite": "^7.3.5",
     "vite-plugin-bundle-analyzer": "^0.0.1",
     "vite-plugin-pwa": "^1.2.0",
-    "vitest": "^4.0.16"
+    "vitest": "^4.1.10"
   }
 }

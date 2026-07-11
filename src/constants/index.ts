@@ -20,8 +20,8 @@ export const CONFIG = {
 };
 
 export const LINKS = {
-  GITHUB_REPO: "https://github.com/usuario/planificador-fio-v2",
-  REPORT_ISSUE: "https://github.com/usuario/planificador-fio-v2/issues/new",
+  GITHUB_REPO: "https://github.com/OperadorCode/plan-fio-unam",
+  REPORT_ISSUE: "https://github.com/OperadorCode/plan-fio-unam/issues/new",
 };
 
 export const TIMING = {

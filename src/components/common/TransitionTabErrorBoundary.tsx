@@ -12,12 +12,12 @@ interface State {
 }
 
 /**
- * TransitionErrorBoundary:
+ * TransitionTabErrorBoundary:
  * Captura errores específicos dentro del dashboard de transición para no romper toda la app.
  * Permite al usuario volver a la vista principal sin perder su progreso.
  */
 
-class TransitionErrorBoundary extends Component<Props, State> {
+class TransitionTabErrorBoundary extends Component<Props, State> {
   public state: State = {
     hasError: false,
     error: null,
@@ -96,4 +96,4 @@ class TransitionErrorBoundary extends Component<Props, State> {
   }
 }
 
-export default TransitionErrorBoundary;
+export default TransitionTabErrorBoundary;

@@ -9,9 +9,9 @@
 import { useMemo } from "react";
 import { useAppStore } from "../store/useAppStore";
 import { usePlanContext } from "../context/PlanContext";
-import { careerPlans, allPlans } from "../data/careers";
+import { allPlans, getPlanForCareer } from "../data/careers";
 import { buildUnlocksMap, calculateCriticality } from "../utils/logic";
-import type { Course, StudyPlan } from "../types";
+import type { Course } from "../types";
 
 interface PlanCoursesData {
   allCourses: Course[];
@@ -30,8 +30,7 @@ export const usePlanCourses = (): PlanCoursesData => {
     if (!currentPlan) return [];
 
 
-    const plan = (allPlans[activePlanId] ||
-      careerPlans[careerId as keyof typeof careerPlans]) as unknown as StudyPlan;
+    const plan = allPlans[activePlanId] || getPlanForCareer(careerId);
 
     const rawCourses = Object.values(currentPlan.coursesData).flat();
 

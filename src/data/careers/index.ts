@@ -113,3 +113,12 @@ export const allPlans: PlansDB = {
   [mecatronica2020.id]: mecatronica2020,
   [higiene2012.id]: higiene2012,
 };
+
+/**
+ * Obtiene el plan de estudios vigente o principal asociado a una carrera.
+ * @param careerId ID de la carrera
+ * @returns El StudyPlan correspondiente o undefined si no existe
+ */
+export const getPlanForCareer = (careerId: string): StudyPlan | undefined => {
+  return careerPlans[careerId];
+};

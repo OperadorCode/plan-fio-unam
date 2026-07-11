@@ -5,11 +5,15 @@ Este documento establece los lineamientos técnicos y estándares de desarrollo 
 ## Stack Tecnológico
 
 - **Runtime**: Node.js (Latest LTS)
-- **Framework**: React + Vite
+- **Framework**: React 19 + Vite
 - **Lenguaje**: TypeScript (Strict Mode)
 - **Gestión de Estado**: Zustand
 - **Estilos**: Tailwind CSS
+- **Visualización**: React Flow (grafos de correlatividades)
+- **Animaciones**: Framer Motion
+- **Validación**: Zod (schemas de datos)
 - **Testing**: Vitest + React Testing Library
+
 
 ## Convenciones de Código
 
@@ -19,6 +23,13 @@ Este documento establece los lineamientos técnicos y estándares de desarrollo 
 - `src/components`: Componentes funcionales. Se recomienda el uso de `React.memo` únicamente cuando sea justificable por razones de rendimiento.
 - `src/store`: Lógica de negocio y gestión de estado global.
 - `src/types`: Definiciones de TypeScript compartidas.
+- `src/schemas`: Schemas de validación con Zod para la integridad de datos.
+- `src/hooks`: Hooks personalizados de React que encapsulan lógica reutilizable.
+- `src/context`: Contextos de React para estado compartido entre componentes.
+- `src/constants`: Constantes de configuración de la aplicación.
+- `src/styles`: Estilos y definiciones de colores por dominio.
+- `src/utils`: Funciones utilitarias y lógica de validación académica.
+
 
 ### TypeScript
 
@@ -82,7 +93,7 @@ Para actualizar horas, créditos o requerimientos de títulos intermedios:
 
 1. Localizar el archivo en `src/data/careers/{carrera}/creditos{anio}.ts`.
 2. Ajustar los valores de `HPS`, `HPT`, `HAT`, `CHT` o `CRE` correspondientes.
-3. Para indicar si una materia pertenece a un título intermedio, usar los flags booleanos específicos de cada carrera (ej: `isTULOC` para Civil, `isTUEM` para Electromecánica, etc.).
+3. Para indicar si una materia pertenece a un título intermedio, usar los flags booleanos específicos de cada carrera: `isTULOC` (Civil - Técnico en Laboratorio de Obras Civiles), `isTUEM` (Electromecánica), `isTUEA` (Electrónica), `isTUGPP` (Industrial), `isBUI` (Básica Universitaria en Ingeniería).
 
 ### Equivalencias y Transición de Planes
 

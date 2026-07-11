@@ -15,9 +15,9 @@ import React, { useState, useMemo } from "react";
 import { ChevronDown, Check, BookOpen, Lock, Trash2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAppStore } from "../../../store/useAppStore";
-import { careerPlans } from "../../../data/careers";
+import { getPlanForCareer } from "../../../data/careers";
 import { getMissingPrerequisites } from "../../../utils/logic";
-import type { Course, StudyPlan } from "../../../types";
+import type { Course } from "../../../types";
 
 interface Props {
   slot: Course;
@@ -33,9 +33,7 @@ export const ElectiveSlotRow: React.FC<Props> = ({ slot }) => {
     updateStatus,
   } = useAppStore();
 
-  const currentPlan = careerPlans[
-    careerId as keyof typeof careerPlans
-  ] as unknown as StudyPlan;
+  const currentPlan = getPlanForCareer(careerId);
   const options = currentPlan?.electivesData?.[slot.electiveGroup!] || [];
 
   const selectedOptionId = selectedElectives[slot.id];
@@ -271,7 +269,7 @@ export const ElectiveSlotRow: React.FC<Props> = ({ slot }) => {
                   selectedElectives
                 ).some((key) => {
                   if (key === slot.id) return false;
-                  const otherSlot = Object.values(currentPlan.coursesData)
+                  const otherSlot = Object.values(currentPlan?.coursesData || {})
                     .flat()
                     .find((c) => c.id === key);
                   if (

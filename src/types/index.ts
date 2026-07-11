@@ -5,7 +5,6 @@
  * --------------------------------------------------------
  */
 
-export const _TYPES_VERSION = "1.0.0";
 export type { TabId } from "./navigation";
 
 export type KnowledgeBlock = "CB" | "TB" | "TA" | "CC"; // Ciencias Básicas, Tecnologías Básicas, etc.
@@ -90,15 +89,6 @@ export interface CareerMetadata {
 // --- BASES DE DATOS ---
 export type PlansDB = Record<string, StudyPlan>;
 export type CareersRegistry = Record<string, CareerMetadata>;
-
-// --- COMPATIBILIDAD LEGACY [OLD] ---
-/** @deprecated Use StudyPlan instead */
-export interface CareerPlan {
-  name: string;
-  planYear: string;
-  coursesData: Record<string, Course[]>;
-}
-export type CareersDB = Record<string, CareerPlan>;
 
 // --- ESTADOS Y EVENTOS ---
 

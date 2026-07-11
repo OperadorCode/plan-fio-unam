@@ -16,8 +16,8 @@
 
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import type { CourseStatusMap, CourseStatus, StudyPlan } from "../types";
-import { careerPlans, allPlans } from "../data/careers";
+import type { CourseStatusMap, CourseStatus } from "../types";
+import { careerPlans, allPlans, getPlanForCareer } from "../data/careers";
 import { validateCourseStatus } from "../utils/academicValidation";
 
 interface AppState {
@@ -169,11 +169,7 @@ export const useAppStore = create<AppState>()(
           const tempStatus = { ...state.courseStatus };
           delete tempStatus[slotId];
 
-          const currentPlan =
-            allPlans[state.activePlanId] ||
-            (careerPlans[
-              state.careerId as keyof typeof careerPlans
-            ] as unknown as StudyPlan);
+          const currentPlan = allPlans[state.activePlanId] || getPlanForCareer(state.careerId);
 
           if (!currentPlan) {
             return {
@@ -205,11 +201,7 @@ export const useAppStore = create<AppState>()(
             tempStatus[courseId] = newStatus;
           }
 
-          const currentPlan =
-            allPlans[state.activePlanId] ||
-            (careerPlans[
-              state.careerId as keyof typeof careerPlans
-            ] as unknown as StudyPlan);
+          const currentPlan = allPlans[state.activePlanId] || getPlanForCareer(state.careerId);
 
           if (!currentPlan) return { courseStatus: tempStatus };
           return validateCourseStatus(
@@ -242,10 +234,7 @@ export const useAppStore = create<AppState>()(
           const examPlan = data.examPlan || {};
           let courseStatus = data.courseStatus;
 
-          const targetPlan = allPlans[activePlanId || ""] ||
-            (careerPlans[
-              data.careerId as keyof typeof careerPlans
-            ] as unknown as StudyPlan);
+          const targetPlan = allPlans[activePlanId || ""] || getPlanForCareer(data.careerId);
 
           if (targetPlan) {
             const validated = validateCourseStatus(

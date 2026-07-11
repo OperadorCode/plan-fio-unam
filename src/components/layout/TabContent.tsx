@@ -1,7 +1,7 @@
 import React, { Suspense, lazy } from "react";
 import YearTable from "../features/academic/YearTable";
 import { LoadingScreen } from "../common/LoadingScreen";
-import TransitionErrorBoundary from "../common/TransitionErrorBoundary";
+import TransitionTabErrorBoundary from "../common/TransitionTabErrorBoundary";
 import ExamPlannerErrorBoundary from "../common/ExamPlannerErrorBoundary";
 import MapErrorBoundary from "../common/MapErrorBoundary";
 import type { StudyPlan } from "../../types";
@@ -64,9 +64,9 @@ export const TabContent: React.FC<TabContentProps> = ({
             </div>
           }
         >
-          <TransitionErrorBoundary>
+          <TransitionTabErrorBoundary>
             <TransitionDashboard />
-          </TransitionErrorBoundary>
+          </TransitionTabErrorBoundary>
         </Suspense>
       )}
 
@@ -78,9 +78,9 @@ export const TabContent: React.FC<TabContentProps> = ({
             </div>
           }
         >
-          <TransitionErrorBoundary>
+          <TransitionTabErrorBoundary>
             <EquivalenciesView />
-          </TransitionErrorBoundary>
+          </TransitionTabErrorBoundary>
         </Suspense>
       )}
 

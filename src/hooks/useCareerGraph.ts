@@ -20,8 +20,8 @@ import {
   type Edge,
 } from "reactflow";
 import { useAppStore } from "../store/useAppStore";
-import { careerPlans, allPlans } from "../data/careers";
-import type { StudyPlan, Course, GraphCourse } from "../types";
+import { allPlans, getPlanForCareer } from "../data/careers";
+import type { Course, GraphCourse } from "../types";
 import { calculateCriticality } from "../utils/logic";
 import { getRegimenOrderValue } from "../utils/courseUtils";
 
@@ -36,8 +36,7 @@ export const useCareerGraph = (
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
   const effectiveCoursesData = useMemo(() => {
-    const plan = (allPlans[activePlanId] ||
-      careerPlans[careerId as keyof typeof careerPlans]) as unknown as StudyPlan;
+    const plan = allPlans[activePlanId] || getPlanForCareer(careerId);
 
     if (!initialCoursesData) return {};
     if (!plan) return initialCoursesData;
