@@ -75,6 +75,7 @@ export const PlanProvider: React.FC<{ children: React.ReactNode }> = ({
   return <PlanContext.Provider value={value}>{children}</PlanContext.Provider>;
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const usePlanContext = () => {
   const context = useContext(PlanContext);
   if (context === undefined) {

@@ -100,7 +100,7 @@ function App() {
           show: true,
         },
       ],
-    [careerId, showTransitionTabs]
+    [showTransitionTabs]
   );
 
   if (loading || !currentPlan) {

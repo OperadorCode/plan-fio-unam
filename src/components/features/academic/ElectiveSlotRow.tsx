@@ -11,7 +11,7 @@
  * - Implementa la lógica de progresión de estado (Regularizar -> Aprobar) limitada por los requisitos académicos.
  */
 
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import { ChevronDown, Check, BookOpen, Lock, Trash2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAppStore } from "../../../store/useAppStore";
@@ -39,7 +39,7 @@ export const ElectiveSlotRow: React.FC<Props> = ({ slot }) => {
   const selectedOptionId = selectedElectives[slot.id];
   const activeOption = options.find((o) => o.id === selectedOptionId);
   const currentStatus = courseStatus[slot.id];
-  const allCoursesById = useMemo(() => {
+  const allCoursesById = (() => {
     if (!currentPlan) return {};
     const flat = Object.values(currentPlan.coursesData).flat();
     const electives = Object.values(currentPlan.electivesData || {}).flat();
@@ -48,7 +48,7 @@ export const ElectiveSlotRow: React.FC<Props> = ({ slot }) => {
       (acc, c) => ({ ...acc, [c.id]: c }),
       {} as Record<string, Course>
     );
-  }, [currentPlan]);
+  })();
 
   const getMissing = (option: Course, forCursar: boolean) => {
     return getMissingPrerequisites(

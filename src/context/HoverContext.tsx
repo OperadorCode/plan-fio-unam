@@ -32,6 +32,7 @@ export const HoverProvider: React.FC<{ children: React.ReactNode }> = ({
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useHoverContext = () => {
   const context = useContext(HoverContext);
   if (context === undefined) {
@@ -40,11 +41,13 @@ export const useHoverContext = () => {
   return context;
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useHoveredCourse = () => {
   const { hoveredCourseId } = useHoverContext();
   return hoveredCourseId;
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useSetHoveredCourse = () => {
   const { setHoveredCourseId } = useHoverContext();
   return setHoveredCourseId;

@@ -11,7 +11,9 @@ export const CareerSelector: React.FC = () => {
   const setCareer = useAppStore((state) => state.setCareer);
   const [isCareerOpen, setIsCareerOpen] = useState(false);
   const [showCareerHint, setShowCareerHint] = useState(false);
-  const [seenNewIndustrial, setSeenNewIndustrial] = useState(false);
+  const [seenNewIndustrial, setSeenNewIndustrial] = useState(
+    () => localStorage.getItem("seenNew_industrial") === "true"
+  );
   const [pendingCareerId, setPendingCareerId] = useState<string | null>(null);
 
   const hasProgress = Object.keys(courseStatus).length > 0;
@@ -27,16 +29,7 @@ export const CareerSelector: React.FC = () => {
     }
   }, []);
 
-  useEffect(() => {
-    setSeenNewIndustrial(localStorage.getItem("seenNew_industrial") === "true");
-  }, []);
 
-  useEffect(() => {
-    if (careerId === "industrial" && !seenNewIndustrial) {
-      localStorage.setItem("seenNew_industrial", "true");
-      setSeenNewIndustrial(true);
-    }
-  }, [careerId, seenNewIndustrial]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
