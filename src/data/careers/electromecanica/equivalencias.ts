@@ -279,14 +279,7 @@ export const electromecanicaEquivalencias: EquivalenceRule[] = [
     type: "DIRECTA",
   },
 
-  // --- OPTATIVA Y PPS ---
-  {
-    targetId: "OP",
-    targetName: "Optativa",
-    sourceIds: [], // Sin equivalencia directa en la tabla
-    type: "PARCIAL",
-    note: "Sin equivalencia directa establecida en tabla. Se reconocerán créditos por transición.",
-  },
+  // --- PPS ---
   {
     targetId: "PPS",
     targetName: "Práctica Profesional Supervisada",
