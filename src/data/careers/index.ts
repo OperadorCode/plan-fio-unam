@@ -58,7 +58,7 @@ export const careersRegistry: CareersRegistry = {
     color: "orange",
     icon: "Zap",
     availablePlans: [electromecanica2013.id, electromecanica2025.id],
-    enabled: false,
+    enabled: true,
   },
   electronica: {
     id: "electronica",

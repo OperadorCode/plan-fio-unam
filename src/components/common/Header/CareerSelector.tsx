@@ -11,8 +11,8 @@ export const CareerSelector: React.FC = () => {
   const setCareer = useAppStore((state) => state.setCareer);
   const [isCareerOpen, setIsCareerOpen] = useState(false);
   const [showCareerHint, setShowCareerHint] = useState(false);
-  const [seenNewIndustrial, setSeenNewIndustrial] = useState(
-    () => localStorage.getItem("seenNew_industrial") === "true"
+  const [seenNewElectromecanica, setSeenNewElectromecanica] = useState(
+    () => localStorage.getItem("seenNew_electromecanica") === "true"
   );
   const [pendingCareerId, setPendingCareerId] = useState<string | null>(null);
 
@@ -132,9 +132,9 @@ export const CareerSelector: React.FC = () => {
                     setIsCareerOpen(false);
                     return;
                   }
-                  if (career.id === "industrial") {
-                    localStorage.setItem("seenNew_industrial", "true");
-                    setSeenNewIndustrial(true);
+                  if (career.id === "electromecanica") {
+                    localStorage.setItem("seenNew_electromecanica", "true");
+                    setSeenNewElectromecanica(true);
                   }
                   if (hasProgress) {
                     setPendingCareerId(career.id);
@@ -174,7 +174,7 @@ export const CareerSelector: React.FC = () => {
                       }`}
                   >
                     <span className="truncate">{career.name}</span>
-                    {career.id === "industrial" && !seenNewIndustrial && (
+                    {career.id === "electromecanica" && !seenNewElectromecanica && (
                       <span className="text-[9px] uppercase font-bold text-white bg-blue-500 px-1.5 py-0.5 rounded-full animate-pulse flex-shrink-0">
                         Nuevo
                       </span>
