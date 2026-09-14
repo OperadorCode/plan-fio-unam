@@ -1,289 +1,284 @@
 import type { EquivalenceRule } from "../../../types";
 
-/**
- * Tabla de Equivalencias entre Plan 2013 (Res. C.S. N°073/12) y Plan 2025
- * Fuente: ANEXO RESOLUCIÓN CS Nº 079/2025 - TABLA 3
- */
 export const electromecanicaEquivalencias: EquivalenceRule[] = [
-  // --- PRIMER AÑO ---
   {
     targetId: "EM0111",
     targetName: "Álgebra 1",
-    sourceIds: ["EM111"], // Álgebra y Geometría Analítica
+    sourceIds: ["EM111"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0112",
     targetName: "Cálculo Diferencial",
-    sourceIds: ["EM112"], // Cálculo 1
+    sourceIds: ["EM112"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0113",
     targetName: "Inglés 1",
-    sourceIds: ["EM363"], // Inglés 1
+    sourceIds: ["EM365"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0114",
     targetName: "Introducción a la Ingeniería",
-    sourceIds: ["EM161", "EM261"], // Ingeniería y Sociedad / Ingeniería e Industrias
+    sourceIds: ["EM161", "EM261"],
     type: "DIRECTA",
+    note: "Requiere ambas asignaturas del Plan 2013 (EM161 y EM261)",
   },
   {
     targetId: "EM0121",
     targetName: "Álgebra 2",
-    sourceIds: ["EM111"], // Álgebra y Geometría Analítica
+    sourceIds: ["EM111"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0122",
     targetName: "Cálculo Integral",
-    sourceIds: ["EM112"], // Cálculo 1
+    sourceIds: ["EM112"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0123",
     targetName: "Física 1",
-    sourceIds: ["EM121"], // Física 1
+    sourceIds: ["EM121"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0124",
     targetName: "Sistemas de Representación Gráfica",
-    sourceIds: ["EM131"], // Sistemas de Representación Gráfica
+    sourceIds: ["EM131"],
     type: "DIRECTA",
   },
-
-  // --- SEGUNDO AÑO ---
   {
     targetId: "EM0211",
     targetName: "Cálculo Multivariable",
-    sourceIds: ["EM211"], // Cálculo 2
+    sourceIds: ["EM211"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0212",
     targetName: "Física 2",
-    sourceIds: ["EM221"], // Física 2
+    sourceIds: ["EM221"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0213",
     targetName: "Probabilidad y Estadística",
-    sourceIds: ["EM213"], // Probabilidad y Estadística 1
+    sourceIds: ["EM213"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0214",
     targetName: "Química",
-    sourceIds: ["EM122"], // Química
+    sourceIds: ["EM122"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0221",
     targetName: "Estática y Resistencia de Materiales",
-    sourceIds: ["EM253"], // Estática y Resistencia de Materiales
+    sourceIds: ["EM253"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0222",
     targetName: "Inglés 2",
-    sourceIds: ["EM469"], // Inglés 2
+    sourceIds: ["EM469"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0223",
     targetName: "Matemática Aplicada",
-    sourceIds: ["EM212"], // Matemática Aplicada
+    sourceIds: ["EM212"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0224",
     targetName: "Termodinámica",
-    sourceIds: ["EM231"], // Termodinámica
+    sourceIds: ["EM231"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0225",
     targetName: "Mecánica Racional",
-    sourceIds: ["EM222"], // Mecánica Racional
+    sourceIds: ["EM222"],
     type: "DIRECTA",
   },
-
-  // --- TERCER AÑO ---
   {
     targetId: "EM0311",
     targetName: "Diseño Aplicado",
-    sourceIds: ["EM333"], // Diseño Aplicado
+    sourceIds: ["EM333"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0312",
     targetName: "Electrónica y Control",
-    sourceIds: ["EM341"], // Electrónica
-    type: "PARCIAL", // Indicado explícitamente como PARCIAL en la tabla
+    sourceIds: ["EM341"],
+    type: "PARCIAL",
+    note: "Equivalencia parcial. Requiere cumplimentar contenidos/práctica de Control (Res. CS Nº 079/2025)",
   },
   {
     targetId: "EM0313",
     targetName: "Informática",
-    sourceIds: ["EM241"], // Informática
+    sourceIds: ["EM241"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0314",
-    targetName: "Mecánica de los Fluidos y Máquinas",
-    sourceIds: ["EM332"], // Mecánica de Fluidos y Máquinas
+    targetName: "Mecánica de Fluidos y Máquinas",
+    sourceIds: ["EM332"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0315",
     targetName: "Electrotecnia",
-    sourceIds: ["EM331"], // Electrotecnia
+    sourceIds: ["EM331"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0321",
     targetName: "Ciencia de los Materiales",
-    sourceIds: ["EM335"], // Ciencia de los Materiales A
+    sourceIds: ["EM335"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0322",
     targetName: "Higiene, Seguridad y Medio Ambiente",
-    sourceIds: ["EM466"], // Higiene, Seguridad y Medio Ambiente
+    sourceIds: ["EM466"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0323",
     targetName: "Máquinas Eléctricas",
-    sourceIds: ["EM337"], // Máquinas Eléctricas
+    sourceIds: ["EM337"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0324",
     targetName: "Mediciones y Metrología",
-    sourceIds: ["EM336"], // Mediciones y Metrología
+    sourceIds: ["EM336"],
     type: "DIRECTA",
   },
-
-  // --- CUARTO AÑO ---
   {
     targetId: "EM0411",
     targetName: "Economía y Organización de la Producción",
-    sourceIds: ["EM468"], // Economía y Organización de la Producción
+    sourceIds: ["EM468"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0412",
     targetName: "Instalaciones Eléctricas",
-    sourceIds: ["EM534"], // Instalaciones Eléctricas
+    sourceIds: ["EM534"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0413",
     targetName: "Instalaciones Hidráulicas y Neumáticas",
-    sourceIds: ["EM536"], // Instalaciones Hidráulicas y Neumáticas
+    sourceIds: ["EM536"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0414",
     targetName: "Máquinas e Instalaciones Térmicas 1",
-    sourceIds: ["EM334"], // Máquinas e Instalaciones Térmicas 1
+    sourceIds: ["EM334"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0415",
     targetName: "Tecnología de los Procesos de Producción 1",
-    sourceIds: ["EM433"], // Tecnología de los Procesos de Producción
+    sourceIds: ["EM437"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0421",
     targetName: "Centrales de Energía",
-    sourceIds: ["EM438"], // Centrales de Energía
+    sourceIds: ["EM438"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0422",
     targetName: "Elementos de Máquinas",
-    sourceIds: ["EM431"], // Elementos de Máquinas
+    sourceIds: ["EM431"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0423",
     targetName: "Sistemas de Control",
-    sourceIds: ["EM525"], // Sistemas de Control
+    sourceIds: ["EM535"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0424",
     targetName: "Tecnología de los Procesos de Producción 2",
-    sourceIds: ["EM437"], // Tecnología de los Procesos de Producción
+    sourceIds: ["EM437"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0425",
     targetName: "Transmisión y Distribución de la Energía Eléctrica",
-    sourceIds: ["EM537"], // Transmisión y Distribución de la Energía Eléctrica
+    sourceIds: ["EM537"],
     type: "DIRECTA",
   },
-
-  // --- QUINTO AÑO ---
   {
     targetId: "EM0511",
     targetName: "Legislación y Ejercicio Profesional",
-    sourceIds: ["EM462"], // Legislación y Ejercicio Profesional
+    sourceIds: ["EM462"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0512",
     targetName: "Equipamiento Eléctrico de Centrales",
-    sourceIds: ["EM532"], // Equipamiento Eléctrico de Centrales
+    sourceIds: ["EM532"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0513",
     targetName: "Máquinas e Instalaciones Térmicas 2",
-    sourceIds: ["EM432"], // Máquinas e Instalaciones Térmicas 2
+    sourceIds: ["EM432"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0514",
     targetName: "Mecanismos y Elementos de Máquinas",
-    sourceIds: ["EM434"], // Mecanismos y Elementos de Máquinas
+    sourceIds: ["EM434"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0515",
     targetName: "Proyecto Integrador",
-    sourceIds: ["EM439", "EM533"], // Proyecto Electromecánico 1 y 2
+    sourceIds: ["EM433", "EM533"],
     type: "DIRECTA",
+    note: "Requiere Proyecto Electromecánico 1 y 2 (EM433 y EM533)",
+  },
+  {
+    targetId: "OP",
+    targetName: "Optativa",
+    sourceIds: [],
+    type: "DIRECTA",
+    note: "Reconocimiento de créditos para estudiantes del Plan 2013 con asignaturas aprobadas sin vigencia en el nuevo plan",
   },
   {
     targetId: "EM0521",
     targetName: "Mantenimiento",
-    sourceIds: ["EM531"], // Mantenimiento
+    sourceIds: ["EM531"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0522",
     targetName: "Máquinas e Instalaciones Térmicas 3",
-    sourceIds: ["EM436"], // Climatización y Frío Industrial
+    sourceIds: ["EM436"],
     type: "DIRECTA",
   },
   {
     targetId: "EM0523",
     targetName: "Sistemas Eléctricos de Potencia",
-    sourceIds: ["EM535"], // Sistemas Eléctricos de Potencia
+    sourceIds: ["EM538"],
     type: "DIRECTA",
   },
-
-  // --- PPS ---
   {
     targetId: "PPS",
     targetName: "Práctica Profesional Supervisada",
-    sourceIds: ["PPS"], // Práctica Profesional Supervisada
+    sourceIds: ["PPS"],
     type: "DIRECTA",
   },
 ];

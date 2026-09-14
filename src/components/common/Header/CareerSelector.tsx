@@ -1,9 +1,27 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import { ChevronDown, Check, GraduationCap } from "lucide-react";
 import { useAppStore } from "../../../store/useAppStore";
 import { careersRegistry } from "../../../data/careers";
 import { getCareerIcon } from "../../../utils/iconHelpers";
 import { ConfirmationModal } from "../ConfirmationModal";
+
+/**
+ * Helper para gestionar el estado "visto" del badge "Nuevo" por carrera.
+ * Almacena en localStorage un flag `seenNew_${careerId}` cuando el usuario
+ * selecciona una carrera marcada como `isNew`.
+ */
+const getSeenNewKey = (careerId: string) => `seenNew_${careerId}`;
+
+const getInitialSeenState = (): Record<string, boolean> => {
+  const state: Record<string, boolean> = {};
+  Object.values(careersRegistry).forEach((career) => {
+    if (career.isNew) {
+      state[career.id] =
+        localStorage.getItem(getSeenNewKey(career.id)) === "true";
+    }
+  });
+  return state;
+};
 
 export const CareerSelector: React.FC = () => {
   const careerId = useAppStore((state) => state.careerId);
@@ -11,9 +29,7 @@ export const CareerSelector: React.FC = () => {
   const setCareer = useAppStore((state) => state.setCareer);
   const [isCareerOpen, setIsCareerOpen] = useState(false);
   const [showCareerHint, setShowCareerHint] = useState(false);
-  const [seenNewElectromecanica, setSeenNewElectromecanica] = useState(
-    () => localStorage.getItem("seenNew_electromecanica") === "true"
-  );
+  const [seenNewCareers, setSeenNewCareers] = useState(getInitialSeenState);
   const [pendingCareerId, setPendingCareerId] = useState<string | null>(null);
 
   const hasProgress = Object.keys(courseStatus).length > 0;
@@ -57,6 +73,19 @@ export const CareerSelector: React.FC = () => {
       window.dispatchEvent(new Event("careerMenuClosed"));
     }
   }, [isCareerOpen]);
+
+  const markCareerAsSeen = useCallback((id: string) => {
+    const career = careersRegistry[id];
+    if (career?.isNew && !seenNewCareers[id]) {
+      localStorage.setItem(getSeenNewKey(id), "true");
+      setSeenNewCareers((prev) => ({ ...prev, [id]: true }));
+    }
+  }, [seenNewCareers]);
+
+  const shouldShowNewBadge = (id: string): boolean => {
+    const career = careersRegistry[id];
+    return !!career?.isNew && !seenNewCareers[id];
+  };
 
   const mainContent = (
     <div className="relative" ref={careerRef}>
@@ -132,10 +161,7 @@ export const CareerSelector: React.FC = () => {
                     setIsCareerOpen(false);
                     return;
                   }
-                  if (career.id === "electromecanica") {
-                    localStorage.setItem("seenNew_electromecanica", "true");
-                    setSeenNewElectromecanica(true);
-                  }
+                  markCareerAsSeen(career.id);
                   if (hasProgress) {
                     setPendingCareerId(career.id);
                   } else {
@@ -174,7 +200,7 @@ export const CareerSelector: React.FC = () => {
                       }`}
                   >
                     <span className="truncate">{career.name}</span>
-                    {career.id === "electromecanica" && !seenNewElectromecanica && (
+                    {shouldShowNewBadge(career.id) && (
                       <span className="text-[9px] uppercase font-bold text-white bg-blue-500 px-1.5 py-0.5 rounded-full animate-pulse flex-shrink-0">
                         Nuevo
                       </span>
@@ -217,4 +243,3 @@ export const CareerSelector: React.FC = () => {
     </>
   );
 };
-

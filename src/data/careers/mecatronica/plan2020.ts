@@ -10,13 +10,12 @@ export const mecatronica2020: StudyPlan = {
     "1": [
       {
         id: "IM101",
-        name: "Algebra y Geometría Analítica",
+        name: "Álgebra y Geometría Analítica",
         regimen: "Anual",
         hours: "-",
         requiredRegularToCourse: [],
         requiredApprovedToCourse: [],
         requiredApprovedToFinal: [],
-        criticality: 1,
       },
       {
         id: "IM102",
@@ -26,7 +25,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: [],
         requiredApprovedToCourse: [],
         requiredApprovedToFinal: [],
-        criticality: 1,
       },
       {
         id: "IM103",
@@ -36,7 +34,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: [],
         requiredApprovedToCourse: [],
         requiredApprovedToFinal: [],
-        criticality: 1,
       },
       {
         id: "IM104",
@@ -46,7 +43,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: [],
         requiredApprovedToCourse: [],
         requiredApprovedToFinal: [],
-        criticality: 1,
       },
       {
         id: "IM105",
@@ -56,7 +52,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: [],
         requiredApprovedToCourse: [],
         requiredApprovedToFinal: [],
-        criticality: 1,
       },
       {
         id: "IM106",
@@ -66,7 +61,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: [],
         requiredApprovedToCourse: [],
         requiredApprovedToFinal: [],
-        criticality: 1,
       },
     ],
     "2": [
@@ -78,7 +72,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM101", "IM102"],
         requiredApprovedToCourse: [],
         requiredApprovedToFinal: ["IM101", "IM102"],
-        criticality: 1,
       },
       {
         id: "IM202",
@@ -88,7 +81,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM101", "IM102"],
         requiredApprovedToCourse: [],
         requiredApprovedToFinal: ["IM101", "IM102"],
-        criticality: 1,
       },
       {
         id: "IM203",
@@ -98,7 +90,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM101", "IM102", "IM103"],
         requiredApprovedToCourse: [],
         requiredApprovedToFinal: ["IM101", "IM102", "IM103"],
-        criticality: 1,
       },
       {
         id: "IM204",
@@ -108,7 +99,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM101", "IM102"],
         requiredApprovedToCourse: [],
         requiredApprovedToFinal: ["IM101", "IM102"],
-        criticality: 1,
       },
       {
         id: "IM205",
@@ -118,7 +108,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM102", "IM103", "IM203"],
         requiredApprovedToCourse: [],
         requiredApprovedToFinal: ["IM102", "IM103", "IM203"],
-        criticality: 1,
       },
       {
         id: "IM206",
@@ -128,7 +117,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM201", "IM203"],
         requiredApprovedToCourse: ["IM101", "IM102", "IM103"],
         requiredApprovedToFinal: ["IM101", "IM102", "IM103", "IM201", "IM203"],
-        criticality: 1,
       },
       {
         id: "IM207",
@@ -138,7 +126,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM106", "IM201", "IM202"],
         requiredApprovedToCourse: ["IM102", "IM103"],
         requiredApprovedToFinal: ["IM102", "IM103", "IM106", "IM201", "IM202"],
-        criticality: 1,
       },
       {
         id: "IM208",
@@ -148,7 +135,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM201"],
         requiredApprovedToCourse: ["IM101", "IM102", "IM103", "IM105"],
         requiredApprovedToFinal: ["IM101", "IM102", "IM103", "IM105", "IM201"],
-        criticality: 1,
       },
     ],
     "3": [
@@ -160,7 +146,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM203", "IM206"],
         requiredApprovedToCourse: [],
         requiredApprovedToFinal: ["IM203", "IM206"],
-        criticality: 1,
       },
       {
         id: "IM302",
@@ -170,7 +155,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM206"],
         requiredApprovedToCourse: ["IM201"],
         requiredApprovedToFinal: ["IM201", "IM206"],
-        criticality: 1,
       },
       {
         id: "IM303",
@@ -180,7 +164,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM208", "IM201"],
         requiredApprovedToCourse: ["IM204"],
         requiredApprovedToFinal: ["IM201", "IM204", "IM208"],
-        criticality: 1,
       },
       {
         id: "IM304",
@@ -190,7 +173,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM202", "IM208"],
         requiredApprovedToCourse: [],
         requiredApprovedToFinal: ["IM202", "IM208"],
-        criticality: 1,
       },
       {
         id: "IM305",
@@ -200,7 +182,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM206", "IM301"],
         requiredApprovedToCourse: ["IM203"],
         requiredApprovedToFinal: ["IM203", "IM206", "IM301"],
-        criticality: 1,
       },
       {
         id: "IM306",
@@ -210,7 +191,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM204", "IM205"],
         requiredApprovedToCourse: ["IM203"],
         requiredApprovedToFinal: ["IM203", "IM204", "IM205"],
-        criticality: 1,
       },
       {
         id: "IM307",
@@ -220,7 +200,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM205", "IM301"],
         requiredApprovedToCourse: ["IM203"],
         requiredApprovedToFinal: ["IM203", "IM205", "IM301"],
-        criticality: 1,
       },
       {
         id: "IM308",
@@ -230,7 +209,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM205"],
         requiredApprovedToCourse: [],
         requiredApprovedToFinal: ["IM205"],
-        criticality: 1,
       },
       {
         id: "IM309",
@@ -240,7 +218,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM201", "IM206"],
         requiredApprovedToCourse: [],
         requiredApprovedToFinal: ["IM206"],
-        criticality: 1,
       },
     ],
     "4": [
@@ -252,7 +229,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM305", "IM306"],
         requiredApprovedToCourse: [],
         requiredApprovedToFinal: ["IM305", "IM306"],
-        criticality: 1,
       },
       {
         id: "IM402",
@@ -262,7 +238,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM308"],
         requiredApprovedToCourse: [],
         requiredApprovedToFinal: ["IM308"],
-        criticality: 1,
       },
       {
         id: "IM403",
@@ -272,7 +247,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM308"],
         requiredApprovedToCourse: [],
         requiredApprovedToFinal: ["IM308"],
-        criticality: 1,
       },
       {
         id: "IM404",
@@ -282,7 +256,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM301", "IM307"],
         requiredApprovedToCourse: [],
         requiredApprovedToFinal: ["IM301", "IM307"],
-        criticality: 1,
       },
       {
         id: "IM405",
@@ -292,7 +265,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM302", "IM309", "IM304"],
         requiredApprovedToCourse: ["IM303"],
         requiredApprovedToFinal: ["IM302", "IM309", "IM304", "IM303"],
-        criticality: 1,
       },
       {
         id: "IM406",
@@ -302,7 +274,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM304", "IM309"],
         requiredApprovedToCourse: ["IM303"],
         requiredApprovedToFinal: ["IM303", "IM304", "IM309"],
-        criticality: 1,
       },
       {
         id: "IM407",
@@ -312,7 +283,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM305", "IM306", "IM307", "IM401", "IM404"],
         requiredApprovedToCourse: [],
         requiredApprovedToFinal: ["IM305", "IM306", "IM307", "IM401", "IM404"],
-        criticality: 1,
       },
       {
         id: "IM408",
@@ -322,17 +292,15 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM306", "IM307", "IM301"],
         requiredApprovedToCourse: [],
         requiredApprovedToFinal: ["IM306", "IM307", "IM301"],
-        criticality: 1,
       },
       {
-        id: "IM409",
+        id: "IN409",
         name: "Inglés 1",
         regimen: "Anual",
         hours: "-",
         requiredRegularToCourse: [],
-        requiredApprovedToCourse: ["IM204", "IM205", "IM206", "IM207", "IM208"],
-        requiredApprovedToFinal: ["IM204", "IM205", "IM206", "IM207", "IM208"],
-        criticality: 1,
+        requiredApprovedToCourse: [],
+        requiredApprovedToFinal: [],
       },
     ],
     "5": [
@@ -344,7 +312,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM401", "IM404", "IM407"],
         requiredApprovedToCourse: [],
         requiredApprovedToFinal: ["IM401", "IM404", "IM407"],
-        criticality: 1,
       },
       {
         id: "IM502",
@@ -354,7 +321,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM401", "IM404"],
         requiredApprovedToCourse: [],
         requiredApprovedToFinal: ["IM401", "IM404"],
-        criticality: 1,
       },
       {
         id: "IM503",
@@ -363,15 +329,7 @@ export const mecatronica2020: StudyPlan = {
         hours: "-",
         requiredRegularToCourse: ["IM401", "IM404", "IM407", "IM408"],
         requiredApprovedToCourse: ["IM305", "IM309"],
-        requiredApprovedToFinal: [
-          "IM305",
-          "IM309",
-          "IM401",
-          "IM404",
-          "IM407",
-          "IM408",
-        ],
-        criticality: 1,
+        requiredApprovedToFinal: ["IM305", "IM309", "IM401", "IM404", "IM407", "IM408"],
       },
       {
         id: "IM504",
@@ -381,7 +339,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM404", "IM408"],
         requiredApprovedToCourse: [],
         requiredApprovedToFinal: ["IM404", "IM408"],
-        criticality: 1,
       },
       {
         id: "IM505",
@@ -391,7 +348,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM405", "IM407"],
         requiredApprovedToCourse: [],
         requiredApprovedToFinal: ["IM405", "IM407"],
-        criticality: 1,
       },
       {
         id: "IM506",
@@ -401,7 +357,6 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM403"],
         requiredApprovedToCourse: [],
         requiredApprovedToFinal: ["IM403"],
-        criticality: 1,
       },
       {
         id: "IM507",
@@ -411,7 +366,15 @@ export const mecatronica2020: StudyPlan = {
         requiredRegularToCourse: ["IM405", "IM406", "IM407", "IM408"],
         requiredApprovedToCourse: ["IM401", "IM402", "IM403", "IM404"],
         requiredApprovedToFinal: ["ALL"],
-        criticality: 1,
+      },
+      {
+        id: "PPP",
+        name: "Práctica Profesional Supervisada",
+        regimen: "Anual",
+        hours: 200,
+        requiredRegularToCourse: [],
+        requiredApprovedToCourse: [],
+        requiredApprovedToFinal: [],
       },
     ],
   },

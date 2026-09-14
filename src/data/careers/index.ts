@@ -42,7 +42,8 @@ export const careersRegistry: CareersRegistry = {
     color: "cyan",
     icon: "Laptop",
     availablePlans: [computacion2018.id],
-    enabled: false,
+    enabled: true,
+    isNew: true,
   },
   civil: {
     id: "civil",
@@ -66,7 +67,8 @@ export const careersRegistry: CareersRegistry = {
     color: "indigo",
     icon: "Cpu",
     availablePlans: [electronica2013.id, electronica2025.id],
-    enabled: false,
+    enabled: true,
+    isNew: true,
   },
   industrial: {
     id: "industrial",
@@ -82,7 +84,8 @@ export const careersRegistry: CareersRegistry = {
     color: "rose",
     icon: "Bot",
     availablePlans: [mecatronica2020.id],
-    enabled: false,
+    enabled: true,
+    isNew: true,
   },
   higiene: {
     id: "higiene",
@@ -90,7 +93,8 @@ export const careersRegistry: CareersRegistry = {
     color: "yellow",
     icon: "ShieldCheck",
     availablePlans: [higiene2012.id],
-    enabled: false,
+    enabled: true,
+    isNew: true,
   },
 };
 

@@ -84,6 +84,7 @@ export interface CareerMetadata {
   icon: string; // Nombre del icono lucide
   availablePlans: string[]; // IDs de los planes disponibles para elegir
   enabled: boolean; // true si los datos del plan están verificados y la carrera es seleccionable
+  isNew?: boolean; // true para mostrar el badge "Nuevo" en el selector de carreras
 }
 
 // --- BASES DE DATOS ---

@@ -1,4 +1,4 @@
-import { CheckCircle2, Loader2, Rocket, ArrowRight } from "lucide-react";
+import { CheckCircle2, Loader2, ArrowRight, BookCheck, Archive } from "lucide-react";
 
 interface MigrationStepProps {
   isAlreadyMigrated: boolean;
@@ -20,114 +20,89 @@ export const MigrationStep: React.FC<MigrationStepProps> = ({
   targetPlanName,
 }) => {
   return (
-    <div className="animate-fade-in w-full py-4">
+    <div className="animate-fade-in w-full">
       {!isAlreadyMigrated ? (
-        <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl shadow-indigo-500/5 border border-indigo-100 dark:border-indigo-900/50 p-8 sm:p-12 text-center relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500" />
-          <div className="absolute -top-10 -right-10 w-40 h-40 bg-indigo-50 dark:bg-indigo-900/20 rounded-full blur-3xl opacity-50 pointer-events-none" />
+        <div className="bg-white dark:bg-gray-800/80 rounded-2xl border border-gray-200 dark:border-gray-700/60 p-6 sm:p-8 relative overflow-hidden">
+          {/* Accent top line */}
+          <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-indigo-500 to-purple-500" />
 
-          <div className="relative z-10 space-y-8">
-            <div className="w-20 h-20 bg-indigo-50 dark:bg-indigo-900/30 rounded-2xl rotate-3 flex items-center justify-center mx-auto text-indigo-600 dark:text-indigo-400 shadow-sm mb-6">
-              <Rocket size={40} className="-rotate-3" strokeWidth={1.5} />
-            </div>
-
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3 tracking-tight">
+          {/* Header row */}
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
+            <div className="flex-1 min-w-0">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white tracking-tight">
                 Actualizá tu Planificador
-              </h2>
-              <p className="text-gray-500 dark:text-gray-400 text-lg leading-relaxed max-w-md mx-auto">
-                Configura tu entorno de trabajo para{" "}
-                <strong className="text-indigo-600 dark:text-indigo-300 font-semibold">
+              </h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                Configurá tu entorno de trabajo para{" "}
+                <span className="font-medium text-indigo-600 dark:text-indigo-400">
                   {targetPlanName}
-                </strong>{" "}
-                y visualiza tu avance correctamente.
+                </span>
               </p>
             </div>
 
-            <div className="bg-gray-50 dark:bg-gray-900/50 p-6 rounded-2xl text-left border border-gray-100 dark:border-gray-700/50 space-y-4 max-w-md mx-auto">
-              <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
-                Impacto en la aplicación
-              </h3>
-              <div className="flex items-start gap-4 p-3 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
-                <div className="p-2 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-lg">
-                  <CheckCircle2 size={18} />
-                </div>
-                <div>
-                  <p className="font-semibold text-gray-900 dark:text-white text-sm">
-                    {simulation.courses2025Approved.length} materias reconocidas
-                  </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
-                    Se marcarán automáticamente en tu nuevo plan.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4 p-3 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
-                <div className="p-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg">
-                  <CheckCircle2 size={18} />
-                </div>
-                <div>
-                  <p className="font-semibold text-gray-900 dark:text-white text-sm">
-                    Historial preservado
-                  </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
-                    Tu progreso anterior queda guardado como referencia.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="pt-4 flex flex-col gap-3 items-center">
+            <div className="flex items-center gap-2 shrink-0">
               <button
                 onClick={onMigrate}
                 disabled={isMigrating}
-                className="group w-full sm:w-auto min-w-[240px] px-8 py-4 bg-gray-900 dark:bg-indigo-600 hover:bg-gray-800 dark:hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-xl shadow-gray-200/50 dark:shadow-none transform transition-all active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+                className="group px-5 py-2.5 bg-gray-900 dark:bg-indigo-600 hover:bg-gray-800 dark:hover:bg-indigo-500 text-white text-sm font-semibold rounded-xl transition-all active:scale-[0.97] disabled:opacity-60 disabled:cursor-not-allowed flex items-center gap-2"
               >
                 {isMigrating ? (
                   <>
-                    <Loader2 size={20} className="animate-spin" />
-                    <span>Procesando...</span>
+                    <Loader2 size={16} className="animate-spin" />
+                    <span>Procesando…</span>
                   </>
                 ) : (
                   <>
-                    <span>Actualizar Planificador</span>
+                    <span>Actualizar</span>
                     <ArrowRight
-                      size={18}
-                      className="group-hover:translate-x-1 transition-transform"
+                      size={15}
+                      className="group-hover:translate-x-0.5 transition-transform"
                     />
                   </>
                 )}
               </button>
-
               {!isMigrating && (
                 <button
                   onClick={onLater}
-                  className="text-sm text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 transition-colors py-2 px-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"
+                  className="px-4 py-2.5 text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors"
                 >
-                  Quizás más tarde
+                  Más tarde
                 </button>
               )}
-              <p className="text-xs text-gray-400 mt-4">
-                Esta acción solo afecta a tu visualización local.
-              </p>
             </div>
+          </div>
+
+          {/* Info chips */}
+          <div className="mt-5 pt-5 border-t border-gray-100 dark:border-gray-700/50 flex flex-wrap gap-3">
+            <div className="flex items-center gap-2.5 px-3.5 py-2 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-100 dark:border-green-800/30">
+              <BookCheck size={15} className="text-green-600 dark:text-green-400 shrink-0" />
+              <span className="text-sm text-green-800 dark:text-green-300">
+                <strong className="font-semibold">{simulation.courses2025Approved.length}</strong> materias reconocidas
+              </span>
+            </div>
+            <div className="flex items-center gap-2.5 px-3.5 py-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-100 dark:border-blue-800/30">
+              <Archive size={15} className="text-blue-600 dark:text-blue-400 shrink-0" />
+              <span className="text-sm text-blue-800 dark:text-blue-300">Historial preservado</span>
+            </div>
+            <span className="flex items-center text-xs text-gray-400 dark:text-gray-500 ml-auto">
+              Solo afecta tu visualización local
+            </span>
           </div>
         </div>
       ) : (
-        <div className="text-center py-16 animate-scale-in">
-          <div className="w-24 h-24 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto text-green-600 dark:text-green-400 mb-6 shadow-sm">
-            <CheckCircle2 size={48} strokeWidth={2} />
+        <div className="bg-white dark:bg-gray-800/80 rounded-2xl border border-green-200 dark:border-green-800/40 p-6 sm:p-8 flex items-center gap-5 animate-scale-in">
+          <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-xl flex items-center justify-center text-green-600 dark:text-green-400 shrink-0">
+            <CheckCircle2 size={24} strokeWidth={2} />
           </div>
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">
-            ¡Planificador Actualizado!
-          </h2>
-          <p className="text-gray-500 dark:text-gray-400 max-w-sm mx-auto text-lg">
-            Ahora estás visualizando el <br />
-            <strong className="text-gray-900 dark:text-white">
-              {targetPlanName}
-            </strong>
-            .
-          </p>
+          <div>
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+              ¡Planificador Actualizado!
+            </h3>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
+              Ahora estás visualizando el{" "}
+              <strong className="text-gray-900 dark:text-white">{targetPlanName}</strong>.
+            </p>
+          </div>
         </div>
       )}
     </div>

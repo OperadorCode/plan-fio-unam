@@ -1,284 +1,283 @@
 import type { EquivalenceRule } from "../../../types";
 
-/**
- * Tabla de Equivalencias entre Plan 2013 (Res. C.S. N°075/12) y Plan 2025
- * Fuente: ANEXO RESOLUCIÓN CS Nº 073/2025 - TABLA 3
- */
 export const electronicaEquivalencias: EquivalenceRule[] = [
-  // --- PRIMER AÑO ---
   {
     targetId: "ET0111",
     targetName: "Álgebra 1",
-    sourceIds: ["ET111"], // Álgebra y Geometría Analítica
+    sourceIds: ["ET111"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0112",
     targetName: "Cálculo Diferencial",
-    sourceIds: ["ET112"], // Cálculo 1
+    sourceIds: ["ET112"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0113",
     targetName: "Sistemas de Representación Gráfica",
-    sourceIds: ["ET131"], // Sistemas de Representación Gráfica
+    sourceIds: ["ET131"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0114",
     targetName: "Prototipos Electrónicos",
-    sourceIds: ["ET242"], // Tecnología Electrónica
+    sourceIds: ["ET242"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0121",
     targetName: "Álgebra 2",
-    sourceIds: ["ET111"], // Álgebra y Geometría Analítica
+    sourceIds: ["ET111"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0122",
     targetName: "Cálculo Integral",
-    sourceIds: ["ET112"], // Cálculo 1
+    sourceIds: ["ET112"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0123",
     targetName: "Física 1",
-    sourceIds: ["ET121"], // Física 1
+    sourceIds: ["ET121"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0124",
     targetName: "Química",
-    sourceIds: ["ET122"], // Química
+    sourceIds: ["ET122"],
     type: "DIRECTA",
   },
-
-  // --- SEGUNDO AÑO ---
   {
     targetId: "ET0211",
     targetName: "Cálculo Multivariable",
-    sourceIds: ["ET211"], // Cálculo 2
+    sourceIds: ["ET211"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0212",
     targetName: "Física 2",
-    sourceIds: ["ET221"], // Física 2
+    sourceIds: ["ET221"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0213",
     targetName: "Probabilidad y Estadística",
-    sourceIds: ["ET213"], // Probabilidad y Estadística 1
+    sourceIds: ["ET213"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0214",
     targetName: "Inglés 1",
-    sourceIds: ["ET365"], // Inglés 1
+    sourceIds: ["ET365"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0215",
-    targetName: "Automatismos 1",
-    sourceIds: ["ET344"], // Computación (Otorga ET0215 y ET0312)
+    targetName: "Automatización 1",
+    sourceIds: ["ET344"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0221",
     targetName: "Informática",
-    sourceIds: ["ET241"], // Informática
+    sourceIds: ["ET241"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0222",
     targetName: "Matemática Aplicada",
-    sourceIds: ["ET212"], // Matemática Aplicada
+    sourceIds: ["ET212"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0223",
     targetName: "Materiales y Dispositivos Electrónicos",
-    sourceIds: ["ET345"], // Dispositivos Electrónicos
+    sourceIds: ["ET345"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0224",
     targetName: "Física 3",
-    sourceIds: ["ET243"], // Física 3
+    sourceIds: ["ET243"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0225",
-    targetName: "Automatismos 2",
-    sourceIds: ["ET545"], // Instrum. y Automatismos Ind. (Otorga ET0225 y ET0524)
+    targetName: "Automatización 2",
+    sourceIds: ["ET545"],
     type: "DIRECTA",
   },
-
-  // --- TERCER AÑO ---
   {
     targetId: "ET0311",
     targetName: "Señales y Sistemas",
-    sourceIds: ["ET343"], // Señales y Sistemas
+    sourceIds: ["ET343"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0312",
     targetName: "Computación",
-    sourceIds: ["ET344"], // Computación
+    sourceIds: ["ET344"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0313",
     targetName: "Instalaciones Eléctricas",
-    sourceIds: ["ET339"], // Máquinas e Instalaciones Eléctricas (Otorga ET0313 y ET0415)
+    sourceIds: ["ET339"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0314",
     targetName: "Electrónica Analógica 1",
-    sourceIds: ["ET347"], // Electrónica Analógica (Otorga ET0314 y ET0323)
+    sourceIds: ["ET347"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0321",
     targetName: "Higiene, Seguridad y Medio Ambiente",
-    sourceIds: ["ET466"], // Higiene, Seguridad y Medio Ambiente
+    sourceIds: ["ET466"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0322",
     targetName: "Análisis de Circuitos",
-    sourceIds: ["ET342"], // Análisis de Circuitos
+    sourceIds: ["ET342"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0323",
     targetName: "Electrónica Analógica 2",
-    sourceIds: ["ET347"], // Electrónica Analógica
+    sourceIds: ["ET347"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0324",
     targetName: "Propagación y Antenas",
-    sourceIds: ["ET444"], // Propagación y Antenas
+    sourceIds: ["ET444"],
     type: "DIRECTA",
   },
-
-  // --- CUARTO AÑO ---
   {
     targetId: "ET0411",
     targetName: "Economía y Organización de la Producción",
-    sourceIds: ["ET458"], // Economía y Organización de la Producción
+    sourceIds: ["ET468"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0412",
     targetName: "Comunicaciones 1",
-    sourceIds: ["ET542"], // Comunicaciones 1
+    sourceIds: ["ET542"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0413",
     targetName: "Sistemas Digitales",
-    sourceIds: ["ET442"], // Técnicas Digitales 1
+    sourceIds: ["ET442"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0414",
     targetName: "Organización Empresarial",
-    sourceIds: ["ET468"], // Economía y Organización de la Producción (Ojo: Diferente código que ET0411)
+    sourceIds: ["ET468"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0415",
     targetName: "Máquinas Eléctricas",
-    sourceIds: ["ET339"], // Máquinas e Instalaciones Eléctricas
+    sourceIds: ["ET339"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0421",
     targetName: "Sistemas Embebidos",
-    sourceIds: ["ET446"], // Técnicas Digitales 2
+    sourceIds: ["ET446"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0422",
     targetName: "Sistemas de Control 1",
-    sourceIds: ["ET443"], // Sistemas de Control 1
+    sourceIds: ["ET443"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0423",
     targetName: "Mediciones Electrónicas",
-    sourceIds: ["ET441"], // Mediciones Electrónicas
+    sourceIds: ["ET441"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0424",
     targetName: "Electrónica de Potencia",
-    sourceIds: ["ET541"], // Electrónica de Potencia
+    sourceIds: ["ET541"],
     type: "DIRECTA",
   },
-
-  // --- QUINTO AÑO ---
   {
     targetId: "ET0511",
     targetName: "Procesamiento Digital de Señales",
-    sourceIds: ["ET543"], // Procesamiento de Señales
+    sourceIds: ["ET543"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0512",
     targetName: "Sistemas de Control 2",
-    sourceIds: ["ET445"], // Sistemas de Control 2
+    sourceIds: ["ET445"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0513",
     targetName: "Gestión de Proyectos",
-    sourceIds: ["ET546"], // Proyecto y Diseño Electrónico (Otorga ET0513 y ET0522)
+    sourceIds: ["ET546"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0521",
     targetName: "Legislación y Ejercicio Profesional",
-    sourceIds: ["ET462"], // Legislación y Ejercicio Profesional
+    sourceIds: ["ET462"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0522",
     targetName: "Proyecto Integrador",
-    sourceIds: ["ET546"], // Proyecto y Diseño Electrónico
+    sourceIds: ["ET546"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0523",
     targetName: "Comunicaciones 2",
-    sourceIds: ["ET544"], // Comunicaciones 2
+    sourceIds: ["ET544"],
     type: "DIRECTA",
   },
   {
     targetId: "ET0524",
     targetName: "Instrumentación y Automatismos Industriales",
-    sourceIds: ["ET545"], // Instrumentación y Automatismos Industriales
+    sourceIds: ["ET545"],
     type: "DIRECTA",
   },
-
-  // --- OPTATIVA Y PPS ---
   {
     targetId: "OP",
     targetName: "Optativa",
-    sourceIds: ["ET161", "ET261"], // Ing. y Sociedad / Ing. e Industrias
+    sourceIds: [],
     type: "DIRECTA",
-    note: "Se reconocen estas asignaturas del Plan 2013 para satisfacer horas de Optativa.",
+    note: "(*)Tener aprobadas ET161 (Ingeniería y Sociedad) y/o ET261 (Ingeniería e Industrias) del Plan 2013 te permite pedir equivalencia para cubrir las horas de la materia Optativa en el Plan 2025 (Nuevo Plan).",
   },
   {
     targetId: "PPS",
     targetName: "Práctica Profesional Supervisada",
-    sourceIds: ["PPS"], // PPS
+    sourceIds: ["PPS"],
     type: "DIRECTA",
+  },
+  {
+    targetId: "-",
+    targetName: "Ingeniería y Sociedad",
+    sourceIds: ["ET161"],
+    type: "DIRECTA",
+    note: "(*)Tener aprobadas ET161 (Ingeniería y Sociedad) y/o ET261 (Ingeniería e Industrias) del Plan 2013 te permite pedir equivalencia para cubrir las horas de la materia Optativa en el Plan 2025 (Nuevo Plan).",
+  },
+  {
+    targetId: "-",
+    targetName: "Ingeniería e Industrias",
+    sourceIds: ["ET261"],
+    type: "DIRECTA",
+    note: "(*)Tener aprobadas ET161 (Ingeniería y Sociedad) y/o ET261 (Ingeniería e Industrias) del Plan 2013 te permite pedir equivalencia para cubrir las horas de la materia Optativa en el Plan 2025 (Nuevo Plan).",
   },
 ];
