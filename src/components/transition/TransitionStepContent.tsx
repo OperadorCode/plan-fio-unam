@@ -47,6 +47,7 @@ const TransitionStepContent: React.FC<StepContentProps> = memo(
         </section>
 
         {/* Sección 2: Equivalencias — Oculta temporalmente (rediseño pendiente) */}
+        {/* eslint-disable-next-line no-constant-binary-expression */}
         {false && (
         <section id="transicion-equivalencias" className="scroll-mt-24">
           <div className="mb-6 flex items-center gap-3">
