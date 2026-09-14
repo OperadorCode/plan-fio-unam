@@ -39,6 +39,8 @@ const TransitionStepContent: React.FC<StepContentProps> = memo(
   }) => {
     if (!transitionData) return null;
 
+    const showEquivalencies = false;
+
     return (
       <div className="flex flex-col gap-16 md:gap-24 animate-fade-in pb-12">
         {/* Sección 1: Introducción */}
@@ -46,7 +48,8 @@ const TransitionStepContent: React.FC<StepContentProps> = memo(
             <IntroStep intermediateTitle={transitionData.intermediateTitle} />
         </section>
 
-        {/* Sección 2: Equivalencias — Oculta temporalmente (rediseño pendiente)
+        {/* Sección 2: Equivalencias — Oculta temporalmente (rediseño pendiente) */}
+        {showEquivalencies && (
         <section id="transicion-equivalencias" className="scroll-mt-24">
           <div className="mb-6 flex items-center gap-3">
             <div className="w-2 h-8 bg-blue-500 rounded-r-full hidden md:block" />
@@ -67,7 +70,7 @@ const TransitionStepContent: React.FC<StepContentProps> = memo(
             targetPlanYear={transitionData!.targetPlan.year}
           />
         </section>
-        */}
+        )}
 
         {/* Sección 3: Estructura del Nuevo Plan */}
         <section id="transicion-estructura" className="scroll-mt-24">
